@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "YorpHives Tab Tidy",
+  "version": "1.0.0",
+  "description": "Group, search, deduplicate and close tabs you choose. No tracking or cloud service.",
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "action": {
+    "default_title": "YorpHives Tab Tidy",
+    "default_popup": "popup.html"
+  }
+}

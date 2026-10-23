@@ -2,10 +2,16 @@
 "use strict";
 const desktopFiles = ["manifest.json","popup.html","popup.css","popup.js","options.html","options.css","options.js","README.txt"];
 const firefoxFiles = ["manifest.json","popup.html","popup.css","popup.js","options.html","options.css","options.js","README.txt"];
+const tabTidyFiles = ["manifest.json","popup.html","popup.css","popup.js","README.txt"];
+const focusFenceFiles = ["manifest.json","background.js","popup.html","popup.css","popup.js","README.txt"];
 const desktopButtons = ["downloadZip","downloadZipBottom","downloadZipFinal"].map(id => document.getElementById(id)).filter(Boolean);
 const firefoxButtons = ["downloadFirefoxPackage"].map(id => document.getElementById(id)).filter(Boolean);
 const desktopStatus = document.getElementById("zipStatus");
 const firefoxStatus = document.getElementById("firefoxZipStatus");
+const tabTidyButtons = ["downloadTabTidy"].map(id => document.getElementById(id)).filter(Boolean);
+const focusFenceButtons = ["downloadFocusFence"].map(id => document.getElementById(id)).filter(Boolean);
+const tabTidyStatus = document.getElementById("tabTidyZipStatus");
+const focusFenceStatus = document.getElementById("focusFenceZipStatus");
 const enc = new TextEncoder();
 
 function u16(n) { return [n & 255, (n >>> 8) & 255]; }
@@ -116,6 +122,14 @@ function buildFirefox() {
     successMessage:(bytes,count) => "Firefox AMO submission ZIP created locally: " + count + " root-level files, " + Math.ceil(bytes / 1024) + " KB. It is not signed; Mozilla distribution steps remain."
   });
 }
+function buildTabTidy() {
+  return buildPackage({sourceRoot:"/tab-tidy",files:tabTidyFiles,rootPrefix:"YorpHives-Tab-Tidy/",filename:"YorpHives-Tab-Tidy.zip",status:tabTidyStatus,buttons:tabTidyButtons,successMessage:(bytes,count)=>"Tab Tidy ZIP created locally: "+count+" files, "+Math.ceil(bytes/1024)+" KB."});
+}
+function buildFocusFence() {
+  return buildPackage({sourceRoot:"/focus-fence",files:focusFenceFiles,rootPrefix:"YorpHives-Focus-Fence/",filename:"YorpHives-Focus-Fence.zip",status:focusFenceStatus,buttons:focusFenceButtons,successMessage:(bytes,count)=>"Focus Fence ZIP created locally: "+count+" files, "+Math.ceil(bytes/1024)+" KB. Review its host permissions before installing."});
+}
 desktopButtons.forEach(button => button.addEventListener("click", buildDesktop));
 firefoxButtons.forEach(button => button.addEventListener("click", buildFirefox));
+tabTidyButtons.forEach(button => button.addEventListener("click", buildTabTidy));
+focusFenceButtons.forEach(button => button.addEventListener("click", buildFocusFence));
 })();

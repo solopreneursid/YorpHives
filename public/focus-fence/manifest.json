@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "YorpHives Focus Fence",
+  "version": "1.0.0",
+  "description": "Temporarily block distracting domains during a focus session. Rules stay on your device.",
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "alarms"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_title": "YorpHives Focus Fence",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
