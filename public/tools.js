@@ -53,7 +53,7 @@ function requirePdfJs() {
   return window.pdfjsLib;
 }
 if (window.pdfjsLib) {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '/vendor/pdf.worker.min.js';
 }
 $('menuToggle').addEventListener('click', () => $('mainNav').classList.toggle('nav-open'));
 $('mainNav').querySelectorAll('a').forEach(a => a.addEventListener('click', () => $('mainNav').classList.remove('nav-open')));
