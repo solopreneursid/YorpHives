@@ -2,7 +2,7 @@
   const path = location.pathname.replace(/\/+$/, '') || '/';
   const links = [
     {label:'Home', href:'/', key:'home'},
-    {label:'Products', href:'/free-tools.html#product-catalog', key:'products'},
+    {label:'Products', href:'/products.html', key:'products'},
     {label:'Free Tools', href:'/free-tools.html#directory', key:'tools'},
     {label:'Workbench', href:'/workbench.html', key:'workbench'},
     {label:'QuickPanel', href:'/quickpanel/', key:'quickpanel'}
@@ -13,7 +13,7 @@
     {label:'Services',href:'/#services',key:'services'},
     {label:'About',href:'/#about',key:'about'}
   ];
-  const active = path === '/' ? 'home' : path === '/free-tools.html' ? (location.hash === '#product-catalog' ? 'products' : 'tools') : path === '/workbench.html' ? 'workbench' : path.startsWith('/quickpanel') ? 'quickpanel' : path === '/browser-extension.html' ? 'extensions' : path === '/tools.html' ? 'media' : 'tools';
+  const active = path === '/' ? 'home' : path === '/products.html' ? 'products' : path === '/free-tools.html' ? 'tools' : path === '/workbench.html' ? 'workbench' : path.startsWith('/quickpanel') ? 'quickpanel' : path === '/browser-extension.html' ? 'extensions' : path === '/tools.html' ? 'media' : 'tools';
   const style = document.createElement('style');
   style.id = 'yorphives-shared-nav-style';
   style.textContent = `
@@ -90,7 +90,7 @@
     const linksBox=footer.querySelector('.footer-links');
     if (!linksBox) return;
     linksBox.innerHTML = [
-      ['Home','/'],['Products','/free-tools.html#product-catalog'],['Free Tools','/free-tools.html#directory'],
+      ['Home','/'],['Products','/products.html'],['Free Tools','/free-tools.html#directory'],
       ['Workbench','/workbench.html'],['QuickPanel','/quickpanel/'],['Extensions','/browser-extension.html'],
       ['PDF & Images','/tools.html'],['Services','/#services'],['About','/#about'],['Start a project','/#request']
     ].map(([label,href])=>'<a href="'+href+'">'+label+'</a>').join('');
