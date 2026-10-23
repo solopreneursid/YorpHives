@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "YorpHives QuickPanel",
+  "version": "1.0.0",
+  "description": "Local-first text actions, saved pages, snippets, reader styling and user-invoked form filling.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "action": {
+    "default_title": "YorpHives QuickPanel",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html"
+}

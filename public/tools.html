@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Free browser-based PDF and image tools to optimize PDF size, merge or reorder pages, extract text, convert PDF pages to images, and resize or convert JPG, PNG and WebP.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://yorphives.hatchable.site/tools.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="YorpHives">
+<meta property="og:title" content="Free PDF &amp; Image Tools: Compress, Merge & Convert | YorpHives">
+<meta property="og:description" content="Optimize PDF size, merge and reorder pages, add text watermarks, extract text, inspect PDF details, and resize or convert images with free browser-based tools.">
+<meta property="og:url" content="https://yorphives.hatchable.site/tools.html">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Free PDF &amp; Image Tools: Compress, Merge & Convert | YorpHives"><meta name="twitter:description" content="Optimize PDF size, merge and reorder pages, extract text, inspect PDF details and resize or convert images in your browser.">
+<title>Free PDF &amp; Image Tools: Compress, Merge & Convert | YorpHives</title>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"YorpHives Free PDF & Image Toolkit","url":"https://yorphives.hatchable.site/tools.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires a modern browser and an internet connection to load tool libraries","description":"Free browser-based PDF utilities to optimize PDF file size, merge, extract, reorder and rotate pages, add text watermarks, extract selectable text, inspect metadata, convert PDF pages to images, create PDFs from images, and resize, rotate, flip or convert JPG, PNG and WebP images.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Optimize PDF file size","PDF structure optimization","Optional visual-only raster PDF compression","Merge PDFs","Extract selected PDF pages","Reorder PDF pages","Rotate PDF pages","Add text watermark to PDFs","Extract selectable PDF text","Inspect PDF metadata","Convert images to PDF","Convert PDF pages to JPG or PNG","Resize, rotate and flip images","Convert JPG, PNG and WebP"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://yorphives.hatchable.site/"},{"@type":"ListItem","position":2,"name":"Free Tools","item":"https://yorphives.hatchable.site/free-tools.html"},{"@type":"ListItem","position":3,"name":"Free PDF & Image Tools: Compress, Merge & Convert | YorpHives","item":"https://yorphives.hatchable.site/tools.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are YorpHives’s PDF and image tools free?","acceptedAnswer":{"@type":"Answer","text":"Yes. All tools on this page are free to use without a YorpHives account. Outputs have no forced YorpHives branding; the watermark tool only adds text you choose."}},{"@type":"Question","name":"Are my documents uploaded to YorpHives?","acceptedAnswer":{"@type":"Answer","text":"The selected files are processed in your browser and are not uploaded to YorpHives by these tools. The page loads PDF libraries from third-party CDNs, so an internet connection is needed to load those scripts."}},{"@type":"Question","name":"Can Extract PDF Text read a scanned document?","acceptedAnswer":{"@type":"Answer","text":"It extracts selectable text embedded in a PDF. It does not include OCR, so a scan that contains only page images may produce little or no text."}},{"@type":"Question","name":"Can I rotate only one page?","acceptedAnswer":{"@type":"Answer","text":"The current rotation tool rotates every page in the selected PDF. Use Extract PDF Pages if you need a separate file containing selected pages."}},{"@type":"Question","name":"Will adding a watermark or rotating a PDF preserve digital signatures?","acceptedAnswer":{"@type":"Answer","text":"Editing a PDF can invalidate digital signatures and may affect some forms or advanced document features. Keep your original file and verify the output before using it as an official record."}},{"@type":"Question","name":"Can I open password-protected PDFs?","acceptedAnswer":{"@type":"Answer","text":"Some encrypted or password-protected PDFs may not load in these tools. The tools do not remove password protection or bypass document security."}},{"@type":"Question","name":"Does the image editor support transparency?","acceptedAnswer":{"@type":"Answer","text":"PNG and WebP can preserve transparency where the browser encoder supports it. Converting an image to JPG places it on a white background because JPG does not support transparency."}},{"@type":"Question","name":"Why might a large PDF or image fail?","acceptedAnswer":{"@type":"Answer","text":"Processing uses your browser’s memory, device performance and supported file formats. Try a smaller file or lower export scale if a large document runs out of memory."}},{"@type":"Question","name":"What does PDF structure optimization do?","acceptedAnswer":{"@type":"Answer","text":"It rewrites the PDF structure using compressed object streams and reports the actual output size. It may reduce the file only slightly or can sometimes make it larger; it does not promise a specific compression ratio."}},{"@type":"Question","name":"Does image-based PDF compression preserve selectable text?","acceptedAnswer":{"@type":"Answer","text":"No. Raster mode turns each page into a JPEG image. Text selection/search, links, forms, accessibility structure, comments, and digital signatures are not preserved. Keep your original and inspect the result before using it as an official document."}}]}</script>
+<style>.tools-faq{border-top:1px solid #191a26;background:#0a0b12}.tools-faq-list{max-width:1040px;margin:28px auto 0}.tools-faq-list details{border-bottom:1px solid #282a3a;padding:17px 0}.tools-faq-list summary{cursor:pointer;color:#e3e1f2;font-size:13px;font-weight:600;line-height:1.65}.tools-faq-list details p{max-width:850px;margin:10px 0 0;color:#a2a4b7;font-size:12px;line-height:1.9}.tools-faq-list a{color:#c8baff}.faq-related{margin-top:22px;color:#a2a4b7;font-size:12px;line-height:1.8}.field-label input[type=range]:disabled{opacity:.45;cursor:not-allowed}</style>
+<link rel="stylesheet" href="/theme.css">
+<link rel="stylesheet" href="/tools.css">
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body class="tools-page">
+<header class="site-header">
+<a class="brand" href="/" aria-label="YorpHives home"><span class="brand-mark">&gt;</span><span style="letter-spacing:1.5px">YorpHives</span></a>
+<button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+<nav id="mainNav"><a href="/">Home</a><a href="/free-tools.html">All free tools</a><a href="/workbench.html">Workbench</a><a href="/browser-extension.html">QuickPanel</a><a href="#pdf-tools">PDF utilities</a><a href="#image-tools">Image editor</a><a href="#tool-faq">FAQs</a><a class="nav-cta" href="/#request">Request a tool <span>↗</span></a></nav>
+</header>
+<main>
+<section class="tools-hero">
+<div class="eyebrow"><span class="pulse"></span> YorpHives UTILITIES / FREE TOOLS</div>
+<h1>Free PDF &amp; Image Tools.<br><span class="gradient-text">Work with files faster.</span></h1>
+<p>Optimize PDF size, merge and extract pages, add text watermarks, convert PDF pages to images, and resize or convert pictures. Free to use, with no account required and no forced YorpHives branding.</p>
+<div class="privacy-note"><span>◈</span><div><strong>Private by design</strong><small>Your files are not sent to YorpHives for processing. PDF features load open-source libraries from third-party CDNs.</small></div></div>
+</section>
+<section class="tool-section" id="pdf-tools">
+<div class="section-heading"><div><div class="eyebrow">01 / DOCUMENTS</div><h2>PDF utilities<span class="muted-heading">.</span></h2></div><p>Optimize PDF size, merge, extract, reorder and rotate pages, add text watermarks, read embedded text, inspect document details, and convert documents to images.</p></div>
+<div class="tool-grid">
+<article class="tool-card">
+<div class="tool-icon teal">↓</div><div class="tool-tag">COMPRESS</div><h3>Compress / optimize PDF</h3><p>Try a non-raster structure optimization first. For potentially larger savings, an optional image-based mode trades selectable text and interactive features for a smaller visual copy.</p>
+<label class="file-pick">Choose a PDF<input id="compressPdfFile" type="file" accept="application/pdf,.pdf"></label>
+<label class="field-label">Method<select id="compressMode"><option value="structure">Structure optimization (preserve page content)</option><option value="raster">Image-based compression (visual copy)</option></select></label>
+<div class="field-row"><label class="field-label">Raster scale<select id="compressScale"><option value="0.6">Small file (43 DPI approx.)</option><option value="0.85" selected>Balanced (61 DPI approx.)</option><option value="1">Higher detail (72 DPI approx.)</option><option value="1.25">Extra detail (90 DPI approx.)</option></select></label><label class="field-label">JPEG quality <span id="compressQualityValue">65%</span><input id="compressQuality" type="range" min="30" max="90" value="65"></label></div>
+<div class="file-info" id="compressPdfInfo" aria-live="polite">Choose a PDF to begin.</div><p id="compressModeHelp">Structure optimization may save only a little. Raster mode is visual-only and may take more memory.</p><button class="button button-primary tool-action" id="compressPdfBtn">Optimize &amp; download ↗</button>
+</article>
+<article class="tool-card">
+<div class="tool-icon purple">⇄</div><div class="tool-tag">ORGANIZE</div><h3>Merge PDFs</h3><p>Combine multiple PDF files into one document in the order you choose.</p>
+<label class="file-pick">Choose PDF files<input id="mergeFiles" type="file" accept="application/pdf,.pdf" multiple></label>
+<div class="file-info" id="mergeInfo">Select two or more PDF files.</div><button class="button button-primary tool-action" id="mergeBtn">Merge & download ↗</button>
+</article>
+<article class="tool-card">
+<div class="tool-icon blue">✂</div><div class="tool-tag">EXTRACT</div><h3>Extract PDF pages</h3><p>Save selected pages from a PDF as a new PDF. Use ranges such as 1-3, 5.</p>
+<label class="file-pick">Choose a PDF<input id="splitFile" type="file" accept="application/pdf,.pdf"></label>
+<label class="field-label">Pages to keep<input id="pageRange" type="text" placeholder="e.g. 1-3, 5" inputmode="text"></label>
+<div class="file-info" id="splitInfo">Page numbers start at 1.</div><button class="button button-primary tool-action" id="splitBtn">Extract & download ↗</button>
+</article>
+<article class="tool-card">
+<div class="tool-icon pink">▧</div><div class="tool-tag">CONVERT</div><h3>Convert images to PDF</h3><p>Put JPG, PNG or WebP images into a single PDF, one image per page. Images are placed on white-backed pages.</p>
+<label class="file-pick">Choose images<input id="imagePdfFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple></label>
+<div class="file-info" id="imagePdfInfo">Select one or more images.</div><button class="button button-primary tool-action" id="imagePdfBtn">Create PDF ↗</button>
+</article>
+<article class="tool-card">
+<div class="tool-icon teal">▤</div><div class="tool-tag">EXPORT</div><h3>PDF to JPG or PNG</h3><p>Render PDF pages to PNG or JPG images and download them together as a ZIP.</p>
+<label class="file-pick">Choose a PDF<input id="pdfImageFile" type="file" accept="application/pdf,.pdf"></label>
+<div class="field-row"><label class="field-label">Format<select id="pdfImageFormat"><option value="png">PNG</option><option value="jpeg">JPG</option></select></label><label class="field-label">Scale<select id="pdfImageScale"><option value="1">Standard</option><option value="1.5">High</option><option value="2">Very high</option></select></label></div>
+<div class="file-info" id="pdfImageInfo">Large documents may take a moment.</div><button class="button button-primary tool-action" id="pdfImageBtn">Convert & download ZIP ↗</button>
+</article>
+<article class="tool-card">
+<div class="tool-icon blue">↻</div><div class="tool-tag">ROTATE</div><h3>Rotate PDF pages</h3><p>Rotate every page clockwise by 90°, 180° or 270° and save a new PDF.</p>
+<label class="file-pick">Choose a PDF<input id="rotatePdfFile" type="file" accept="application/pdf,.pdf"></label>
+<label class="field-label">Rotation<select id="rotateDegrees"><option value="90">90° clockwise</option><option value="180">180°</option><option value="270">270° clockwise</option></select></label>
+<div class="file-info" id="rotatePdfInfo" aria-live="polite">Select a PDF to rotate all pages.</div><button class="button button-primary tool-action" id="rotatePdfBtn">Rotate &amp; download ↗</button>
+</article>
+<article class="tool-card">
+<div class="tool-icon pink">✎</div><div class="tool-tag">WATERMARK</div><h3>Add a text watermark</h3><p>Stamp a light text label across each page, with adjustable size, opacity and angle.</p>
+<label class="file-pick">Choose a PDF<input id="watermarkPdfFile" type="file" accept="application/pdf,.pdf"></label>
+<label class="field-label">Watermark text<input id="watermarkText" type="text" maxlength="100" value="CONFIDENTIAL" placeholder="e.g. DRAFT"></label>
+<div class="field-row"><label class="field-label">Text size <span id="watermarkSizeValue">36 pt</span><input id="watermarkSize" type="range" min="12" max="72" value="36"></label><label class="field-label">Opacity <span id="watermarkOpacityValue">22%</span><input id="watermarkOpacity" type="range" min="5" max="60" value="22"></label></div>
+<label class="field-label">Angle<select id="watermarkAngle"><option value="-45">Diagonal</option><option value="0">Horizontal</option><option value="-30">Slight diagonal</option></select></label>
+<div class="file-info" id="watermarkPdfInfo" aria-live="polite">Uses a standard PDF font; plain Latin text has the broadest compatibility.</div><button class="button button-primary tool-action" id="watermarkPdfBtn">Add watermark &amp; download ↗</button>
+</article>
+<article class="tool-card">
+<div class="tool-icon teal">TXT</div><div class="tool-tag">TEXT EXTRACTION</div><h3>Extract PDF text</h3><p>Export selectable text from a PDF into a plain-text file, separated by page.</p>
+<label class="file-pick">Choose a PDF<input id="textPdfFile" type="file" accept="application/pdf,.pdf"></label>
+<div class="file-info" id="textPdfInfo" aria-live="polite">Scanned pages without a text layer are not OCR-processed.</div><button class="button button-primary tool-action" id="extractTextPdfBtn">Extract text &amp; download ↗</button>
+</article>
+<article class="tool-card">
+<div class="tool-icon purple">ⓘ</div><div class="tool-tag">DOCUMENT DETAILS</div><h3>PDF information &amp; metadata</h3><p>Check page count and common metadata fields such as title, author, subject and dates.</p>
+<label class="file-pick">Choose a PDF<input id="metadataPdfFile" type="file" accept="application/pdf,.pdf"></label>
+<div class="file-info" id="metadataPdfInfo" aria-live="polite">Select a PDF to inspect its information.</div><button class="button button-primary tool-action" id="metadataPdfBtn">Inspect PDF ↗</button>
+</article>
+<article class="tool-card">
+<div class="tool-icon blue">⇄</div><div class="tool-tag">PAGE ORDER</div><h3>Reorder PDF pages</h3><p>Arrange all pages in a new sequence, for example 3, 1, 2, then save a reordered copy.</p>
+<label class="file-pick">Choose a PDF<input id="reorderPdfFile" type="file" accept="application/pdf,.pdf"></label>
+<label class="field-label">New page order<input id="pageOrder" type="text" placeholder="e.g. 3, 1, 2" inputmode="text"></label>
+<div class="file-info" id="reorderPdfInfo" aria-live="polite">Enter every page number exactly once after selecting a file.</div><button class="button button-primary tool-action" id="reorderPdfBtn">Reorder &amp; download ↗</button>
+</article>
+</div>
+</section>
+<section class="tool-section image-section" id="image-tools">
+<div class="section-heading"><div><div class="eyebrow">02 / IMAGES</div><h2>Image editing tools<span class="muted-heading">.</span></h2></div><p>Resize, convert, rotate and flip JPG, PNG and WebP images. Adjust output quality and compare the resulting file size.</p></div>
+<div class="image-workspace">
+<div class="image-input-panel">
+<div class="tool-icon blue">▧</div><h3>Image resizer &amp; format converter</h3><p>Supports JPG, PNG and WebP. Choose an image, adjust the output settings, then save a new copy.</p>
+<label class="file-pick wide-pick">Choose an image<input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp"></label>
+<div class="file-info" id="imageInfo">No image selected.</div>
+<div id="imagePreviewWrap" class="image-preview-wrap" hidden><img id="imagePreview" alt="Selected image preview"></div>
+<div class="field-row"><label class="field-label">Width (px)<input id="imageWidth" type="number" min="1" max="12000" placeholder="Original"></label><label class="field-label">Height (px)<input id="imageHeight" type="number" min="1" max="12000" placeholder="Original"></label></div>
+<label class="check-label"><input type="checkbox" id="keepRatio" checked> Keep aspect ratio</label>
+<label class="field-label">Output format<select id="imageFormat"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select></label>
+<label class="field-label">Rotation<select id="imageRotation"><option value="0">No rotation</option><option value="90">Rotate 90° clockwise</option><option value="180">Rotate 180°</option><option value="270">Rotate 270° clockwise</option></select></label>
+<label class="check-label"><input type="checkbox" id="flipHorizontal"> Flip horizontally</label><label class="check-label"><input type="checkbox" id="flipVertical"> Flip vertically</label>
+<label class="field-label">Quality (JPG/WebP) <span id="qualityValue">82%</span><input id="imageQuality" type="range" min="20" max="100" value="82"></label>
+<button class="button button-primary tool-action" id="imageConvertBtn">Process & download ↗</button>
+</div>
+<div class="image-help-panel"><div class="eyebrow">HOW IT WORKS</div><h3>Simple, local, useful.</h3><ul><li>Choose an image from your device.</li><li>Enter a width and/or height if you want to resize it.</li><li>Optionally rotate by 90°, 180° or 270°, or flip horizontally/vertically.</li><li>Choose JPG, PNG or WebP output and adjust quality.</li><li>Lower JPG/WebP quality for smaller files; PNG is lossless and JPG removes transparency.</li></ul><div class="tip-box"><strong>Tip</strong><p>JPG and WebP are usually smaller for photos. PNG is useful when you need transparency. Converting to JPG removes transparency.</p></div><div class="result-box" id="imageResult" aria-live="polite">Your processed file will be downloaded directly to your device.</div></div>
+</div>
+</section>
+<section class="tool-section tools-faq" id="tool-faq"><div class="section-heading"><div><div class="eyebrow">03 / HELP &amp; PRIVACY</div><h2>PDF &amp; image tool FAQs<span class="muted-heading">.</span></h2></div><p>Answers about file handling, compatibility and what the tools can—and cannot—do.</p></div><div class="tools-faq-list"><details><summary>Are YorpHives’s PDF and image tools free?</summary><p>Yes. All tools on this page are free to use without a YorpHives account. Outputs have no forced YorpHives branding; the watermark tool only adds text you choose.</p></details><details><summary>Are my documents uploaded to YorpHives?</summary><p>The selected files are processed in your browser and are not uploaded to YorpHives by these tools. The page loads PDF libraries from third-party CDNs, so an internet connection is needed to load those scripts.</p></details><details><summary>Can Extract PDF Text read a scanned document?</summary><p>It extracts selectable text embedded in a PDF. It does not include OCR, so a scan that contains only page images may produce little or no text.</p></details><details><summary>Can I rotate only one page?</summary><p>The current rotation tool rotates every page in the selected PDF. Use Extract PDF Pages if you need a separate file containing selected pages.</p></details><details><summary>Will adding a watermark or rotating a PDF preserve digital signatures?</summary><p>Editing a PDF can invalidate digital signatures and may affect some forms or advanced document features. Keep your original file and verify the output before using it as an official record.</p></details><details><summary>Can I open password-protected PDFs?</summary><p>Some encrypted or password-protected PDFs may not load in these tools. The tools do not remove password protection or bypass document security.</p></details><details><summary>Does the image editor support transparency?</summary><p>PNG and WebP can preserve transparency where the browser encoder supports it. Converting an image to JPG places it on a white background because JPG does not support transparency.</p></details><details><summary>Why might a large PDF or image fail?</summary><p>Processing uses your browser’s memory, device performance and supported file formats. Try a smaller file or lower export scale if a large document runs out of memory.</p></details><details><summary>What does PDF structure optimization do?</summary><p>It rewrites the PDF structure using compressed object streams and reports the actual output size. It may reduce the file only slightly or can sometimes make it larger; it does not promise a specific compression ratio.</p></details><details><summary>Does image-based PDF compression preserve selectable text?</summary><p>No. Raster mode turns each page into a JPEG image. The resulting PDF is visual-only: text search/selection, links, forms, accessibility structure, comments, and digital signatures are not preserved. Keep your original and inspect the result before using it as an official document.</p></details><p class="faq-related">Need something else? Browse <a href="/free-tools.html">all free YorpHives tools</a> or <a href="/#request">suggest a file utility</a>.</p></div></section>
+<section class="tools-bottom"><div><div class="eyebrow">KEEP EXPLORING</div><h2>Need another utility?</h2><p>Explore the complete free tools library for developer utilities, calculators and text tools, or suggest a file workflow that would help you.</p></div><a class="button button-light" href="/free-tools.html">Browse all free tools ↗</a></section>
+</main>
+<footer class="site-footer"><a class="brand" href="/"><span class="brand-mark">&gt;</span><span style="letter-spacing:1.5px">YorpHives</span></a><p>Free, practical browser utilities for everyday work.</p><div class="footer-links"><a href="/">Home</a><a href="#pdf-tools">PDF utilities</a><a href="#image-tools">Image editing</a><a href="#tool-faq">FAQs</a><a href="/free-tools.html">All free tools</a></div><div class="footer-bottom"><span>© <span id="year"></span> YorpHives.</span><span>YOUR FILES STAY ON YOUR DEVICE</span></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="/tools.js"></script>
+</body></html>
