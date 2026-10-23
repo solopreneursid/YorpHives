@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10111a">
+<meta name="description" content="YorpHives QuickPanel is a private, installable web workspace for text actions, reusable snippets, research clips, table cleanup and copy-ready profile values.">
+<meta name="robots" content="index,follow">
+<link rel="manifest" href="/quickpanel/manifest.webmanifest">
+<link rel="icon" href="/quickpanel/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/quickpanel/icon.svg">
+<link rel="stylesheet" href="/quickpanel/app.css">
+<title>QuickPanel Web App | YorpHives</title>
+<script src="/quickpanel/app.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/quickpanel/" aria-label="QuickPanel home"><span class="brand-mark">&gt;</span><span><b>YorpHives</b><small>QUICKPANEL</small></span></a>
+  <div class="top-actions"><span id="connectionStatus" class="connection"><i></i> Checking status…</span><button class="button button-primary" id="installButton" hidden>Install app</button></div>
+</header>
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="side-intro"><span class="eyebrow">YOUR EVERYDAY SHORTCUTS</span><h1>Useful actions.<br><em>Wherever you work.</em></h1><p>QuickPanel's web app runs on desktop, phone and tablet. Your saved content stays in this browser unless you export it.</p></div>
+    <nav class="app-nav" aria-label="QuickPanel sections">
+      <button class="nav-item active" data-view="textView"><span>⌘</span> Text actions</button>
+      <button class="nav-item" data-view="snippetsView"><span>✎</span> Snippets <b id="snippetCount">0</b></button>
+      <button class="nav-item" data-view="clipsView"><span>⌁</span> Research clips <b id="clipCount">0</b></button>
+      <button class="nav-item" data-view="tablesView"><span>▦</span> Table tools</button>
+      <button class="nav-item" data-view="profileView"><span>▤</span> Copy profile</button>
+      <button class="nav-item" data-view="backupView"><span>⇄</span> Backup & privacy</button>
+    </nav>
+    <div class="sidebar-foot"><span class="local-dot"></span> LOCAL-FIRST BY DESIGN<br><small>No required account or hosted AI</small></div>
+  </aside>
+  <main class="main-content">
+    <div class="mobile-title"><span class="eyebrow">YORPHIVES / QUICKPANEL</span><h1>Your shortcuts, <em>everywhere.</em></h1></div>
+    <section class="view active" id="textView" aria-labelledby="textTitle">
+      <div class="view-head"><div><span class="eyebrow">01 / TEXT TOOLKIT</span><h2 id="textTitle">Clean up text in a few taps.</h2><p>Paste or type text, choose an action, then copy or reuse the result.</p></div><span class="view-tag">WORKS OFFLINE</span></div>
+      <div class="panel text-panel">
+        <label for="textInput">Input text</label>
+        <textarea id="textInput" rows="7" placeholder="Paste selected text, a message, URLs or a list here…"></textarea>
+        <div class="action-grid" role="group" aria-label="Text actions">
+          <button class="action-button" data-action="trim">Trim lines</button>
+          <button class="action-button" data-action="dedupe">Remove duplicates</button>
+          <button class="action-button" data-action="blank">Remove blank lines</button>
+          <button class="action-button" data-action="upper">UPPERCASE</button>
+          <button class="action-button" data-action="lower">lowercase</button>
+          <button class="action-button" data-action="title">Title Case</button>
+          <button class="action-button" data-action="urls">Extract URLs</button>
+          <button class="action-button" data-action="words">Word & character count</button>
+        </div>
+        <div class="result-head"><label for="textOutput">Result</label><span id="textStats" class="muted">Ready when you are</span></div>
+        <textarea id="textOutput" rows="7" placeholder="Your transformed text appears here…" spellcheck="false"></textarea>
+        <div class="panel-actions"><button id="copyTextResult" class="button button-primary">Copy result</button><button id="useTextResult" class="button button-secondary">Use result as input</button><button id="clearText" class="button button-ghost">Clear</button></div>
+        <p id="textStatus" class="status-message" role="status" aria-live="polite"></p>
+      </div>
+      <div class="notice"><b>Quick tip</b><span>On mobile, copy text from another app or webpage and paste it here. This web app cannot read a different browser tab automatically; use the desktop extension for active-page actions.</span></div>
+    </section>
+    <section class="view" id="snippetsView" aria-labelledby="snippetsTitle" hidden>
+      <div class="view-head"><div><span class="eyebrow">02 / REUSABLE TEXT</span><h2 id="snippetsTitle">Keep your best lines close.</h2><p>Save replies, prompts, reusable notes and text blocks locally on this device.</p></div><span class="view-tag">PRIVATE STORAGE</span></div>
+      <div class="panel">
+        <form id="snippetForm" class="form-grid">
+          <input id="snippetId" type="hidden">
+          <label>Snippet title<input id="snippetName" maxlength="120" required placeholder="e.g. Polite follow-up"></label>
+          <label class="full-width">Snippet content<textarea id="snippetContent" rows="5" required placeholder="Write or paste your reusable text…"></textarea></label>
+          <div class="panel-actions full-width"><button type="submit" id="saveSnippet" class="button button-primary">Save snippet</button><button type="button" id="cancelSnippet" class="button button-ghost" hidden>Cancel edit</button></div>
+        </form>
+        <div class="list-head"><h3>Your snippets</h3><input id="snippetSearch" type="search" placeholder="Search snippets…" aria-label="Search snippets"></div>
+        <div id="snippetsList" class="record-list"></div>
+        <p id="snippetStatus" class="status-message" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+    <section class="view" id="clipsView" aria-labelledby="clipsTitle" hidden>
+      <div class="view-head"><div><span class="eyebrow">03 / RESEARCH WORKSPACE</span><h2 id="clipsTitle">Save what matters.</h2><p>Store a title, URL and excerpt or notes for research you want to revisit.</p></div><span class="view-tag">LOCAL CLIPS</span></div>
+      <div class="panel">
+        <form id="clipForm" class="form-grid">
+          <label>Page or source title<input id="clipTitle" maxlength="180" required placeholder="Article, project or source name"></label>
+          <label>Source URL <span class="optional">(optional)</span><input id="clipUrl" type="url" maxlength="2048" placeholder="https://example.com/article"></label>
+          <label class="full-width">Excerpt or notes<textarea id="clipText" rows="5" maxlength="30000" placeholder="Paste a key passage or write your own notes…"></textarea></label>
+          <div class="panel-actions full-width"><button type="submit" class="button button-primary">Save research clip</button><button type="button" id="shareClipText" class="button button-secondary">Share text…</button></div>
+        </form>
+        <div class="list-head"><h3>Saved clips</h3><input id="clipSearch" type="search" placeholder="Search clips…" aria-label="Search research clips"></div>
+        <div id="clipsList" class="record-list"></div>
+        <p id="clipStatus" class="status-message" role="status" aria-live="polite"></p>
+      </div>
+      <div class="notice"><b>Capture limitation</b><span>For privacy and browser security, this page does not fetch or scrape arbitrary URLs. Open a page, copy the content you need, then save it here; the desktop extension can capture a page after you invoke it.</span></div>
+    </section>
+    <section class="view" id="tablesView" aria-labelledby="tablesTitle" hidden>
+      <div class="view-head"><div><span class="eyebrow">04 / TABLE & DATA</span><h2 id="tablesTitle">Turn pasted data into a clean table.</h2><p>Paste copied spreadsheet cells, CSV/TSV data or HTML containing a table.</p></div><span class="view-tag">IN-BROWSER</span></div>
+      <div class="panel">
+        <label for="tableInput">Paste table data or HTML</label>
+        <textarea id="tableInput" rows="8" placeholder="Paste spreadsheet cells, CSV or an HTML table here…"></textarea>
+        <div class="panel-actions"><button id="parseTable" class="button button-primary">Parse table</button><button id="clearTable" class="button button-ghost">Clear</button></div>
+        <p id="tableStatus" class="status-message" role="status" aria-live="polite"></p>
+        <div id="tablePreviewWrap" class="table-preview-wrap" hidden><div class="result-head"><h3>Table preview</h3><span id="tableDimensions" class="muted"></span></div><div id="tablePreview" class="table-preview"></div>
+          <div class="format-row"><label for="tableFormat">Export format</label><select id="tableFormat"><option value="tsv">Tab-separated (TSV)</option><option value="csv">CSV</option><option value="markdown">Markdown</option><option value="json">JSON</option></select></div>
+          <label for="tableOutput">Converted output</label><textarea id="tableOutput" rows="7" readonly spellcheck="false"></textarea>
+          <div class="panel-actions"><button id="copyTable" class="button button-primary">Copy output</button><button id="downloadTable" class="button button-secondary">Download .txt</button></div>
+        </div>
+      </div>
+    </section>
+    <section class="view" id="profileView" aria-labelledby="profileTitle" hidden>
+      <div class="view-head"><div><span class="eyebrow">05 / COPY-READY DETAILS</span><h2 id="profileTitle">Your profile, under your control.</h2><p>Keep non-sensitive details here and copy them into forms when you choose.</p></div><span class="view-tag">NO AUTO-FILL</span></div>
+      <div class="panel">
+        <form id="profileForm" class="form-grid">
+          <label>Full name<input id="profileName" autocomplete="name" maxlength="160" placeholder="Your name"></label>
+          <label>Email<input id="profileEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com"></label>
+          <label>Phone<input id="profilePhone" type="tel" autocomplete="tel" maxlength="60" placeholder="Phone number"></label>
+          <label>Company or role<input id="profileCompany" maxlength="160" placeholder="Company / job title"></label>
+          <label>Website<input id="profileWebsite" type="url" maxlength="2048" placeholder="https://…"></label>
+          <label>Location or address<input id="profileAddress" autocomplete="street-address" maxlength="500" placeholder="City or mailing address"></label>
+          <label class="full-width">Short bio or standard introduction<textarea id="profileBio" rows="4" maxlength="5000" placeholder="A short introduction you often reuse…"></textarea></label>
+          <div class="panel-actions full-width"><button type="submit" class="button button-primary">Save profile</button><button id="copyProfile" type="button" class="button button-secondary">Copy all as text</button><button id="exportProfile" type="button" class="button button-ghost">Export profile</button></div>
+        </form>
+        <p id="profileStatus" class="status-message" role="status" aria-live="polite"></p>
+        <div id="profileCopyList" class="profile-copy-list"></div>
+      </div>
+      <div class="notice notice-warning"><b>Keep it safe</b><span>Do not store passwords, payment-card information, one-time codes or other secrets. Profile values stay in this browser's site storage and are not synced automatically.</span></div>
+    </section>
+    <section class="view" id="backupView" aria-labelledby="backupTitle" hidden>
+      <div class="view-head"><div><span class="eyebrow">06 / PORTABILITY & PRIVACY</span><h2 id="backupTitle">Your data should move with you.</h2><p>Export your local workspace and import it on another device or browser.</p></div><span class="view-tag">USER CONTROLLED</span></div>
+      <div class="panel backup-panel">
+        <article class="backup-card"><span class="backup-icon">⇩</span><div><h3>Export QuickPanel data</h3><p>Download snippets, research clips and your profile as a JSON backup file.</p><button id="exportAll" class="button button-primary">Download backup</button></div></article>
+        <article class="backup-card"><span class="backup-icon">⇧</span><div><h3>Import a backup</h3><p>Choose a QuickPanel JSON backup. You can merge its records with this device or replace local data.</p><label class="file-button">Choose JSON backup<input id="importFile" type="file" accept=".json,application/json"></label><div id="importChoices" class="import-choices" hidden><button id="mergeImport" class="button button-secondary">Merge data</button><button id="replaceImport" class="button button-ghost">Replace local data</button></div></div></article>
+        <article class="backup-card"><span class="backup-icon">⌁</span><div><h3>Install on your device</h3><p>Use the browser's Install or Add to Home Screen option to launch QuickPanel like an app.</p><p class="muted small">If no install button appears, this browser may use its own menu, or may not support PWA installation.</p><button id="installHelp" class="button button-secondary">Show install steps</button></div></article>
+        <article class="backup-card danger-card"><span class="backup-icon">⌫</span><div><h3>Delete local data</h3><p>Remove all QuickPanel snippets, clips and profile values from this browser.</p><button id="clearAllData" class="button button-danger">Delete all saved data</button></div></article>
+        <p id="backupStatus" class="status-message" role="status" aria-live="polite"></p>
+      </div>
+      <div class="privacy-grid"><article><b>Local by default</b><p>Text actions, table conversion and saved records run in this browser. There is no required account or cloud sync.</p></article><article><b>Offline shell</b><p>After first loading while online, the QuickPanel app shell and core tools can open offline. Website content and new links still require connectivity.</p></article><article><b>Moving devices</b><p>Export a backup on the old device and import it on the new one. Automatic cross-device sync is not included in this phase.</p></article></div>
+    </section>
+    <footer class="app-footer"><span>YorpHives QuickPanel · Web app</span><span><a href="/workbench.html">Open Workbench</a><a href="/browser-extension.html">Desktop extension</a><a href="/">YorpHives home</a></span></footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="installDialog" class="install-dialog"><form method="dialog"><button class="dialog-close" aria-label="Close">×</button><span class="eyebrow">INSTALL QUICKPANEL</span><h2>Add QuickPanel to your device</h2><div id="installInstructions" class="install-instructions"></div><button class="button button-primary dialog-done">Got it</button></form></dialog>
+</body>
+</html>
