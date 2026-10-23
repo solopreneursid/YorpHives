@@ -14,6 +14,10 @@
 <script src="/quickpanel/app.js" defer></script>
 </head>
 <body>
+<header class="site-header" aria-label="YorpHives site navigation">
+  <a class="brand" href="/" aria-label="YorpHives home"><span class="brand-mark">&gt;</span><span><b>YorpHives</b></span></a>
+  <nav id="mainNav" aria-label="Main navigation"></nav>
+</header>
 <header class="topbar">
   <a class="brand" href="/quickpanel/" aria-label="QuickPanel home"><span class="brand-mark">&gt;</span><span><b>YorpHives</b><small>QUICKPANEL</small></span></a>
   <div class="top-actions"><a class="button button-secondary home-button" href="/" aria-label="Go to YorpHives homepage">⌂ Home</a><span id="connectionStatus" class="connection"><i></i> Checking status…</span><button class="button button-primary" id="installButton" hidden>Install app</button></div>
@@ -127,7 +131,8 @@
       </div>
       <div class="privacy-grid"><article><b>Local by default</b><p>Text actions, table conversion and saved records run in this browser. There is no required account or cloud sync.</p></article><article><b>Offline shell</b><p>After first loading while online, the QuickPanel app shell and core tools can open offline. Website content and new links still require connectivity.</p></article><article><b>Moving devices</b><p>Export a backup on the old device and import it on the new one. Automatic cross-device sync is not included in this phase.</p></article></div>
     </section>
-    <footer class="app-footer"><span>YorpHives QuickPanel · Web app</span><span><a href="/workbench.html">Open Workbench</a><a href="/browser-extension.html">Desktop extension</a><a href="/">YorpHives home</a></span></footer>
+    <footer class="app-footer site-footer"><span>YorpHives QuickPanel · Web app</span><span class="footer-links"><a href="/workbench.html">Open Workbench</a><a href="/browser-extension.html">Desktop extension</a><a href="/">YorpHives home</a></span></footer>
+<script src="/shared-nav.js" defer></script>
   </main>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>

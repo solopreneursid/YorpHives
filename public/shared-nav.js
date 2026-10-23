@@ -17,7 +17,7 @@
   const style = document.createElement('style');
   style.id = 'yorphives-shared-nav-style';
   style.textContent = `
-    .site-header{position:sticky!important;top:0;z-index:1000;background:rgba(8,8,14,.94)!important;backdrop-filter:blur(16px);border-bottom:1px solid #242333!important}
+    .site-header{position:sticky!important;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px clamp(20px,3vw,44px);background:rgba(8,8,14,.94)!important;backdrop-filter:blur(16px);border-bottom:1px solid #242333!important}
     .site-header .brand{flex-shrink:0;text-decoration:none}
     .site-header #mainNav{display:flex;align-items:center;gap:clamp(12px,1.7vw,28px)}
     .site-header #mainNav a{color:#b9b8c9;text-decoration:none;white-space:nowrap;font-size:14px;transition:color .18s ease}
