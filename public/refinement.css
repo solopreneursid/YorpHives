@@ -56,13 +56,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .catalog-kicker{font-size:9px;letter-spacing:1.2px;color:#9386c4;font-weight:700}
 .catalog-group-head h3{font-size:clamp(21px,3vw,28px);letter-spacing:-.7px;margin:8px 0 0}
 .catalog-count{border:1px solid #39354d;border-radius:999px;padding:7px 10px;color:#aaa6c4;font-size:10px;white-space:nowrap}
-.catalog-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.catalog-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:220px;padding:20px;border:1px solid #2c2c40;border-radius:12px;background:linear-gradient(145deg,#151521,#101119);color:inherit;text-decoration:none;transition:border-color .18s,transform .18s}
+.catalog-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.catalog-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:180px;padding:16px;border:1px solid #2c2c40;border-radius:11px;background:linear-gradient(145deg,#151521,#101119);color:inherit;text-decoration:none;transition:border-color .18s,transform .18s}
 .catalog-card:hover{border-color:#7765aa;transform:translateY(-2px)}
-.catalog-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:#29213f;color:#d1c3ff;font-size:20px;margin-bottom:14px}
+.catalog-icon{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;background:#29213f;color:#d1c3ff;font-size:17px;margin-bottom:10px}
 .catalog-type{font-size:9px;letter-spacing:.65px;color:#9f91d2;font-weight:700}
-.catalog-card h4{font-size:16px;margin:8px 0;color:#f1effb}
-.catalog-card p{font-size:11px;line-height:1.8;color:#a1a2b6;margin:0 0 18px;flex:1}
+.catalog-card h4{font-size:14px;line-height:1.45;margin:6px 0;color:#f1effb}
+.catalog-card p{font-size:10px;line-height:1.7;color:#a1a2b6;margin:0 0 12px;flex:1}
 .catalog-link{font-size:11px;color:#c8baff;font-weight:700}
 .catalog-note{font-size:10px;line-height:1.8;color:#8e90a5;margin:15px 0 0}
 .catalog-empty{display:flex;align-items:flex-start;gap:16px;padding:22px;border:1px dashed #48415f;border-radius:12px;background:#11111b}
