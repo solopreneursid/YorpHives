@@ -3,7 +3,7 @@ const APP_SHELL = [
   "/quickpanel/index.html",
   "/quickpanel/app.css",
   "/quickpanel/app.js",
-  "/quickpanel/manifest.webmanifest",
+  "/quickpanel/manifest.json",
   "/quickpanel/icon.svg"
 ];
 self.addEventListener("install", event => {
