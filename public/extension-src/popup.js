@@ -22,7 +22,7 @@ else if(action.startsWith('transform:')){text.value=transform(text.value,action.
 else if(action==='save-snippet'){const title=$('#snippetTitle').value.trim();if(!title||!text.value.trim()){say('Add a snippet title and text.');return}const a=(await get('dhSnippets'))||[];a.unshift({id:Date.now().toString(36),title,text:text.value,created:Date.now()});await put({dhSnippets:a.slice(0,300)});$('#snippetTitle').value='';await renderSaved();say('Snippet saved locally.')}
 }catch(e){say(e.message||'Action unavailable on this page. Open an ordinary webpage and try again.')}}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b)act(b.dataset.action);const p=e.target.closest('[data-open-url]');if(p){const u=p.dataset.openUrl;if(/^https?:\/\//i.test(u))chrome.tabs.create({url:u})}const s=e.target.closest('[data-use-snippet]');if(s)get('dhSnippets').then(a=>{const x=(a||[]).find(x=>x.id===s.dataset.useSnippet);if(x){text.value=x.text;say('Snippet loaded into the editor.')}})});
-$('#saveCurrent').addEventListener('click',()=>act('save-page'));
+// The Save current page action is handled by the existing [data-action] button.
 $('#profileOptions').addEventListener('click',()=>chrome.runtime.openOptionsPage());
 renderSaved();
 $('#stats').textContent='Local actions · '+wordCount(text.value)+' words';
