@@ -7,7 +7,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 img,video,canvas,svg{max-width:100%}
 pre,code{overflow-wrap:anywhere}
 button,input,select,textarea{max-width:100%;touch-action:manipulation}
-:focus-visible{outline:2px solid #a995ff;outline-offset:3px}
+:focus-visible{outline:2px solid #a995ff;outline-offset:3px}button:disabled,.button:disabled,input:disabled{background:#29213f;color:#f5f1ff;border-color:#65528e;opacity:1;-webkit-text-fill-color:#f5f1ff}
 @media(max-width:900px){.site-header .menu-toggle{display:block}.site-header nav{display:none;position:absolute;top:calc(100% - 1px);left:0;right:0;padding:18px max(20px,env(safe-area-inset-left)) calc(20px + env(safe-area-inset-bottom));background:#10111a;border-bottom:1px solid #303142;align-items:stretch;gap:4px;flex-direction:column;max-height:calc(100vh - 68px);overflow-y:auto;overscroll-behavior:contain;box-shadow:0 18px 35px #0007}.site-header nav.nav-open{display:flex}.site-header nav>a{display:flex;align-items:center;min-height:44px;padding:6px 0}.site-header nav>.nav-cta{justify-content:center;padding:10px 14px;margin-top:4px}}
 @media(max-width:650px){.site-header{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}.site-header nav{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),select,textarea{font-size:16px!important}}
 @media(pointer:coarse){.button,button,.category-filter,.tool-action,.tool-controls button,.wb-tool-panel .wb-btn,.wb-output-actions button,.wb-filters button,.wb-item-actions button,.file-pick{min-height:44px}.tool-card-link{display:inline-flex;align-items:center;min-height:44px}}
