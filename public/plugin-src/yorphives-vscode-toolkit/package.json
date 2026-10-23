@@ -1,0 +1,20 @@
+{
+  "name": "yorphives-toolkit",
+  "displayName": "YorpHives Developer Toolkit",
+  "description": "Local-first text and JSON utilities for VS Code: format JSON, decode URL components, convert case and inspect text statistics.",
+  "version": "1.0.0",
+  "publisher": "yorphives",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Other"],
+  "activationEvents": ["onCommand:yorphives.formatJson", "onCommand:yorphives.decodeUrl", "onCommand:yorphives.textStats", "onCommand:yorphives.toCamelCase"],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "yorphives.formatJson", "title": "YorpHives: Format JSON" },
+      { "command": "yorphives.decodeUrl", "title": "YorpHives: Decode URL Component" },
+      { "command": "yorphives.textStats", "title": "YorpHives: Text Statistics" },
+      { "command": "yorphives.toCamelCase", "title": "YorpHives: Convert Selection to camelCase" }
+    ]
+  },
+  "license": "MIT"
+}

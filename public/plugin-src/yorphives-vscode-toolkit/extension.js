@@ -1,0 +1,12 @@
+const vscode = require('vscode');
+function activeEditor() { const e = vscode.window.activeTextEditor; if (!e) vscode.window.showInformationMessage('Open a file or select text first.'); return e; }
+function selectedOrDocument(editor) { const s = editor.document.getText(editor.selection); return s || editor.document.getText(); }
+function replaceSelectionOrDocument(editor, value) { const range = editor.selection.isEmpty ? new vscode.Range(editor.document.positionAt(0), editor.document.positionAt(editor.document.getText().length)) : editor.selection; return editor.edit(b => b.replace(range, value)); }
+function activate(context) {
+  context.subscriptions.push(vscode.commands.registerCommand('yorphives.formatJson', async () => { const e=activeEditor(); if(!e)return; try { const value=JSON.stringify(JSON.parse(selectedOrDocument(e)),null,2); await replaceSelectionOrDocument(e,value); vscode.window.setStatusBarMessage('YorpHives: JSON formatted',2500); } catch(err) { vscode.window.showErrorMessage('YorpHives: Invalid JSON — '+err.message); } }));
+  context.subscriptions.push(vscode.commands.registerCommand('yorphives.decodeUrl', async () => { const e=activeEditor(); if(!e)return; try { const value=decodeURIComponent(selectedOrDocument(e).replace(/\+/g,'%20')); await replaceSelectionOrDocument(e,value); } catch(err) { vscode.window.showErrorMessage('YorpHives: Could not decode URL component. Check percent-encoding.'); } }));
+  context.subscriptions.push(vscode.commands.registerCommand('yorphives.textStats', async () => { const e=activeEditor(); if(!e)return; const value=selectedOrDocument(e); const words=(value.trim().match(/\S+/g)||[]).length; const lines=value.length?value.split(/\r?\n/).length:0; vscode.window.showInformationMessage(`YorpHives Text Stats · ${words} words · ${value.length} characters · ${lines} lines`); }));
+  context.subscriptions.push(vscode.commands.registerCommand('yorphives.toCamelCase', async () => { const e=activeEditor(); if(!e)return; const value=selectedOrDocument(e).trim().replace(/([a-z0-9])([A-Z])/g,'$1 $2').split(/[^\p{L}\p{N}]+/u).filter(Boolean).map((w,i)=>i===0?w.toLowerCase():w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(''); await replaceSelectionOrDocument(e,value); }));
+}
+function deactivate() {}
+module.exports = { activate, deactivate };
