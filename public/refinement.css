@@ -36,6 +36,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 #free-tools .home-tools-carousel:focus-visible{outline:2px solid #a78bfa;outline-offset:3px}
 @media(max-width:900px){#free-tools .home-tools-carousel>.product-card{flex-basis:calc((100% - 18px)/2)}}
 @media(max-width:560px){#free-tools .home-tools-carousel>.product-card{flex-basis:84%}#free-tools .home-tools-controls button{width:38px;height:38px}}
+.products-section:not(#free-tools) .product-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1050px){.products-section:not(#free-tools) .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.products-section:not(#free-tools) .product-grid{grid-template-columns:1fr}}
 /* Product directory hierarchy: apps, extensions, agents and plugins */
 .product-catalog{padding:64px max(6vw,24px) 72px;max-width:1500px;margin:0 auto;border-bottom:1px solid #242333}
 .catalog-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,390px);align-items:end;gap:32px}
