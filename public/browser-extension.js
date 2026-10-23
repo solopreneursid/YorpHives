@@ -4,6 +4,7 @@ const desktopFiles = ["manifest.json","popup.html","popup.css","popup.js","optio
 const firefoxFiles = ["manifest.json","popup.html","popup.css","popup.js","options.html","options.css","options.js","README.txt"];
 const tabTidyFiles = ["manifest.json","popup.html","popup.css","popup.js","README.txt"];
 const focusFenceFiles = ["manifest.json","background.js","popup.html","popup.css","popup.js","README.txt"];
+const localSuiteFiles = ["manifest.json","popup.html","popup.css","popup.js","README.txt"];
 const desktopButtons = ["downloadZip","downloadZipBottom","downloadZipFinal"].map(id => document.getElementById(id)).filter(Boolean);
 const firefoxButtons = ["downloadFirefoxPackage"].map(id => document.getElementById(id)).filter(Boolean);
 const desktopStatus = document.getElementById("zipStatus");
@@ -128,6 +129,10 @@ function buildTabTidy() {
 function buildFocusFence() {
   return buildPackage({sourceRoot:"/focus-fence",files:focusFenceFiles,rootPrefix:"YorpHives-Focus-Fence/",filename:"YorpHives-Focus-Fence.zip",status:focusFenceStatus,buttons:focusFenceButtons,successMessage:(bytes,count)=>"Focus Fence ZIP created locally: "+count+" files, "+Math.ceil(bytes/1024)+" KB. Review its host permissions before installing."});
 }
+function buildLocalSuite() {
+  return buildPackage({sourceRoot:"/local-suite",files:localSuiteFiles,rootPrefix:"YorpHives-Local-Productivity-Suite/",filename:"YorpHives-Local-Productivity-Suite.zip",status:document.getElementById("localSuiteZipStatus"),buttons:[document.getElementById("downloadLocalSuite")].filter(Boolean),successMessage:(bytes,count)=>"Local Productivity Suite ZIP created locally: "+count+" files, "+Math.ceil(bytes/1024)+" KB."});
+}
+document.getElementById("downloadLocalSuite")?.addEventListener("click",buildLocalSuite);
 desktopButtons.forEach(button => button.addEventListener("click", buildDesktop));
 firefoxButtons.forEach(button => button.addEventListener("click", buildFirefox));
 tabTidyButtons.forEach(button => button.addEventListener("click", buildTabTidy));

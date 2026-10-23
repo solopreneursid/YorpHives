@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "YorpHives Local Productivity Suite",
+  "version": "1.0.0",
+  "description": "Local text tools, reusable snippets and private page notes. No account or remote AI required.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_title": "YorpHives Local Productivity Suite",
+    "default_popup": "popup.html"
+  }
+}
