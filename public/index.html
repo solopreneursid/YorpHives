@@ -82,13 +82,18 @@
 </section>
 <section class="section products-section" id="free-tools">
   <div class="section-heading"><div><div class="eyebrow">FREE / BROWSER UTILITIES</div><h2>Useful tools.<br><span class="muted-heading">Ready when you are.</span></h2></div><p>Use practical browser-based utilities for writing, developer workflows, image checks and interface design. Start with a tool or browse the full library.</p></div>
-  <div class="product-grid">
+  <div class="home-tools-carousel-wrap"><div class="home-tools-controls"><span class="home-tools-hint">Explore the tool shelf <span aria-hidden="true">↔</span></span><div><button type="button" id="homeToolsPrev" aria-label="Slide tools left">←</button><button type="button" id="homeToolsNext" aria-label="Slide tools right">→</button></div></div><div class="product-grid home-tools-carousel" id="homeToolsCarousel" tabindex="0" aria-label="Featured free tools. Scroll horizontally to browse more tools.">
     <article class="product-card"><div class="product-top"><span class="product-icon icon-violet">TXT</span><span class="status-pill">FREE TOOL</span></div><div class="product-kicker">TEXT / HTML</div><h3>HTML to Text Converter</h3><p>Extract readable text from pasted HTML markup without running embedded scripts.</p><a href="/html-to-text-converter.html" class="text-link">Convert HTML to text <span>↗</span></a></article>
     <article class="product-card"><div class="product-top"><span class="product-icon icon-blue">MD</span><span class="status-pill">FREE TOOL</span></div><div class="product-kicker">DOCUMENTATION</div><h3>Markdown Previewer</h3><p>Preview headings, lists, emphasis and inline code for simple README files and notes.</p><a href="/markdown-preview.html" class="text-link">Preview Markdown <span>↗</span></a></article>
     <article class="product-card"><div class="product-top"><span class="product-icon icon-pink">▧</span><span class="status-pill">FREE TOOL</span></div><div class="product-kicker">IMAGE / DESIGN</div><h3>Image Dimensions Checker</h3><p>Check pixel dimensions, aspect ratio and file size locally before using an image.</p><a href="/image-dimensions-checker.html" class="text-link">Check image dimensions <span>↗</span></a></article>
     <article class="product-card"><div class="product-top"><span class="product-icon icon-violet">◉</span><span class="status-pill">FREE TOOL</span></div><div class="product-kicker">COLOR / DESIGN</div><h3>HEX Color Palette Generator</h3><p>Create a coordinated palette from a base color and copy the resulting HEX values.</p><a href="/color-palette-generator.html" class="text-link">Generate a color palette <span>↗</span></a></article>
     <article class="product-card"><div class="product-top"><span class="product-icon icon-blue">▱</span><span class="status-pill">FREE TOOL</span></div><div class="product-kicker">CSS / DESIGN</div><h3>CSS Box Shadow Generator</h3><p>Tune shadow offsets, blur, spread and color, then copy the CSS declaration.</p><a href="/css-box-shadow-generator.html" class="text-link">Generate a box shadow <span>↗</span></a></article>
-  </div>
+    <article class="product-card"><div class="product-top"><span class="product-icon icon-violet">{ }</span><span class="status-pill">FREE TOOL</span></div><div class="product-kicker">DEVELOPER / JSON</div><h3>JSON to TypeScript</h3><p>Turn a JSON example into a TypeScript type definition for faster development.</p><a href="/json-to-typescript.html" class="text-link">Convert JSON <span>↗</span></a></article>
+    <article class="product-card"><div class="product-top"><span class="product-icon icon-blue">#</span><span class="status-pill">FREE TOOL</span></div><div class="product-kicker">DEVELOPER / URLS</div><h3>URL Query Parser</h3><p>Inspect URL parameters and understand the key-value pairs in a query string.</p><a href="/url-query-string-parser.html" class="text-link">Parse a URL <span>↗</span></a></article>
+    <article class="product-card"><div class="product-top"><span class="product-icon icon-pink">▦</span><span class="status-pill">FREE TOOL</span></div><div class="product-kicker">DATA / TABLES</div><h3>CSV to Markdown Table</h3><p>Convert comma-separated data into a clean Markdown table for docs and notes.</p><a href="/csv-to-markdown-table.html" class="text-link">Convert CSV <span>↗</span></a></article>
+    <article class="product-card"><div class="product-top"><span class="product-icon icon-violet">◷</span><span class="status-pill">FREE TOOL</span></div><div class="product-kicker">DEVELOPER / SCHEDULING</div><h3>Cron Expression Helper</h3><p>Build and inspect cron expressions for recurring scheduled tasks.</p><a href="/cron-expression-helper.html" class="text-link">Explore cron syntax <span>↗</span></a></article>
+    <article class="product-card"><div class="product-top"><span class="product-icon icon-blue">Aa</span><span class="status-pill">FREE TOOL</span></div><div class="product-kicker">ACCESSIBILITY / DESIGN</div><h3>Color Contrast Checker</h3><p>Compare foreground and background colors to check text contrast.</p><a href="/color-converter-contrast-checker.html" class="text-link">Check color contrast <span>↗</span></a></article>
+  </div></div>
   <div style="margin-top:28px"><a class="button button-primary" href="/free-tools.html">Browse the full free tools library <span>↗</span></a><div class="hero-chips" style="margin-top:18px"><a href="/css-formatter.html">CSS formatter</a><a href="/html-entity-reference.html">HTML entity reference</a><a href="/image-file-size-estimator.html">Image file size estimator</a><a href="/responsive-breakpoint-helper.html">Responsive breakpoint helper</a><a href="/color-converter-contrast-checker.html">Color converter &amp; contrast checker</a><a href="/json-to-typescript.html">JSON to TypeScript</a><a href="/url-query-string-parser.html">URL query parser</a><a href="/csv-to-markdown-table.html">CSV to Markdown table</a><a href="/cron-expression-helper.html">Cron expression helper</a><a href="/tools.html">Free PDF &amp; Image Toolkit</a></div></div>
 </section>
 <section class="section services-section" id="services">
@@ -121,6 +126,25 @@ const toggle=document.getElementById('menuToggle'),nav=document.getElementById('
 toggle.addEventListener('click',()=>nav.classList.toggle('nav-open'));
 nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('nav-open')));
 document.getElementById('year').textContent=new Date().getFullYear();
+const toolShelf=document.getElementById('homeToolsCarousel');
+if(toolShelf){
+  const prev=document.getElementById('homeToolsPrev'),next=document.getElementById('homeToolsNext');
+  const step=()=>Math.max(260,Math.round(toolShelf.clientWidth*.82));
+  prev.addEventListener('click',()=>toolShelf.scrollBy({left:-step(),behavior:'smooth'}));
+  next.addEventListener('click',()=>toolShelf.scrollBy({left:step(),behavior:'smooth'}));
+  let shelfTimer=null;
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stopShelf=()=>{if(shelfTimer){clearInterval(shelfTimer);shelfTimer=null}};
+  const startShelf=()=>{stopShelf();if(reducedMotion||window.matchMedia('(hover: none)').matches)return;shelfTimer=setInterval(()=>{if(toolShelf.matches(':hover')||toolShelf.contains(document.activeElement)||document.hidden)return;const end=toolShelf.scrollWidth-toolShelf.clientWidth;if(end<=4)return;if(toolShelf.scrollLeft>=end-8)toolShelf.scrollTo({left:0,behavior:'smooth'});else toolShelf.scrollBy({left:step()*.52,behavior:'smooth'})},3600)};
+  toolShelf.addEventListener('mouseenter',stopShelf);toolShelf.addEventListener('mouseleave',startShelf);
+  toolShelf.addEventListener('focusin',stopShelf);toolShelf.addEventListener('focusout',startShelf);
+  document.addEventListener('visibilitychange',()=>document.hidden?stopShelf():startShelf());
+  let dragStart=null;
+  toolShelf.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button===0)dragStart={x:e.clientX,left:toolShelf.scrollLeft}});
+  toolShelf.addEventListener('pointerup',e=>{if(dragStart&&Math.abs(e.clientX-dragStart.x)>35)toolShelf.scrollTo({left:dragStart.left-(e.clientX-dragStart.x),behavior:'smooth'});dragStart=null});
+  toolShelf.addEventListener('pointercancel',()=>dragStart=null);
+  startShelf();
+}
 const form=document.getElementById('projectForm'),msg=document.getElementById('formMessage'),submit=form.querySelector('button[type="submit"]');
 form.addEventListener('submit',async e=>{e.preventDefault();msg.textContent='';msg.className='form-message';submit.disabled=true;submit.querySelector('.submit-label').textContent='Sending enquiry…';const data=Object.fromEntries(new FormData(form).entries());try{const r=await fetch('/api/project-requests',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await r.json();if(!r.ok)throw new Error(result.error||'Unable to submit your enquiry right now.');form.reset();msg.textContent='Thanks — your enquiry has been received. We will review the details and follow up.';msg.classList.add('success')}catch(err){msg.textContent=err.message||'Something went wrong. Please try again.';msg.classList.add('error')}finally{submit.disabled=false;submit.querySelector('.submit-label').textContent='Send project enquiry'}});
 </script>

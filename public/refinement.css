@@ -23,6 +23,19 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:1100px){.site-header nav{gap:14px}.site-header{padding-inline:22px}.nav-cta{padding:9px 11px}}
 @media(max-width:900px){.hero{min-height:auto;padding-top:65px;padding-bottom:55px}.hero h1{font-size:clamp(46px,7vw,62px)}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-card{min-height:275px}}
 @media(max-width:650px){.site-header{height:68px}.site-header nav{gap:0}.hero{padding:54px 22px 58px;grid-template-columns:1fr}.hero h1{font-size:clamp(43px,12vw,58px);letter-spacing:-2.6px;margin:20px 0}.hero-art{height:300px;transform:scale(.78);transform-origin:center;margin:-8px -25px}.hero-bottom{left:22px;right:22px;font-size:8px}.section{padding:58px 20px}.section-heading{gap:18px;margin-bottom:26px}.section-heading h2,.request-intro h2,.bottom-cta h2,.workhub-content h2{font-size:clamp(32px,9vw,43px);letter-spacing:-1.4px}.product-grid{grid-template-columns:1fr}.product-card{min-height:0;padding:22px}.product-card p{min-height:0}.trust-strip{padding:22px}.trust-strip div{gap:12px}.workhub-section{padding:58px 20px;grid-template-columns:1fr}.network-visual{max-width:360px;width:100%;margin:auto}.request-section{grid-template-columns:1fr;gap:28px}.request-intro{position:static}.project-form{padding:22px 17px}.bottom-cta{padding:42px 22px;align-items:flex-start;flex-direction:column}.site-footer{padding:35px 22px 20px;grid-template-columns:1fr}.footer-links{grid-column:auto;justify-content:flex-start;flex-wrap:wrap}.footer-bottom{grid-column:auto;flex-wrap:wrap}}
+/* Homepage featured free-tools horizontal shelf */
+#free-tools .home-tools-carousel-wrap{position:relative;margin-top:4px}
+#free-tools .home-tools-controls{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 0 12px}
+#free-tools .home-tools-hint{font-size:10px;letter-spacing:.5px;color:#9292aa}
+#free-tools .home-tools-controls>div{display:flex;gap:8px}
+#free-tools .home-tools-controls button{width:42px;height:42px;border:1px solid #46405f;border-radius:10px;background:#15141f;color:#e8e2ff;font-size:22px;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+#free-tools .home-tools-controls button:hover{background:#29213f;border-color:#a78bfa;transform:translateY(-1px)}
+#free-tools .home-tools-controls button:focus-visible{outline:2px solid #b6a1ff;outline-offset:3px}
+#free-tools .home-tools-carousel{display:flex;grid-template-columns:none;gap:18px;overflow-x:auto;overflow-y:hidden;padding:4px 2px 18px;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-inline:contain;scrollbar-width:thin;scrollbar-color:#65558d #171722}
+#free-tools .home-tools-carousel>.product-card{flex:0 0 calc((100% - 36px)/3);min-width:0;scroll-snap-align:start}
+#free-tools .home-tools-carousel:focus-visible{outline:2px solid #a78bfa;outline-offset:3px}
+@media(max-width:900px){#free-tools .home-tools-carousel>.product-card{flex-basis:calc((100% - 18px)/2)}}
+@media(max-width:560px){#free-tools .home-tools-carousel>.product-card{flex-basis:84%}#free-tools .home-tools-controls button{width:38px;height:38px}}
 /* Product directory hierarchy: apps, extensions, agents and plugins */
 .product-catalog{padding:64px max(6vw,24px) 72px;max-width:1500px;margin:0 auto;border-bottom:1px solid #242333}
 .catalog-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,390px);align-items:end;gap:32px}
