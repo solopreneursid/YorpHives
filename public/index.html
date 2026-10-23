@@ -149,5 +149,6 @@ if(toolShelf){
 const form=document.getElementById('projectForm'),msg=document.getElementById('formMessage'),submit=form.querySelector('button[type="submit"]');
 form.addEventListener('submit',async e=>{e.preventDefault();msg.textContent='';msg.className='form-message';submit.disabled=true;submit.querySelector('.submit-label').textContent='Sending enquiry…';const data=Object.fromEntries(new FormData(form).entries());try{const r=await fetch('/api/project-requests',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await r.json();if(!r.ok)throw new Error(result.error||'Unable to submit your enquiry right now.');form.reset();msg.textContent='Thanks — your enquiry has been received. We will review the details and follow up.';msg.classList.add('success')}catch(err){msg.textContent=err.message||'Something went wrong. Please try again.';msg.classList.add('error')}finally{submit.disabled=false;submit.querySelector('.submit-label').textContent='Send project enquiry'}});
 </script>
+<script src="/shared-nav.js" defer></script>
 </body>
 </html>
