@@ -446,4 +446,94 @@ $('imageConvertBtn').addEventListener('click', () => withButton($('imageConvertB
   $('imageResult').textContent = 'Finished: ' + canvas.width + ' × ' + canvas.height + ' px · ' + formatBytes(blob.size) + ' (' + (delta <= 0 ? formatBytes(-delta) + ' smaller' : formatBytes(delta) + ' larger') + ' than original).';
   notify('Processed image downloaded.');
 }));
+// Modal launcher presentation for PDF and image tools. Existing controls and listeners are moved, not recreated.
+const toolModal = $('pdfToolModal');
+if (toolModal) {
+  const modalTitle = $('pdfToolModalTitle');
+  const modalTag = $('pdfToolModalTag');
+  const modalDescription = $('pdfToolModalDescription');
+  const modalContent = $('pdfToolModalContent');
+  let lastLauncher = null;
+  let activeRestore = null;
+  function openPdfTool(title, tag, description, nodes, launcher, restore) {
+    lastLauncher = launcher || null;
+    activeRestore = restore || null;
+    modalTitle.textContent = title;
+    modalTag.textContent = tag || 'PDF / IMAGE UTILITY';
+    modalDescription.textContent = description || '';
+    modalContent.replaceChildren();
+    nodes.forEach(node => modalContent.appendChild(node));
+    toolModal.hidden = false;
+    document.body.classList.add('pdf-tool-modal-open');
+    toolModal.querySelector('.pdf-tool-close').focus();
+  }
+  function closePdfTool() {
+    if (toolModal.hidden) return;
+    toolModal.hidden = true;
+    document.body.classList.remove('pdf-tool-modal-open');
+    if (activeRestore) activeRestore();
+    activeRestore = null;
+    modalContent.replaceChildren();
+    if (lastLauncher) lastLauncher.focus();
+  }
+  toolModal.querySelectorAll('[data-pdf-close]').forEach(button => button.addEventListener('click', closePdfTool));
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && !toolModal.hidden) closePdfTool(); });
+  document.querySelectorAll('#pdf-tools .tool-card').forEach(card => {
+    const icon = card.querySelector('.tool-icon');
+    const tag = card.querySelector('.tool-tag');
+    const heading = card.querySelector('h3');
+    const description = card.querySelector('p');
+    if (!heading || !description) return;
+    const title = heading.textContent.trim();
+    const desc = description.textContent.trim();
+    const launch = document.createElement('article');
+    launch.className = 'pdf-launch-card';
+    if (icon) launch.appendChild(icon.cloneNode(true));
+    const launchTag = document.createElement('div');
+    launchTag.className = 'tool-tag';
+    launchTag.textContent = tag ? tag.textContent : 'PDF TOOL';
+    launch.appendChild(launchTag);
+    const launchHeading = document.createElement('h3');
+    launchHeading.textContent = title;
+    launch.appendChild(launchHeading);
+    const launchDescription = document.createElement('p');
+    launchDescription.textContent = desc;
+    launch.appendChild(launchDescription);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'button button-primary pdf-launch-button';
+    button.textContent = 'Open tool ↗';
+    button.setAttribute('aria-label', 'Open ' + title);
+    launch.appendChild(button);
+    const controls = Array.from(card.children).filter(node => node !== icon && node !== tag && node !== heading && node !== description);
+    button.addEventListener('click', () => openPdfTool(title, tag ? tag.textContent : 'PDF TOOL', desc, controls, button, () => controls.forEach(node => card.appendChild(node))));
+    card.replaceWith(launch);
+  });
+  const workspace = document.querySelector('#image-tools .image-workspace');
+  const imagePanel = workspace && workspace.querySelector('.image-input-panel');
+  const helpPanel = workspace && workspace.querySelector('.image-help-panel');
+  if (workspace && imagePanel && helpPanel) {
+    const imageLaunch = document.createElement('article');
+    imageLaunch.className = 'pdf-launch-card image-launch-card';
+    const icon = imagePanel.querySelector('.tool-icon');
+    if (icon) imageLaunch.appendChild(icon.cloneNode(true));
+    const tag = document.createElement('div');
+    tag.className = 'tool-tag';
+    tag.textContent = 'IMAGE EDITOR';
+    imageLaunch.appendChild(tag);
+    const heading = document.createElement('h3');
+    heading.textContent = 'Image resizer & format converter';
+    imageLaunch.appendChild(heading);
+    const description = document.createElement('p');
+    description.textContent = 'Resize, convert, rotate or flip JPG, PNG and WebP images. Adjust output quality and download the processed copy.';
+    imageLaunch.appendChild(description);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'button button-primary pdf-launch-button';
+    button.textContent = 'Open image editor ↗';
+    imageLaunch.appendChild(button);
+    workspace.replaceChildren(imageLaunch);
+    button.addEventListener('click', () => openPdfTool('Image resizer & format converter', 'IMAGE EDITOR', description.textContent, [imagePanel, helpPanel], button, () => workspace.replaceChildren(imagePanel, helpPanel)));
+  }
+}
 })();
