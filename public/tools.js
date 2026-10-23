@@ -533,7 +533,7 @@ if (toolModal) {
     button.textContent = 'Open image editor ↗';
     imageLaunch.appendChild(button);
     workspace.replaceChildren(imageLaunch);
-    button.addEventListener('click', () => openPdfTool('Image resizer & format converter', 'IMAGE EDITOR', description.textContent, [imagePanel, helpPanel], button, () => workspace.replaceChildren(imagePanel, helpPanel)));
+    button.addEventListener('click', () => openPdfTool('Image resizer & format converter', 'IMAGE EDITOR', description.textContent, [imagePanel, helpPanel], button, () => workspace.replaceChildren(imageLaunch)));
   }
 }
 })();
