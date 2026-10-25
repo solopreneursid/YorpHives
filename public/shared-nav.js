@@ -23,6 +23,9 @@
     .site-header #mainNav a:hover,.site-header #mainNav a[aria-current=page]{color:#d1c4ff}
     .site-header #mainNav a[aria-current=page]{text-decoration:underline;text-decoration-color:#9b83ff;text-underline-offset:7px}
     .site-header #mainNav .nav-cta{color:#f4f1ff;border:1px solid #49435f;border-radius:10px;padding:10px 13px}
+    .site-header .yh-install-app{display:none;align-items:center;justify-content:center;gap:7px;background:linear-gradient(105deg,#b39bff,#7da9ff);color:#0b0c15!important;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer;font-size:12px}
+    .site-header .yh-install-app.yh-install-visible{display:inline-flex}
+    .yh-pwa-hint{position:fixed;z-index:2000;left:50%;bottom:20px;transform:translateX(-50%);max-width:min(92vw,520px);padding:12px 16px;border:1px solid #48415f;border-radius:12px;background:#11111b;color:#f4f1ff;box-shadow:0 12px 35px #0009;font-size:13px}
     .site-header .yh-more{position:relative}
     .site-header .yh-more summary{list-style:none;cursor:pointer;color:#b9b8c9;font-size:13px;white-space:nowrap;padding:8px 0}
     .site-header .yh-more summary::-webkit-details-marker{display:none}
@@ -60,6 +63,7 @@
     more.forEach(item=>{const a=document.createElement('a');a.href=item.href;a.textContent=item.label;if(item.key===active)a.setAttribute('aria-current','page');menu.appendChild(a)});
     details.append(summary,menu);nav.appendChild(details);
     const cta=document.createElement('a');cta.className='nav-cta';cta.href='/#request';cta.textContent='Start a project ↗';nav.appendChild(cta);
+    const install=document.createElement('button');install.type='button';install.className='yh-install-app';install.id='yhInstallApp';install.textContent='Install app ↓';install.setAttribute('aria-label','Install YorpHives as an app');nav.appendChild(install);
     const oldToggle=header.querySelector('.menu-toggle');if(oldToggle)oldToggle.remove();
     let toggle=header.querySelector('.yh-menu-toggle');
     if(!toggle){toggle=document.createElement('button');toggle.className='yh-menu-toggle';toggle.type='button';toggle.setAttribute('aria-label','Open navigation');toggle.setAttribute('aria-expanded','false');toggle.textContent='☰';nav.before(toggle)}
@@ -73,4 +77,17 @@
     const main=document.querySelector('main');const title=document.querySelector('main h1')?.textContent?.replace(/\s+/g,' ').trim()||document.title.split('|')[0].trim();
     if(main&&!document.querySelector('.yh-breadcrumb')){const section=document.createElement('nav');section.className='yh-breadcrumb';section.setAttribute('aria-label','Breadcrumb');const ol=document.createElement('ol');const home=document.createElement('li');home.innerHTML='<a href="/">Home</a>';ol.appendChild(home);const current=document.createElement('li');current.setAttribute('aria-current','page');current.textContent=path==='/products.html'?'Products':path==='/free-tools.html'?'Free Tools':path==='/workbench.html'?'Workbench':path==='/tools.html'?'PDF & Images':path==='/browser-extension.html'?'Extensions':title;ol.appendChild(current);section.appendChild(ol);main.before(section)}
   }
+// Progressive Web App setup: manifest, service worker, and install prompt.
+  if(!document.querySelector('link[rel="manifest"]')){const manifest=document.createElement('link');manifest.rel='manifest';manifest.href='/manifest.webmanifest';document.head.appendChild(manifest)}
+  if(!document.querySelector('meta[name="theme-color"]')){const theme=document.createElement('meta');theme.name='theme-color';theme.content='#08090e';document.head.appendChild(theme)}
+  const installButton=document.getElementById('yhInstallApp');let deferredInstallPrompt=null;
+  const showInstall=()=>installButton?.classList.add('yh-install-visible');
+  const hideInstall=()=>installButton?.classList.remove('yh-install-visible');
+  const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+  if(isStandalone()){hideInstall()}else if(installButton){if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){showInstall()} }
+  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstallPrompt=event;showInstall()});
+  window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;hideInstall();showPwaHint('YorpHives has been installed. You can open it from your apps.');});
+  function showPwaHint(message){const old=document.querySelector('.yh-pwa-hint');if(old)old.remove();const hint=document.createElement('div');hint.className='yh-pwa-hint';hint.setAttribute('role','status');hint.textContent=message;document.body.appendChild(hint);setTimeout(()=>hint.remove(),9000)}
+  installButton?.addEventListener('click',async()=>{if(deferredInstallPrompt){deferredInstallPrompt.prompt();const choice=await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;if(choice?.outcome==='accepted')hideInstall();return}if(/iPhone|iPad|iPod/i.test(navigator.userAgent)&&!isStandalone()){showPwaHint('To install: tap Share in Safari, then choose “Add to Home Screen”.');return}if(/Android/i.test(navigator.userAgent)&&!isStandalone()){showPwaHint('If the install prompt does not appear, open your browser menu and choose “Install app” or “Add to Home screen”.');return}showPwaHint('Use your browser menu and choose “Install YorpHives” or “Install app” to add it to your desktop.');});
+  if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js',{scope:'/'}).catch(()=>{}))}
 })();

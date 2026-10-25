@@ -1,0 +1,17 @@
+{
+  "id": "/",
+  "name": "YorpHives — Tools & Workspaces",
+  "short_name": "YorpHives",
+  "description": "Free browser tools, original plugins, extensions and productivity workspaces.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#08090e",
+  "theme_color": "#08090e",
+  "categories": ["productivity", "utilities", "developer"],
+  "icons": [
+    {"src": "/pwa-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}
