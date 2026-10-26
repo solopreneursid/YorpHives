@@ -84,13 +84,9 @@
 </section>
 <section class="section products-section" id="recently-added">
   <div class="section-heading"><div><div class="eyebrow">LATEST / FRESHLY PUBLISHED</div><h2>Recently added.<br><span class="muted-heading">Made by YorpHives.</span></h2></div><p>Explore the newest tools and projects added to the YorpHives catalogue, from application plugins to browser extensions. New releases appear here first.</p></div>
-  <div class="product-grid home-recent-grid">
-    <article class="product-card"><div class="product-top"><span class="product-icon icon-violet">✓</span><span class="status-pill">NEW · WORDPRESS</span></div><div class="product-kicker">PLUGIN / CONTENT QUALITY</div><h3>YorpHives Content Check</h3><p>An editorial checklist inside WordPress for titles, excerpts, headings, links and image alt attributes.</p><a href="/plugins.html#wordpress" class="text-link">View plugin &amp; download <span>↗</span></a></article>
-    <article class="product-card"><div class="product-top"><span class="product-icon icon-blue">{ }</span><span class="status-pill">NEW · VS CODE</span></div><div class="product-kicker">EDITOR INTEGRATION / DEVELOPER</div><h3>YorpHives Developer Toolkit</h3><p>Local commands for formatting JSON, decoding URLs, checking text statistics and converting to camelCase.</p><a href="/plugins.html#vscode" class="text-link">View source package <span>↗</span></a></article>
-    <article class="product-card"><div class="product-top"><span class="product-icon icon-pink">✦</span><span class="status-pill">FREE · BROWSER</span></div><div class="product-kicker">BROWSER EXTENSION / PRODUCTIVITY</div><h3>Local Productivity Suite</h3><p>Three local-first browser tools for text cleanup, saved snippets and page research notes.</p><a href="/browser-extension.html#productivity-extensions" class="text-link">View extension package <span>↗</span></a></article>
-    <article class="product-card"><div class="product-top"><span class="product-icon icon-violet">⌘</span><span class="status-pill">WEB APP</span></div><div class="product-kicker">WORKSPACE / PRODUCTIVITY</div><h3>QuickPanel Web App</h3><p>A browser workspace for everyday text actions, reusable snippets, saved pages and practical helpers.</p><a href="/quickpanel/" class="text-link">Open QuickPanel <span>↗</span></a></article>
-  </div>
-  <div style="margin-top:28px"><a class="button button-primary" href="/products.html">Browse all products &amp; projects <span>↗</span></a></div>
+  <div class="product-grid home-recent-grid" id="recentToolsGrid" aria-live="polite" aria-busy="true"><p class="empty-state">Loading the latest tools…</p></div>
+  <p id="recentToolsStatus" class="small-note" role="status" style="margin-top:16px"></p>
+  <div style="margin-top:28px"><a class="button button-primary" href="/free-tools.html">Browse all free tools <span>↗</span></a> <a class="button button-ghost" href="/products.html">Browse products &amp; projects <span>↗</span></a></div>
 </section>
 <section class="section services-section" id="services">
   <div class="section-heading"><div><div class="eyebrow">02 / SERVICES</div><h2>Your challenge.<br><span class="muted-heading">Our next build.</span></h2></div><p>Get expert help for a specific task or a complete project. We coordinate the work and match each request with suitable skills.</p></div>
@@ -140,6 +136,55 @@ form.addEventListener('submit',async e=>{e.preventDefault();msg.textContent='';m
 </script>
 <script>
 (()=>{const main=document.querySelector('main'),free=document.getElementById('free-tools'),products=document.getElementById('products');if(main&&free&&products&&products.compareDocumentPosition(free)&Node.DOCUMENT_POSITION_FOLLOWING)main.insertBefore(free,products)})();
+</script>
+<script>
+(() => {
+  const grid = document.getElementById('recentToolsGrid');
+  const status = document.getElementById('recentToolsStatus');
+  if (!grid) return;
+  const el = (tag, cls, value) => {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (value !== undefined) node.textContent = value;
+    return node;
+  };
+  fetch('/recent-tools.json?v=1', { cache: 'no-store' })
+    .then(response => {
+      if (!response.ok) throw new Error('Recent tools registry could not be loaded.');
+      return response.json();
+    })
+    .then(data => {
+      const items = Array.isArray(data.items) ? data.items.slice() : [];
+      items.sort((a, b) => String(b.added || '').localeCompare(String(a.added || '')));
+      const latest = items.slice(0, 4);
+      grid.replaceChildren();
+      if (!latest.length) {
+        grid.append(el('p', 'empty-state', 'New tools will appear here when published.'));
+        grid.setAttribute('aria-busy', 'false');
+        return;
+      }
+      latest.forEach(item => {
+        const card = el('article', 'product-card');
+        const top = el('div', 'product-top');
+        top.append(el('span', 'product-icon icon-violet', item.icon || '✦'));
+        top.append(el('span', 'status-pill', item.type || 'NEW TOOL'));
+        card.append(top, el('div', 'product-kicker', item.category || 'NEWLY ADDED'));
+        card.append(el('h3', '', item.name || 'New tool'));
+        card.append(el('p', '', item.description || 'Explore this newly published YorpHives tool.'));
+        const link = el('a', 'text-link', (item.action || 'Open tool') + ' ↗');
+        link.href = item.url || '/free-tools.html';
+        card.append(link);
+        grid.append(card);
+      });
+      grid.setAttribute('aria-busy', 'false');
+      if (status) status.textContent = 'Updated automatically from the latest published tool list.';
+    })
+    .catch(() => {
+      grid.replaceChildren(el('p', 'empty-state', 'The latest tools list is temporarily unavailable. Browse the full directory instead.'));
+      grid.setAttribute('aria-busy', 'false');
+      if (status) status.textContent = '';
+    });
+})();
 </script>
 <script src="/shared-nav.js" defer></script>
 </body>

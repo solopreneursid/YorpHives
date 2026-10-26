@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "name": "OCR for Scanned PDFs",
+      "type": "PDF TOOL",
+      "category": "PDF / ACCESSIBILITY",
+      "icon": "Aa",
+      "description": "Recognize text in scanned PDF pages and export the result as TXT or Markdown, with English and Hindi language options.",
+      "url": "/file-workspace.html#pdf-extra-tools",
+      "action": "Open OCR tool",
+      "added": "2026-10-26"
+    },
+    {
+      "name": "PDF Page Organizer",
+      "type": "PDF TOOL",
+      "category": "PDF / DOCUMENTS",
+      "icon": "▤",
+      "description": "Reorder, rotate, extract or remove PDF pages using a visual page organizer.",
+      "url": "/file-workspace.html#pdf-organizer-tools",
+      "action": "Open page organizer",
+      "added": "2026-10-26"
+    },
+    {
+      "name": "Image Converter & Resizer",
+      "type": "IMAGE TOOL",
+      "category": "IMAGES / CONVERSION",
+      "icon": "▧",
+      "description": "Convert image formats, resize images, rotate or flip them, and apply basic effects in your browser.",
+      "url": "/file-workspace.html#image-tools",
+      "action": "Open image tools",
+      "added": "2026-10-26"
+    },
+    {
+      "name": "PDF Watermarks & Page Numbers",
+      "type": "PDF TOOL",
+      "category": "PDF / DOCUMENTS",
+      "icon": "№",
+      "description": "Add page numbers, text or image watermarks, and text overlays to PDF documents.",
+      "url": "/file-workspace.html#pdf-extra-tools",
+      "action": "Open PDF utilities",
+      "added": "2026-10-26"
+    }
+  ]
+}
