@@ -10,7 +10,7 @@
   const more = [
     {label:'Extensions',href:'/browser-extension.html',key:'extensions'},
     {label:'PDF & Images',href:'/tools.html',key:'media'},
-    {label:'File Conversion Workspace',href:'/file-workspace.html',key:'tools'},
+    {label:'File Conversion Workspace',href:'/free-tools.html#file-workspace',key:'tools'},
     {label:'Services',href:'/#services',key:'services'},
     {label:'About',href:'/#about',key:'about'}
   ];
