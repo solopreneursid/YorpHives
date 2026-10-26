@@ -10,10 +10,11 @@
   const more = [
     {label:'Extensions',href:'/browser-extension.html',key:'extensions'},
     {label:'PDF & Images',href:'/tools.html',key:'media'},
+    {label:'File Conversion Workspace',href:'/file-workspace.html',key:'fileworkspace'},
     {label:'Services',href:'/#services',key:'services'},
     {label:'About',href:'/#about',key:'about'}
   ];
-  const active = path==='/'?'home':path==='/products.html'?'products':path==='/free-tools.html'?'tools':path==='/workbench.html'?'workbench':path.startsWith('/quickpanel')?'quickpanel':path==='/browser-extension.html'?'extensions':path==='/tools.html'?'media':'tools';
+  const active = path==='/'?'home':path==='/products.html'?'products':path==='/free-tools.html'?'tools':path==='/workbench.html'?'workbench':path.startsWith('/quickpanel')?'quickpanel':path==='/browser-extension.html'?'extensions':path==='/tools.html'?'media':path==='/file-workspace.html'?'fileworkspace':'tools';
   const style=document.createElement('style');style.id='yorphives-shared-nav-style';
   style.textContent=`
     .site-header{position:sticky!important;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:13px clamp(18px,3vw,44px);background:rgba(8,8,14,.96)!important;backdrop-filter:blur(16px);border-bottom:1px solid #242333!important}
