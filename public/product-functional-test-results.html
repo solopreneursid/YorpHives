@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Functional Test Record | YorpHives</title>
+<meta name="description" content="Recorded functional and package test evidence for YorpHives products, including the test environment and outstanding verification work.">
+<link rel="canonical" href="https://yorphives.hatchable.site/product-functional-test-results.html">
+<link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/refinement.css">
+<style>
+.test-wrap{max-width:1050px;margin:auto;padding:56px 22px 80px}.test-wrap h1{font-size:clamp(34px,5vw,54px);line-height:1.08}.test-lead{max-width:800px;color:#b2b0c3;line-height:1.8}.test-banner{margin:22px 0;padding:18px 20px;border:1px solid #765d2b;background:#211b12;border-radius:14px;line-height:1.7}.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:24px 0}.test-card{border:1px solid #343047;border-radius:14px;background:#12121d;padding:18px;min-width:0}.test-card h2{font-size:19px;margin:0 0 8px}.test-meta{color:#b7b3c9;font-size:13px;line-height:1.65;overflow-wrap:anywhere}.test-tag{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;background:#25243a;color:#c7baff;margin-bottom:10px}.test-card ul,.test-list{padding-left:20px;line-height:1.7;font-size:14px}.test-card li.pass{color:#a6e4bd}.test-card li.pending{color:#e8ca8d}.test-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.test-note{color:#aaa8bd;font-size:13px;line-height:1.7}.test-summary{display:flex;gap:12px;flex-wrap:wrap}.test-summary div{padding:12px 15px;border:1px solid #343047;border-radius:10px;min-width:120px}.test-summary strong{display:block;font-size:22px}.test-error{color:#ff9caa}
+</style></head>
+<body><main class="test-wrap">
+<p class="eyebrow">YORPHIVES / RELEASE ENGINEERING</p>
+<h1>Functional test record.<br><span class="muted-heading">Evidence before verification.</span></h1>
+<p class="test-lead">This report records what was exercised, where it was exercised, and what remains untested. A source or mocked-API test is not treated as a substitute for installing a product in its intended host application.</p>
+<div class="test-banner"><strong>Verification policy:</strong> product catalogue verification statuses remain unchanged until the corresponding product passes tests in its intended environment. Some checks below ran in a real browser, but Tab Tidy and the VS Code toolkit used mocked host APIs; the WordPress plugins were not installed in WordPress.</div>
+<div class="test-summary" id="testSummary"><div><strong>2026-10-27</strong><span class="test-meta">Test date</span></div><div><strong>v89</strong><span class="test-meta">Site version tested</span></div><div><strong>Partial</strong><span class="test-meta">Overall result</span></div></div>
+<section id="testResults" class="test-grid" aria-live="polite">
+<article class="test-card"><h2>Loading test record…</h2><p class="test-meta">Reading the published test-results file.</p></article>
+</section>
+<h2>Remaining real-environment tests</h2>
+<ul class="test-list">
+<li>Install Tab Tidy in a real Chromium browser; test permissions, actual tabs, duplicate detection, grouping and export.</li>
+<li>Install each WordPress plugin in a test WordPress site; run PHP lint, activation, editor or shortcode tests, and check permission/security behavior.</li>
+<li>Install the Developer Toolkit in VS Code and run all four commands against real files and selections.</li>
+<li>Test QuickPanel export/import round-trip, offline reload, clipboard permissions and PWA installation.</li>
+</ul>
+<p class="test-note">The report is a recorded snapshot, not a continuously running test suite. Retest after relevant code changes and record the environment and results before changing catalogue verification.</p>
+<div class="test-links"><a class="button button-primary" href="/product-preflight.html">Run source preflight ↗</a><a class="button button-ghost" href="/product-release-checklist.html">Release checklist ↗</a><a class="button button-ghost" href="/product-functional-test-results.json">View raw test record ↗</a></div>
+</main>
+<script>
+(async()=>{
+ const root=document.getElementById('testResults');
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ try{
+  const res=await fetch('/product-functional-test-results.json',{cache:'no-store'});
+  if(!res.ok)throw new Error('Test record returned HTTP '+res.status);
+  const report=await res.json();
+  root.replaceChildren();
+  report.results.forEach(item=>{
+   const card=document.createElement('article');card.className='test-card';
+   const tag=document.createElement('span');tag.className='test-tag';tag.textContent=item.status.replaceAll('-',' ');
+   const title=document.createElement('h2');title.textContent=item.product;
+   const meta=document.createElement('p');meta.className='test-meta';meta.textContent=item.environment;
+   const counts=document.createElement('p');counts.className='test-meta';counts.textContent=(item.passed??0)+' checks recorded · '+(item.failed??0)+' failures recorded';
+   const ul=document.createElement('ul');
+   (item.checks||[]).forEach(check=>{const li=document.createElement('li');li.className='pass';li.textContent=check;ul.appendChild(li)});
+   const note=document.createElement('p');note.className='test-note';note.textContent=item.notes||'';
+   card.append(tag,title,meta,counts,ul,note);root.appendChild(card);
+  });
+  document.getElementById('testSummary').innerHTML='<div><strong>'+esc(report.testDate)+'</strong><span class="test-meta">Test date</span></div><div><strong>v'+esc(report.deployedVersionAtTest)+'</strong><span class="test-meta">Site version tested</span></div><div><strong>'+esc(report.overall.replaceAll('-',' '))+'</strong><span class="test-meta">Overall result</span></div>';
+ }catch(e){root.innerHTML='<article class="test-card"><h2 class="test-error">Could not load the test record</h2><p class="test-meta">'+esc(e.message)+'</p></article>'}
+})();
+</script><script src="/shared-nav.js" defer></script></body></html>

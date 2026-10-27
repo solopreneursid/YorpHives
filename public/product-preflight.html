@@ -14,7 +14,7 @@
 <h1>Product preflight.<br><span class="muted-heading">Catch avoidable release issues.</span></h1>
 <p class="qa-lead">Run automated checks against the currently published catalogue and package files before preparing a release. This checks metadata, same-site destinations, internal anchors, extension manifests and source-file availability. It does not run a real browser extension, WordPress, or VS Code, and it cannot block Hatchable's Deploy action.</p>
 <section class="qa-panel">
-<div class="qa-actions"><button class="button button-primary" id="runQa" type="button">Run preflight checks</button><a class="button button-ghost" href="/product-release-checklist.html">Manual release checklist ↗</a><span class="qa-status" id="qaStatus" role="status" aria-live="polite">Ready to check the live version.</span></div>
+<div class="qa-actions"><button class="button button-primary" id="runQa" type="button">Run preflight checks</button><a class="button button-ghost" href="/product-release-checklist.html">Manual release checklist ↗</a><a class="button button-ghost" href="/product-functional-test-results.html">Functional test record ↗</a><span class="qa-status" id="qaStatus" role="status" aria-live="polite">Ready to check the live version.</span></div>
 <div class="qa-results" id="qaResults" aria-live="polite"></div>
 <p class="qa-note">Important: these checks run on the version currently published at this URL, not unsaved draft files. Run Hatchable's deployment dry-run separately. Treat a failed result as a stop-and-investigate signal; a passing result is not proof of end-to-end product functionality.</p>
 </section></main>

@@ -1,0 +1,142 @@
+{
+  "reportVersion": 1,
+  "project": "YorpHives",
+  "testDate": "2026-10-27",
+  "deployedVersionAtTest": 89,
+  "overall": "partial-functional-validation",
+  "verificationPolicy": "Do not change product verification metadata until each product has been tested in its intended host environment.",
+  "environment": [
+    "Real browser automation session against the live QuickPanel site.",
+    "Real browser DOM session loading Tab Tidy popup UI with a mocked chrome.tabs API; this is not an installed extension test.",
+    "JavaScript harness with mocked VS Code API; this is not a real VS Code installation.",
+    "Published source/package URL checks for the four WordPress plugins; no WordPress host or PHP runtime was available."
+  ],
+  "results": [
+    {
+      "product": "QuickPanel Web App",
+      "status": "partial-pass",
+      "environment": "Live browser session on https://yorphives.hatchable.site/quickpanel/",
+      "passed": 10,
+      "failed": 0,
+      "checks": [
+        "Page loaded and main UI rendered",
+        "Trim text action",
+        "Remove duplicate lines",
+        "Remove blank lines",
+        "Uppercase action",
+        "Clear action",
+        "Save snippet",
+        "Snippet persisted to localStorage",
+        "Backup view opened",
+        "Export UI present"
+      ],
+      "notes": "A test snippet was removed from localStorage after testing. Clipboard permissions, real file download/import round-trip, offline reload and install-to-home-screen were not verified."
+    },
+    {
+      "product": "Tab Tidy",
+      "status": "partial-pass",
+      "environment": "Live popup page in browser session with controlled mock chrome.tabs API",
+      "passed": 6,
+      "failed": 0,
+      "checks": [
+        "Popup UI loaded",
+        "Search filters tabs",
+        "Duplicate URL group detected",
+        "Tabs grouped by domain",
+        "JSON export filename created",
+        "Only the chosen tab ID was passed to close action"
+      ],
+      "notes": "Chrome APIs were mocked and test tabs were synthetic. Not installed or tested as an actual Chromium extension; browser permission prompt and real tab integration remain pending."
+    },
+    {
+      "product": "YorpHives Developer Toolkit",
+      "status": "partial-pass",
+      "environment": "JavaScript harness with mocked VS Code API",
+      "passed": 5,
+      "failed": 0,
+      "checks": [
+        "JSON formatting",
+        "URL decoding",
+        "Text statistics",
+        "Camel case conversion",
+        "Invalid JSON error handling"
+      ],
+      "notes": "Commands executed against a fake editor/API. VS Code installation, activation and editor integration remain pending."
+    },
+    {
+      "product": "YorpHives Content Check",
+      "status": "package-source-checks-only",
+      "environment": "Published PHP text source and package assets",
+      "passed": 4,
+      "failed": 0,
+      "checks": [
+        "Source URL available",
+        "WordPress plugin header present",
+        "ABSPATH direct-access guard present",
+        "Capability check present"
+      ],
+      "notes": "Not installed in WordPress. PHP lint, editor metabox, permissions, and content checks remain unverified."
+    },
+    {
+      "product": "YorpHives Image Alt Helper",
+      "status": "package-source-checks-only",
+      "environment": "Published PHP text source and package assets",
+      "passed": 4,
+      "failed": 0,
+      "checks": [
+        "Source URL available",
+        "WordPress plugin header present",
+        "ABSPATH direct-access guard present",
+        "Capability check present"
+      ],
+      "notes": "Not installed in WordPress. PHP lint and editor image-analysis behavior remain unverified."
+    },
+    {
+      "product": "YorpHives Link Audit",
+      "status": "package-source-checks-only",
+      "environment": "Published PHP text source and package assets",
+      "passed": 4,
+      "failed": 0,
+      "checks": [
+        "Source URL available",
+        "WordPress plugin header present",
+        "ABSPATH direct-access guard present",
+        "Capability check present"
+      ],
+      "notes": "Not installed in WordPress. PHP lint and editor link-audit behavior remain unverified."
+    },
+    {
+      "product": "YorpHives Reading Time",
+      "status": "package-source-checks-only",
+      "environment": "Published PHP text source and package assets",
+      "passed": 3,
+      "failed": 0,
+      "checks": [
+        "Source URL available",
+        "WordPress plugin header present",
+        "ABSPATH direct-access guard present"
+      ],
+      "notes": "Not installed in WordPress. Shortcode rendering, reading-time calculation and PHP compatibility remain unverified."
+    },
+    {
+      "product": "WordPress ZIP downloads",
+      "status": "package-build-pass",
+      "environment": "ZIP builder exercised against live published source files",
+      "passed": 4,
+      "failed": 0,
+      "checks": [
+        "Content Check ZIP builder",
+        "Image Alt Helper ZIP builder",
+        "Link Audit ZIP builder",
+        "Reading Time ZIP builder"
+      ],
+      "notes": "The generated ZIP entries were checked for expected .php filenames. Installation in WordPress remains pending."
+    }
+  ],
+  "notCompleted": [
+    "Install and test Tab Tidy in a real Chromium browser with the actual extension package.",
+    "Install each of the four WordPress plugins in a real WordPress test site and run PHP lint/activation/editor/shortcode checks.",
+    "Install the Developer Toolkit into VS Code and test commands in a real editor.",
+    "Run QuickPanel export/import round-trip, offline reload, clipboard permission and PWA install checks."
+  ]
+}
