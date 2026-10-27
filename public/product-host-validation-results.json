@@ -1,5 +1,5 @@
 {
-  "reportVersion": 2,
+  "reportVersion": 3,
   "project": "YorpHives",
   "purpose": "Persistent evidence record for WordPress Playground validation. Passing automated smoke checks does not equal full product verification.",
   "lastUpdated": "2026-10-27",
@@ -7,7 +7,7 @@
     "runtime": "Official WordPress Playground browser runtime",
     "wordpress": "7.1.3",
     "php": "8.5.12",
-    "environmentSelection": "Playground-selected current versions during the recorded Content Check run"
+    "environmentSelection": "Playground-selected current versions during each recorded run"
   },
   "verificationPolicy": "Do not mark a product verified until installation, activation, product-specific runtime checks, manual editor/front-end behavior, and relevant compatibility checks have been recorded.",
   "products": [
@@ -20,11 +20,12 @@
         "wordpress": "7.1.3",
         "php": "8.5.12",
         "checks": {
+          "zipInstall": true,
           "pluginActivated": true,
           "classLoaded": true,
           "metaboxHookRegistered": true
         },
-        "notes": "A first attempt using do_action('add_meta_boxes', 'post') caused a WordPress critical-error response. The smoke test was changed to inspect the registered hook without invoking the full metabox lifecycle. A fresh run then passed the installation, activation, class-loading, and hook-registration checks."
+        "notes": "The first test attempt used an incomplete add_meta_boxes action invocation and returned a WordPress critical-error page. The smoke test was changed to inspect hook registration without invoking the full metabox lifecycle. A fresh run then passed install, activation, class-loading, and hook-registration checks."
       },
       "automatedChecks": ["ZIP install", "plugin activation", "PHP class loading", "editor metabox hook registration"],
       "manualChecks": ["Open a disposable post in the editor", "Run Check this draft", "Confirm warnings are relevant and advisory"],
@@ -33,8 +34,19 @@
     {
       "id": "yorphives-image-alt-helper",
       "zip": "/plugin-packages/yorphives-image-alt-helper.zip",
-      "status": "fix-published-runtime-retest-pending",
-      "fix": "Version 1.0.1 rewrites the editor renderer to avoid a PHP string-quoting parse error and render labels via DOM text nodes. A rebuilt ZIP has been published; rerun installation and activation against that package.",
+      "status": "automated-runtime-smoke-pass",
+      "version": "1.0.1",
+      "recordedRun": {
+        "date": "2026-10-27",
+        "wordpress": "7.1.3",
+        "php": "8.5.12",
+        "checks": {
+          "zipInstall": true,
+          "pluginActivated": true,
+          "rendererFunctionLoaded": true
+        },
+        "notes": "The initial package failed during plugin activation. A PHP string-quoting issue in the inline renderer was corrected, the package rebuilt, and the rebuilt ZIP then installed and activated successfully."
+      },
       "automatedChecks": ["ZIP install", "plugin activation", "renderer function loading"],
       "manualChecks": ["Create a test post with images", "Run Review images", "Check missing, empty, and present alt labels"],
       "manualChecksStatus": "pending"
@@ -42,7 +54,17 @@
     {
       "id": "yorphives-link-audit",
       "zip": "/plugin-packages/yorphives-link-audit.zip",
-      "status": "not-run",
+      "status": "automated-runtime-smoke-pass",
+      "recordedRun": {
+        "date": "2026-10-27",
+        "wordpress": "7.1.3",
+        "php": "8.5.12",
+        "checks": {
+          "zipInstall": true,
+          "pluginActivated": true,
+          "rendererFunctionLoaded": true
+        }
+      },
       "automatedChecks": ["ZIP install", "plugin activation", "renderer function loading"],
       "manualChecks": ["Test readable links, empty labels, placeholder destinations, javascript: links, and target=_blank without rel=noopener"],
       "manualChecksStatus": "pending"
@@ -50,7 +72,19 @@
     {
       "id": "yorphives-reading-time",
       "zip": "/plugin-packages/yorphives-reading-time.zip",
-      "status": "not-run",
+      "status": "automated-runtime-smoke-pass",
+      "recordedRun": {
+        "date": "2026-10-27",
+        "wordpress": "7.1.3",
+        "php": "8.5.12",
+        "checks": {
+          "zipInstall": true,
+          "pluginActivated": true,
+          "shortcodeRegistered": true,
+          "shortcodeOutputNonempty": true,
+          "sampleOutput": "Reading time: 4 min read"
+        }
+      },
       "automatedChecks": ["ZIP install", "plugin activation", "shortcode registration", "shortcode output rendering"],
       "manualChecks": ["Add [yorphives_reading_time] to a test post", "Check estimate on front end", "Check custom wpm, label, and suffix attributes"],
       "manualChecksStatus": "pending"
