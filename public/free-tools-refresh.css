@@ -1,0 +1,36 @@
+/* Free Tools directory — focused discovery redesign */
+.directory-page{background:radial-gradient(ellipse at 90% 0%,rgba(82,67,162,.13),transparent 35%),#090b13}
+.directory-hero{position:relative;overflow:hidden;padding:clamp(58px,7vw,100px) max(5vw,22px) 44px;background:radial-gradient(ellipse at 82% 18%,rgba(97,74,192,.25),transparent 34%),linear-gradient(135deg,#101321,#0a0c14 75%);border-bottom:1px solid rgba(181,160,255,.17)}
+.directory-hero:after{content:"";position:absolute;right:-120px;top:-190px;width:460px;height:460px;border:1px solid rgba(120,226,224,.13);border-radius:50%;box-shadow:0 0 0 48px rgba(181,160,255,.025),0 0 0 96px rgba(181,160,255,.02);pointer-events:none}
+.directory-hero>*{position:relative;z-index:1}
+.directory-hero h1{font-size:clamp(46px,6.5vw,82px);line-height:.99;letter-spacing:-.065em;margin:22px 0 18px}
+.directory-hero>p{max-width:690px;font-size:15px;line-height:1.85}
+.directory-search{max-width:850px;margin-top:28px}
+.searchbox{min-height:66px;border-radius:16px;padding:0 15px 0 19px;background:rgba(14,16,28,.88);border-color:rgba(181,160,255,.38);box-shadow:0 18px 55px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.035);backdrop-filter:blur(16px)}
+.searchbox input{font-size:15px;padding:19px 0}
+.searchbox>span{font-size:28px}
+.searchbox button{width:36px;height:36px;border-radius:10px;font-size:23px;display:grid;place-items:center}
+.searchbox button:hover{background:rgba(181,160,255,.14);color:#fff}
+.directory-search small{font-size:11px}
+.hero-chips{gap:8px;margin-top:20px;max-width:950px}
+.hero-chips a,.category-filter{border-color:rgba(181,160,255,.2);background:rgba(19,21,35,.78);padding:10px 14px;font-size:11px;transition:transform .18s,border-color .18s,background .18s}
+.hero-chips a:hover,.category-filter:hover,.category-filter.active{transform:translateY(-1px);border-color:rgba(120,226,224,.62);background:rgba(91,76,150,.22)}
+.directory-wrap{max-width:1540px;padding:clamp(38px,5vw,68px) max(4vw,18px) 70px}
+.directory-toolbar{align-items:center;gap:16px;margin-bottom:22px}
+.directory-toolbar h2,.directory-faq h2{font-size:clamp(27px,3.2vw,40px);letter-spacing:-.055em}
+.directory-toolbar select{min-height:44px;border-radius:11px;padding:0 35px 0 13px;color:#f4f2ff;background:#141625;border-color:rgba(181,160,255,.28)}
+.category-filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 26px;padding:0 0 20px;border-bottom:1px solid rgba(181,160,255,.13)}
+.category-filter{cursor:pointer}
+.directory-categories{display:grid;gap:30px}
+.directory-categories>section,.directory-category{min-width:0}
+.directory-categories h3{font-size:18px;letter-spacing:-.025em;margin:0 0 15px}
+.tool-grid,.directory-tool-grid,.tools-grid{gap:12px!important}
+.tool-card,.directory-tool-card,.tool-item,.free-tool-card{border:1px solid rgba(181,160,255,.15)!important;border-radius:15px!important;background:linear-gradient(145deg,rgba(22,25,41,.92),rgba(13,15,25,.96))!important;box-shadow:0 10px 30px rgba(0,0,0,.12);transition:transform .2s,border-color .2s,box-shadow .2s}
+.tool-card:hover,.directory-tool-card:hover,.tool-item:hover,.free-tool-card:hover{transform:translateY(-3px);border-color:rgba(120,226,224,.45)!important;box-shadow:0 16px 34px rgba(0,0,0,.23)}
+.popular-pages{border-top:1px solid rgba(181,160,255,.13)}
+.popular-pages .hero-chips a{font-size:11px}
+.directory-privacy{border-top:1px solid rgba(181,160,255,.14)}
+.directory-faq details,.directory-page details{border-color:rgba(181,160,255,.17)}
+.directory-page :is(a,button,input,select):focus-visible{outline:2px solid #78e2e0!important;outline-offset:3px}
+@media(max-width:700px){.directory-hero{padding:58px 19px 34px}.directory-hero h1{font-size:clamp(43px,11vw,62px);letter-spacing:-.06em}.directory-hero:after{right:-280px;opacity:.6}.directory-wrap{padding:40px 16px 55px}.directory-toolbar{align-items:flex-start;flex-direction:column}.directory-toolbar select{width:100%}.searchbox{min-height:58px;padding-left:13px}.searchbox input{font-size:13px}.category-filters{gap:7px;padding-bottom:15px}.category-filter{padding:9px 11px}.tool-card,.directory-tool-card,.tool-item,.free-tool-card{border-radius:12px!important}}
+@media(prefers-reduced-motion:reduce){.directory-page *{scroll-behavior:auto!important;transition:none!important}}

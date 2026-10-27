@@ -1,0 +1,16 @@
+/* Workbench interface refinement — phase 2 */
+.workbench-page{background:radial-gradient(ellipse at 84% 0%,rgba(82,67,162,.13),transparent 34%),var(--wb-bg)}
+.wb-hero{max-width:1460px;padding:clamp(54px,7vw,96px) max(4vw,20px) 66px;gap:clamp(25px,4vw,58px)}
+.wb-copy h1{font-size:clamp(40px,5.3vw,74px);letter-spacing:-.065em;line-height:1.02}
+.wb-copy>p{font-size:15px;line-height:1.85;max-width:690px}
+.wb-hero-card{border-color:rgba(181,160,255,.24);border-radius:20px;background:radial-gradient(ellipse at 95% 0%,rgba(120,226,224,.08),transparent 40%),linear-gradient(145deg,rgba(31,33,53,.95),rgba(12,14,24,.98));box-shadow:0 28px 90px rgba(0,0,0,.22)}
+.wb-hero-card>strong{letter-spacing:-.035em}
+.wb-metrics>div{border:1px solid rgba(181,160,255,.13);border-radius:12px;padding:12px 9px;background:rgba(9,11,20,.35)}
+.wb-explainer{gap:clamp(24px,5vw,72px)}
+.wb-explainer h2,.wb-section-head h2{letter-spacing:-.055em}
+.wb-shelf{max-width:1460px;margin-inline:auto}
+.wb-tool-card,.wb-module,.wb-card,.wb-tile{border-color:rgba(181,160,255,.17)}
+.workbench-page :is(button,a,input,select,textarea):focus-visible{outline:2px solid var(--wb-teal)!important;outline-offset:3px}
+@media(max-width:850px){.wb-hero{grid-template-columns:1fr;padding-top:54px}.wb-hero-card{max-width:640px}.wb-copy h1{font-size:clamp(39px,8vw,62px)}}
+@media(max-width:560px){.wb-hero{padding:42px 17px 48px}.wb-actions{gap:8px}.wb-actions .button{width:100%;justify-content:center}.wb-hero-card{padding:21px}.wb-metrics{gap:7px}.wb-metrics>div{padding:10px 6px}}
+@media(prefers-reduced-motion:reduce){.workbench-page *{transition:none!important;scroll-behavior:auto!important}}
