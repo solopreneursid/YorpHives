@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yorphives.hatchable.site/product-catalog.schema.json",
+  "title": "YorpHives Product Catalogue",
+  "description": "Versioned metadata contract for discoverable YorpHives apps, extensions, assistants and plugins.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "lastReviewed",
+    "groups",
+    "products"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "lastReviewed": {
+      "type": "string",
+      "format": "date"
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "eyebrow",
+          "summary"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "eyebrow": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "group",
+          "description",
+          "url",
+          "status",
+          "access",
+          "platform",
+          "keywords"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "group": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1
+          },
+          "access": {
+            "type": "string",
+            "minLength": 1
+          },
+          "platform": {
+            "type": "string",
+            "minLength": 1
+          },
+          "keywords": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

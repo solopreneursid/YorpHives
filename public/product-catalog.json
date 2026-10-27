@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "lastReviewed": "2026-10-27",
+  "groups": [
+    {
+      "id": "apps",
+      "title": "Apps & workspaces",
+      "eyebrow": "01 / USE IN YOUR BROWSER",
+      "summary": "Browser-based applications and workspaces."
+    },
+    {
+      "id": "extensions",
+      "title": "Browser extensions",
+      "eyebrow": "02 / ENHANCE AN EXISTING BROWSER",
+      "summary": "Installable tools that extend your browser."
+    },
+    {
+      "id": "agents",
+      "title": "Agents & assistants",
+      "eyebrow": "03 / GUIDED WORKFLOWS",
+      "summary": "User-invoked assistants and rule-based workflows."
+    },
+    {
+      "id": "plugins",
+      "title": "Plugins & integrations",
+      "eyebrow": "04 / ADD FEATURES INSIDE A HOST APP",
+      "summary": "Integrations that add functionality inside supported host applications."
+    }
+  ],
+  "products": [
+    {
+      "id": "quickpanel-web",
+      "name": "QuickPanel Web App",
+      "type": "App",
+      "group": "apps",
+      "icon": "⌘",
+      "description": "A browser-based space for text actions, snippets, saved pages and everyday helpers.",
+      "url": "/quickpanel/",
+      "status": "Available now",
+      "access": "Free currently",
+      "platform": "Modern browsers",
+      "keywords": "quickpanel text snippets page capture clipboard productivity"
+    },
+    {
+      "id": "workbench",
+      "name": "YorpHives Workbench",
+      "type": "Workspace",
+      "group": "apps",
+      "icon": "▦",
+      "description": "A searchable workspace for productivity, research, text, privacy and rule-based workflows.",
+      "url": "/workbench.html",
+      "status": "Available now",
+      "access": "Free currently",
+      "platform": "Web",
+      "keywords": "workbench productivity research notes checklist privacy workflow"
+    },
+    {
+      "id": "pdf-image-toolkit",
+      "name": "PDF & Image Toolkit",
+      "type": "Web toolkit",
+      "group": "apps",
+      "icon": "▧",
+      "description": "A dedicated home for PDF and image utilities, separate from the general tools directory.",
+      "url": "/tools.html",
+      "status": "Available now",
+      "access": "Free tools",
+      "platform": "Web",
+      "keywords": "pdf image merge compress convert resize"
+    },
+    {
+      "id": "local-productivity-suite",
+      "name": "Local Productivity Suite",
+      "type": "Browser extension",
+      "group": "extensions",
+      "icon": "✦",
+      "description": "Original browser tools for text cleanup, saved snippets and private page notes with source links.",
+      "url": "/browser-extension.html#productivity-extensions",
+      "status": "Manual install",
+      "access": "Free",
+      "platform": "Compatible Chromium browsers",
+      "keywords": "local productivity text cleanup clipboard snippets page notes research"
+    },
+    {
+      "id": "quickpanel-extension",
+      "name": "QuickPanel Extension",
+      "type": "Browser extension",
+      "group": "extensions",
+      "icon": "⌘",
+      "description": "Invoke page actions, save snippets and capture useful page content in compatible Chromium browsers.",
+      "url": "/browser-extension.html#install",
+      "status": "Manual install",
+      "access": "Free currently",
+      "platform": "Chromium browsers",
+      "keywords": "quickpanel extension text snippets page capture"
+    },
+    {
+      "id": "tab-tidy",
+      "name": "Tab Tidy",
+      "type": "Browser extension",
+      "group": "extensions",
+      "icon": "▤",
+      "description": "Search current-window tabs, inspect duplicate URLs and export a tab list.",
+      "url": "/browser-extension.html#productivity-extensions",
+      "status": "Manual install",
+      "access": "Free",
+      "platform": "Chromium browsers",
+      "keywords": "tabs tidy duplicate urls session browser"
+    },
+    {
+      "id": "focus-fence",
+      "name": "Focus Fence",
+      "type": "Browser extension",
+      "group": "extensions",
+      "icon": "◉",
+      "description": "Temporarily block selected domains during a timed focus session.",
+      "url": "/browser-extension.html#productivity-extensions",
+      "status": "Manual install",
+      "access": "Free",
+      "platform": "Chromium browsers",
+      "keywords": "focus fence block websites timer productivity"
+    },
+    {
+      "id": "research-assistant",
+      "name": "Research Assistant",
+      "type": "Workbench assistant",
+      "group": "agents",
+      "icon": "⌕",
+      "description": "Combine saved clips and reading-queue entries into a structured research brief. It does not independently browse or verify claims.",
+      "url": "/workbench.html#tool-research-agent",
+      "status": "Available in Workbench",
+      "access": "Free currently",
+      "platform": "Web",
+      "keywords": "research source collector clips reading queue citations report"
+    },
+    {
+      "id": "job-organizer",
+      "name": "Job & Application Organizer",
+      "type": "Workbench assistant",
+      "group": "agents",
+      "icon": "✓",
+      "description": "Organize opportunities, application details and follow-up work in your browser.",
+      "url": "/workbench.html#tool-job-tracker",
+      "status": "Available in Workbench",
+      "access": "Free currently",
+      "platform": "Web",
+      "keywords": "job application organizer tracker checklist"
+    },
+    {
+      "id": "workflow-builder",
+      "name": "Workflow Builder",
+      "type": "Workbench assistant",
+      "group": "agents",
+      "icon": "⇢",
+      "description": "Structure repeatable workflows into steps and reusable checklists, without paid AI APIs.",
+      "url": "/workbench.html#tool-workflow-builder",
+      "status": "Available in Workbench",
+      "access": "Free currently",
+      "platform": "Web",
+      "keywords": "workflow builder templates reusable steps automation checklist"
+    },
+    {
+      "id": "content-check",
+      "name": "YorpHives Content Check",
+      "type": "WordPress plugin",
+      "group": "plugins",
+      "icon": "✓",
+      "description": "Editorial checklist inside WordPress for title, excerpt, word count, headings, links and image alt attributes.",
+      "url": "/plugins.html#wordpress",
+      "status": "Download package",
+      "access": "Free",
+      "platform": "WordPress",
+      "keywords": "wordpress plugin content editorial checklist SEO"
+    },
+    {
+      "id": "developer-toolkit",
+      "name": "YorpHives Developer Toolkit",
+      "type": "Editor extension",
+      "group": "plugins",
+      "icon": "{ }",
+      "description": "Editor commands for JSON formatting, URL decoding, text statistics and camelCase conversion.",
+      "url": "/plugins.html#vscode",
+      "status": "Source package; not Marketplace-published",
+      "access": "Free",
+      "platform": "VS Code-compatible editors",
+      "keywords": "vscode visual studio code developer json URL text stats camelcase"
+    },
+    {
+      "id": "image-alt-helper",
+      "name": "YorpHives Image Alt Helper",
+      "type": "WordPress plugin",
+      "group": "plugins",
+      "icon": "ALT",
+      "description": "Review image alternative text in the current post or page.",
+      "url": "/plugins.html#image-alt",
+      "status": "Download package",
+      "access": "Free",
+      "platform": "WordPress",
+      "keywords": "wordpress image alt accessibility"
+    },
+    {
+      "id": "link-audit",
+      "name": "YorpHives Link Audit",
+      "type": "WordPress plugin",
+      "group": "plugins",
+      "icon": "↗",
+      "description": "Find common link-label, placeholder URL and new-tab rel issues.",
+      "url": "/plugins.html#link-audit",
+      "status": "Download package",
+      "access": "Free",
+      "platform": "WordPress",
+      "keywords": "wordpress links audit quality security"
+    },
+    {
+      "id": "reading-time",
+      "name": "YorpHives Reading Time",
+      "type": "WordPress plugin",
+      "group": "plugins",
+      "icon": "◷",
+      "description": "Add an estimated reading-time label with a simple shortcode.",
+      "url": "/plugins.html#reading-time",
+      "status": "Download package",
+      "access": "Free",
+      "platform": "WordPress",
+      "keywords": "wordpress reading time publishing shortcode"
+    }
+  ]
+}
