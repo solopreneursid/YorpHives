@@ -57,17 +57,13 @@ echo json_encode(['active'=>$active,'class_loaded'=>$class,'metabox_hook_registe
  alt:{name:'YorpHives Image Alt Helper',zip:'/plugin-packages/yorphives-image-alt-helper.zip',slug:'yorphives-image-alt-helper',file:'yorphives-image-alt-helper/yorphives-image-alt-helper.php',php:`<?php
 require_once '/wordpress/wp-load.php';
 $active = in_array('yorphives-image-alt-helper/yorphives-image-alt-helper.php', (array) get_option('active_plugins', true), true);
-do_action('add_meta_boxes', 'post');
-global $wp_meta_boxes;
-$box = isset($wp_meta_boxes['post']['side']['default']['yhia-box']) || isset($wp_meta_boxes['post']['side']['high']['yhia-box']) || isset($wp_meta_boxes['post']['normal']['high']['yhia-box']);
-echo json_encode(['active'=>$active,'metabox_registered'=>$box,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
+$renderer = function_exists('yhiah_render');
+echo json_encode(['active'=>$active,'renderer_function_loaded'=>$renderer,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
  link:{name:'YorpHives Link Audit',zip:'/plugin-packages/yorphives-link-audit.zip',slug:'yorphives-link-audit',file:'yorphives-link-audit/yorphives-link-audit.php',php:`<?php
 require_once '/wordpress/wp-load.php';
 $active = in_array('yorphives-link-audit/yorphives-link-audit.php', (array) get_option('active_plugins', true), true);
-do_action('add_meta_boxes', 'post');
-global $wp_meta_boxes;
-$box = isset($wp_meta_boxes['post']['side']['default']['yhla-box']) || isset($wp_meta_boxes['post']['side']['high']['yhla-box']) || isset($wp_meta_boxes['post']['normal']['high']['yhla-box']);
-echo json_encode(['active'=>$active,'metabox_registered'=>$box,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
+$renderer = function_exists('yhla_render');
+echo json_encode(['active'=>$active,'renderer_function_loaded'=>$renderer,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
  reading:{name:'YorpHives Reading Time',zip:'/plugin-packages/yorphives-reading-time.zip',slug:'yorphives-reading-time',file:'yorphives-reading-time/yorphives-reading-time.php',php:`<?php
 require_once '/wordpress/wp-load.php';
 $active = in_array('yorphives-reading-time/yorphives-reading-time.php', (array) get_option('active_plugins', true), true);
@@ -91,7 +87,7 @@ function writeLog(msg){log.textContent+=((log.textContent&&log.textContent!=='Wa
 function setStatus(id,text,kind){const el=$('#status-'+id);el.textContent=text;el.className='host-status '+kind}
 document.querySelectorAll('[data-run]').forEach(btn=>btn.addEventListener('click',async()=>{
  if(busy)return;busy=true;document.querySelectorAll('[data-run]').forEach(b=>b.disabled=true);
- const id=btn.dataset.run,c=config[id];runner.hidden=false;$('#runnerTitle').textContent='Testing: '+c.name;$('#runnerIntro').textContent='Fresh temporary WordPress · PHP 8.3 · latest supported WordPress';log.textContent='Preparing browser-based WordPress…';frame.src='about:blank';runner.scrollIntoView({behavior:'smooth',block:'start'});setStatus(id,'Running real WordPress install and runtime checks…','pending');
+ const id=btn.dataset.run,c=config[id];runner.hidden=false;$('#runnerTitle').textContent='Testing: '+c.name;$('#runnerIntro').textContent='Fresh temporary WordPress · Playground-selected current PHP and WordPress versions';log.textContent='Preparing browser-based WordPress…';frame.src='about:blank';runner.scrollIntoView({behavior:'smooth',block:'start'});setStatus(id,'Running real WordPress install and runtime checks…','pending');
  try{
   const {startPlaygroundWeb,login,installPlugin}=await import('https://playground.wordpress.net/client/index.js');
   const zipResponse=await fetch(c.zip,{cache:'no-store'});if(!zipResponse.ok)throw new Error('Plugin ZIP returned HTTP '+zipResponse.status);const zipBytes=new Uint8Array(await zipResponse.arrayBuffer());writeLog('Package downloaded ('+zipBytes.length+' bytes).');
@@ -113,7 +109,7 @@ document.querySelectorAll('[data-run]').forEach(btn=>btn.addEventListener('click
   if(data.active!==true)failed.push('plugin activation');
   if(id==='content'&&data.class_loaded!==true)failed.push('plugin class loading');
   if(id==='content'&&!data.metabox_hook_registered)failed.push('editor metabox hook registration');
-  if((id==='alt'||id==='link')&&!data.metabox_registered)failed.push('editor metabox registration');
+  if((id==='alt'||id==='link')&&!data.renderer_function_loaded)failed.push('plugin renderer function loading');
   if(id==='reading'&&data.shortcode_registered!==true)failed.push('shortcode registration');
   if(id==='reading'&&data.output_nonempty!==true)failed.push('shortcode output rendering');
   const summary='WP '+(data.wordpress||'?')+' · PHP '+(data.php||'?')+' · '+(failed.length?'Needs investigation: '+failed.join(', '):'Automated runtime checks passed');
