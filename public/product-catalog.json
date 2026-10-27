@@ -43,6 +43,7 @@
     },
     {
       "id": "workbench",
+      "featured": true,
       "name": "YorpHives Workbench",
       "type": "Workspace",
       "group": "apps",
@@ -69,6 +70,7 @@
     },
     {
       "id": "local-productivity-suite",
+      "featured": true,
       "name": "Local Productivity Suite",
       "type": "Browser extension",
       "group": "extensions",
@@ -121,6 +123,7 @@
     },
     {
       "id": "research-assistant",
+      "featured": true,
       "name": "Research Assistant",
       "type": "Workbench assistant",
       "group": "agents",
@@ -160,6 +163,7 @@
     },
     {
       "id": "content-check",
+      "featured": true,
       "name": "YorpHives Content Check",
       "type": "WordPress plugin",
       "group": "plugins",
