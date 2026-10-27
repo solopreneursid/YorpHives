@@ -4,38 +4,40 @@
   <url><loc>https://yorphives.hatchable.site/services.html</loc><changefreq>monthly</changefreq><priority>0.95</priority></url>
   <url><loc>https://yorphives.hatchable.site/portfolio.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://yorphives.hatchable.site/products.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://yorphives.hatchable.site/free-tools.html</loc><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://yorphives.hatchable.site/free-tools.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://yorphives.hatchable.site/workbench.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://yorphives.hatchable.site/browser-extension.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://yorphives.hatchable.site/quickpanel/</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://yorphives.hatchable.site/browser-extension.html</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://yorphives.hatchable.site/plugins.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://yorphives.hatchable.site/quickpanel/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://yorphives.hatchable.site/tools.html</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://yorphives.hatchable.site/word-counter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/json-formatter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/percentage-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/password-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/qr-code-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/gst-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/base64-encoder-decoder.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/url-encoder-decoder.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/css-gradient-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/emi-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/discount-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/compound-interest-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/unix-timestamp-converter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/json-to-csv-converter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/aspect-ratio-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/html-to-text-converter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/markdown-preview.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/image-dimensions-checker.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/color-palette-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/css-box-shadow-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/css-formatter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/html-entity-reference.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/image-file-size-estimator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/responsive-breakpoint-helper.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/color-converter-contrast-checker.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/json-to-typescript.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/url-query-string-parser.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/csv-to-markdown-table.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yorphives.hatchable.site/cron-expression-helper.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://yorphives.hatchable.site/file-workspace.html</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://yorphives.hatchable.site/aspect-ratio-calculator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/base64-encoder-decoder.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/color-converter-contrast-checker.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/color-palette-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/compound-interest-calculator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/cron-expression-helper.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/css-box-shadow-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/css-formatter.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/css-gradient-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/csv-to-markdown-table.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/discount-calculator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/emi-calculator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/gst-calculator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/html-entity-reference.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/html-to-text-converter.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/image-dimensions-checker.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/image-file-size-estimator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/json-formatter.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/json-to-csv-converter.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/json-to-typescript.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/markdown-preview.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/password-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/percentage-calculator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/qr-code-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/responsive-breakpoint-helper.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/unix-timestamp-converter.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/url-encoder-decoder.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/url-query-string-parser.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://yorphives.hatchable.site/word-counter.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

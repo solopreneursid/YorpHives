@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /extension-src/
+Disallow: /firefox-addon/
+Disallow: /tab-tidy/
+Disallow: /focus-fence/
+Disallow: /local-suite/
 
 Sitemap: https://yorphives.hatchable.site/sitemap.xml
