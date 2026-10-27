@@ -1,6 +1,6 @@
 'use strict';
-const CACHE='lifeos-shell-v1';
-const SHELL=['/lifeos/','/lifeos/styles.css','/lifeos/app.js','/lifeos/manifest.json','/lifeos/icon.svg','/lifeos/icon-192.svg','/lifeos/icon-512.svg'];
+const CACHE='lifeos-shell-v2';
+const SHELL=['/lifeos/','/lifeos/styles.css','/lifeos/app.js','/lifeos/manifest.json','/lifeos/icon.svg','/lifeos/icon-192.svg','/lifeos/icon-512.svg','/lifeos/about.html','/lifeos/privacy.html'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('lifeos-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',event=>{const request=event.request;if(request.method!=='GET')return;const url=new URL(request.url);if(url.origin!==self.location.origin||!url.pathname.startsWith('/lifeos/'))return;if(request.mode==='navigate'){event.respondWith(fetch(request).then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put('/lifeos/',copy));return response}).catch(()=>caches.match('/lifeos/')));return}event.respondWith(caches.match(request,{ignoreSearch:true}).then(cached=>cached||fetch(request).then(response=>{if(response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(request,copy))}return response})))});

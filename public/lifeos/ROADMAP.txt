@@ -1,0 +1,38 @@
+LifeOS — Implementation Roadmap
+YorpHives product route: /lifeos/
+Status: early-access prototype; this document describes planned work, not active features.
+
+PHASE 1 — CORE MVP QUALITY
+- Verify add, edit, complete/reopen, habit check-in/undo, goal progress, expense/subscription editing, JSON export/import, and reload persistence.
+- Test keyboard focus, modal close/cancel, empty states, mobile layout, and visible error states.
+- Test PWA install, icon appearance, offline launch, and cache refresh on supported real devices.
+- Keep the lifecycle label at Testing until end-to-end checks are recorded.
+
+PHASE 2 — ACCOUNT AND SYNC DESIGN (NOT IMPLEMENTED)
+- Use Hatchable's supported end-user authentication. Do not create a custom password system.
+- Require authentication for every personal-data API. Derive the owner from the authenticated server request; never trust a client-supplied user_id or workspace_id alone.
+- Proposed schema:
+  lifeos_workspaces: id, owner_user_id, name, created_at, updated_at.
+  lifeos_items: id, workspace_id, owner_user_id, type, payload JSONB, created_at, updated_at, deleted_at, revision.
+  lifeos_sync_state (optional): user_id, device_id, last_sync_at, schema_version.
+- Add database indexes for owner_user_id, workspace_id, and updated_at. Add uniqueness/foreign-key constraints appropriate to the platform's auth schema.
+- Keep task, habit, goal, reminder, study, expense, subscription, and document-reference records scoped to the authenticated owner. Verify cross-user reads and writes fail.
+- Build explicit authenticated API routes for listing changes, creating/updating items, deleting items, exporting, and deleting an account's LifeOS data. Do not expose a public list endpoint.
+- Use per-item updated_at/revision values and soft-delete tombstones so deletes sync between devices. Detect revision conflicts and avoid silently overwriting newer data. Present a recoverable conflict choice where needed.
+- Preserve offline-first interaction. Queue local changes, retry sync safely, show sync state, and keep export/import available.
+- Before enabling sync, add migration/rollback notes, backup/export, API rate limits, ownership tests, session-expiry handling, and privacy/retention/deletion documentation.
+
+PHASE 3 — PRIVATE BETA
+- Start with a small, opt-in beta. Explain what leaves the device and when.
+- Add a sync toggle and a visible last-synced status; never silently upload the existing local workspace on first sign-in.
+- Provide an explicit import/merge choice when connecting a local workspace to an account.
+- Test two-device edits, offline changes, simultaneous edits, logout, account deletion, and recovery from failed sync.
+
+PHASE 4 — PUBLIC RELEASE
+- Only after test evidence: update product catalogue verification and lifecycle status; publish genuine screenshots captured from the live app; finalise access terms, support path, privacy notice, and release notes.
+- Keep future AI planning, notifications, bank integrations, native packaging, and paid features clearly marked as unavailable until actually implemented.
+
+CURRENT DATA AND FEATURE LIMITS
+- Current workspace stays in browser localStorage on the current device/profile.
+- No LifeOS accounts, cloud sync, server-side workspace storage, bank connection, file upload vault, connected AI planner, browser notifications, billing, or native APK/app-store package.
+- Do not use this prototype to store passwords, account credentials, medical records, or other highly sensitive information.
