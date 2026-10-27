@@ -1,0 +1,13 @@
+<?php
+/**
+ * Plugin Name: YorpHives Link Audit
+ * Description: Audits links in the current WordPress post or page for empty labels, placeholder URLs and external links opened in new tabs without rel protections.
+ * Version: 1.0.0
+ * Requires at least: 6.0
+ * Requires PHP: 7.4
+ * Author: YorpHives
+ * License: GPL-2.0-or-later
+ */
+if (!defined('ABSPATH')) { exit; }
+add_action('add_meta_boxes', function () { foreach (array('post','page') as $type) add_meta_box('yhla-box','YorpHives Link Audit','yhla_render',$type,'side','default'); });
+function yhla_render($post) { if (!current_user_can('edit_post',$post->ID)) return; echo '<p>Check links in the current draft for common issues. Findings are advisory and remain in your browser.</p><button type="button" class="button" id="yhla-run">Audit links</button><div id="yhla-results" aria-live="polite"><p>Run an audit to review links.</p></div><script>(function(){const b=document.getElementById("yhla-run");if(!b)return;b.addEventListener("click",function(){try{const ed=window.tinymce&&tinymce.get("content");const html=ed&&!ed.isHidden()?ed.getContent():document.getElementById("content").value;const d=new DOMParser().parseFromString(html,"text/html"),links=[...d.querySelectorAll("a")],findings=[];links.forEach((a,i)=>{const href=(a.getAttribute("href")||"").trim(),label=(a.textContent||"").trim()||a.querySelector("img[alt]")?.getAttribute("alt")||"";if(!label)findings.push("Link "+(i+1)+": no readable link text or image alt label.");if(!href||href==="#"||/^javascript:/i.test(href))findings.push("Link "+(i+1)+": empty or placeholder destination.");if(a.getAttribute("target")==="_blank"&&!/\bnoopener\b/i.test(a.getAttribute("rel")||""))findings.push("Link "+(i+1)+": target=_blank without rel=noopener.")});const box=document.getElementById("yhla-results");box.replaceChildren();const p=document.createElement("p");p.textContent="Found "+links.length+" link(s); "+findings.length+" item(s) to review.";box.append(p);if(findings.length){const ul=document.createElement("ul");findings.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.append(li)});box.append(ul)}else{const ok=document.createElement("p");ok.textContent="No common issues detected by these checks.";box.append(ok)}}catch(e){document.getElementById("yhla-results").textContent="Could not inspect the editor content. Try the Code editor or save the draft first."}});})();</script>'; }

@@ -54,22 +54,25 @@ async function run(){
   const packageFiles=[
    '/tab-tidy/manifest.json','/tab-tidy/popup.html','/tab-tidy/popup.js','/tab-tidy/popup.css','/tab-tidy/README.txt',
    '/quickpanel/manifest.json','/quickpanel/sw.js','/quickpanel/app.js',
-   '/plugin-src/wordpress-yorphives-content-check/yorphives-content-check.php','/plugin-src/wordpress-yorphives-content-check/content-check.js','/plugin-src/wordpress-yorphives-content-check/content-check.css',
-   '/plugin-src/yorphives-image-alt-helper/yorphives-image-alt-helper.php','/plugin-src/yorphives-link-audit/yorphives-link-audit.php','/plugin-src/yorphives-reading-time/yorphives-reading-time.php',
+   '/plugin-src/wordpress-yorphives-content-check/yorphives-content-check.php.txt','/plugin-src/wordpress-yorphives-content-check/content-check.js','/plugin-src/wordpress-yorphives-content-check/content-check.css',
+   '/plugin-src/yorphives-image-alt-helper/yorphives-image-alt-helper.php.txt','/plugin-src/yorphives-link-audit/yorphives-link-audit.php.txt','/plugin-src/yorphives-reading-time/yorphives-reading-time.php.txt',
    '/plugin-src/yorphives-vscode-toolkit/package.json','/plugin-src/yorphives-vscode-toolkit/extension.js'
   ];
   const fileResults=await Promise.all(packageFiles.map(async path=>{try{return {path,text:await fetchText(path)};}catch(e){return {path,error:e.message};}}));
   const absent=fileResults.filter(x=>x.error);if(absent.length)report('fail','Extension/plugin source files',absent.map(x=>x.path+' — '+x.error).join(' | '));else report('pass','Extension/plugin source files',fileResults.length+' expected source/documentation files are served.');
   for(const path of ['/tab-tidy/manifest.json','/quickpanel/manifest.json','/plugin-src/yorphives-vscode-toolkit/package.json']){
    const item=fileResults.find(x=>x.path===path);if(!item||item.error)continue;
-   try{const j=JSON.parse(item.text);if(path.endsWith('manifest.json')){if(j.manifest_version!==3||!j.name||!j.action)throw new Error('Missing expected Manifest V3 metadata/action');}else if(!j.name||!j.main||!j.engines)throw new Error('Missing VS Code package metadata');report('pass','Package metadata: '+path,'Manifest/package JSON parses and required metadata is present.');}
+   try{const j=JSON.parse(item.text);if(path==='/tab-tidy/manifest.json'){if(j.manifest_version!==3||!j.name||!j.action||!Array.isArray(j.permissions))throw new Error('Missing expected Manifest V3 extension metadata');}
+   else if(path==='/quickpanel/manifest.json'){if(!j.name||!j.start_url||!j.scope||!j.display)throw new Error('Missing expected PWA manifest metadata');}
+   else if(!j.name||!j.main||!j.engines)throw new Error('Missing VS Code package metadata');
+   report('pass','Package metadata: '+path,'Manifest/package JSON parses and expected metadata is present.');}
    catch(e){report('fail','Package metadata: '+path,e.message);}
   }
   for(const item of fileResults.filter(x=>x.path.endsWith('.js')&&!x.error)){
    try{new Function(item.text);report('pass','JavaScript syntax: '+item.path,'Parses without a syntax error (not a runtime test).');}
    catch(e){report('fail','JavaScript syntax: '+item.path,e.message);}
   }
-  const php=fileResults.filter(x=>x.path.endsWith('.php')&&!x.error);
+  const php=fileResults.filter(x=>x.path.endsWith('.php.txt')&&!x.error);
   if(php.length&&php.every(x=>/Plugin Name:/.test(x.text)&&/if\s*\(!defined\(['"]ABSPATH['"]\)\)\s*\{\s*exit;\s*\}/.test(x.text)))report('pass','WordPress source headers','Found plugin headers and direct-access guards in '+php.length+' PHP files; PHP runtime/lint was not run.');
   else report('warn','WordPress source headers','One or more PHP source files lack an expected header/guard, or files were unavailable.');
  }catch(e){if(!checks.some(c=>c.level==='fail'))report('fail','Preflight runner',e.message);}
