@@ -115,14 +115,43 @@
   // Progressive Web App setup: manifest, service worker, and install prompt.
   if(!document.querySelector('link[rel="manifest"]')){const manifest=document.createElement('link');manifest.rel='manifest';manifest.href='/manifest.webmanifest';document.head.appendChild(manifest)}
   if(!document.querySelector('meta[name="theme-color"]')){const theme=document.createElement('meta');theme.name='theme-color';theme.content='#08090e';document.head.appendChild(theme)}
-  const installButton=document.getElementById('yhInstallApp');let deferredInstallPrompt=null;
-  const showInstall=()=>installButton?.classList.add('yh-install-visible');
+  const installButton=document.getElementById('yhInstallApp');
+  let deferredInstallPrompt=null;
+  const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.matchMedia('(display-mode: minimal-ui)').matches||window.navigator.standalone===true;
+  const showInstall=()=>{if(installButton){installButton.classList.add('yh-install-visible');installButton.textContent='Install app ↓'}};
   const hideInstall=()=>installButton?.classList.remove('yh-install-visible');
-  const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
-  if(isStandalone()){hideInstall()}else if(installButton){if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){showInstall()} }
+  if(isStandalone()){hideInstall()}else{showInstall()}
   window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstallPrompt=event;showInstall()});
-  window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;hideInstall();showPwaHint('YorpHives has been installed. You can open it from your apps.');});
-  function showPwaHint(message){const old=document.querySelector('.yh-pwa-hint');if(old)old.remove();const hint=document.createElement('div');hint.className='yh-pwa-hint';hint.setAttribute('role','status');hint.textContent=message;document.body.appendChild(hint);setTimeout(()=>hint.remove(),9000)}
-  installButton?.addEventListener('click',async()=>{if(deferredInstallPrompt){deferredInstallPrompt.prompt();const choice=await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;if(choice?.outcome==='accepted')hideInstall();return}if(/iPhone|iPad|iPod/i.test(navigator.userAgent)&&!isStandalone()){showPwaHint('To install: tap Share in Safari, then choose “Add to Home Screen”.');return}if(/Android/i.test(navigator.userAgent)&&!isStandalone()){showPwaHint('If the install prompt does not appear, open your browser menu and choose “Install app” or “Add to Home screen”.');return}showPwaHint('Use your browser menu and choose “Install YorpHives” or “Install app” to add it to your desktop.');});
-  if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js',{scope:'/'}).catch(()=>{}))}
+  window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;hideInstall();showPwaHint('YorpHives is installed. Open it from your desktop, app launcher, or home screen.')});
+  function showPwaHint(message){
+    const old=document.querySelector('.yh-pwa-hint');if(old)old.remove();
+    const hint=document.createElement('div');hint.className='yh-pwa-hint';hint.setAttribute('role','status');hint.setAttribute('aria-live','polite');hint.textContent=message;document.body.appendChild(hint);
+    window.setTimeout(()=>{if(hint.isConnected)hint.remove()},12000);
+  }
+  installButton?.addEventListener('click',async()=>{
+    const nav=document.querySelector('#mainNav');const toggle=document.querySelector('.yh-menu-toggle');
+    if(nav?.classList.contains('yh-nav-open')){nav.classList.remove('yh-nav-open');toggle?.setAttribute('aria-expanded','false');toggle?.setAttribute('aria-label','Open navigation');if(toggle)toggle.textContent='☰'}
+    if(isStandalone()){hideInstall();showPwaHint('YorpHives is already running as an installed app.');return}
+    if(deferredInstallPrompt){
+      try{
+        deferredInstallPrompt.prompt();
+        const choice=await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt=null;
+        if(choice?.outcome==='accepted'){hideInstall();showPwaHint('Installation accepted. Follow any browser or operating-system confirmation to finish.')}
+        else{showInstall();showPwaHint('Installation was cancelled. You can try again later, or use your browser menu to install YorpHives.')}
+      }catch(error){deferredInstallPrompt=null;showInstall();showPwaHint('The browser could not open its install prompt. Use the browser menu to look for “Install YorpHives” or “Install app”.')}
+      return;
+    }
+    const ua=navigator.userAgent;
+    if(/iPhone|iPad|iPod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)){
+      showPwaHint('Add YorpHives to your Home Screen: open this site in Safari, tap Share, choose “Add to Home Screen”, then tap Add. If the option is missing, scroll through the Share actions or check Safari’s Add to Home Screen options.');
+      return;
+    }
+    if(/Android/i.test(ua)){
+      showPwaHint('To install on Android: open YorpHives in Chrome or another supported browser, open the browser menu, choose “Install app” or “Add to Home screen”, and confirm. If no option appears, update the browser, reload this page, and try outside private browsing.');
+      return;
+    }
+    showPwaHint('To install on desktop: in Chrome or Edge, open the browser menu or look for the install icon in the address bar, then choose “Install YorpHives” or “Install app”. If it is unavailable, update the browser, reload this HTTPS page, and check the browser’s PWA/installability diagnostics. Some browsers do not support native PWA installation.');
+  });
+  if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js',{scope:'/'}).catch(error=>console.warn('YorpHives offline support could not be registered.',error)))}
 })();
