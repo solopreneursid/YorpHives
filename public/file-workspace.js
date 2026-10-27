@@ -84,4 +84,35 @@ workspaceSearch?.addEventListener('input',filterWorkspaceTools);
 $('clearWorkspaceSearch')?.addEventListener('click',()=>{workspaceSearch.value='';activeWorkspaceFilter='all';workspaceFilters.forEach(b=>{const active=b.dataset.filter==='all';b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});filterWorkspaceTools();workspaceSearch.focus()});
 workspaceFilters.forEach(button=>button.addEventListener('click',()=>{activeWorkspaceFilter=button.dataset.filter;workspaceFilters.forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});filterWorkspaceTools()}));
 
+// Present each existing file tool as a discovery card that opens its live controls in a modal.
+// The original tool DOM is moved (not cloned), so all existing IDs, handlers and processing stay intact.
+const toolModal=$('workspaceToolModal'),modalContent=$('workspaceModalContent'),modalTitle=$('workspaceModalTitle'),modalClose=$('workspaceModalClose');
+let modalReturnFocus=null;
+function closeWorkspaceTool(){if(!toolModal||toolModal.hidden)return;toolModal.hidden=true;document.body.classList.remove('workspace-modal-open');if(modalReturnFocus&&document.contains(modalReturnFocus))modalReturnFocus.focus();modalReturnFocus=null}
+document.querySelectorAll('.tool-section:not(.workspace-faq) .workspace-card').forEach((card,index)=>{
+  const section=card.closest('.tool-section');if(!section)return;
+  const title=(card.querySelector('h3')?.textContent||section.querySelector('.section-heading h2')?.textContent||'File tool').trim();
+  const description=(card.querySelector('.workspace-note')?.textContent||section.querySelector('.workspace-lede')?.textContent||'Open this tool to select files and configure options.').trim();
+  const launcher=document.createElement('button');launcher.type='button';launcher.className='workspace-tool-launcher';launcher.innerHTML='<span class="launcher-icon" aria-hidden="true">↗</span><strong></strong><small></small>';
+  launcher.querySelector('strong').textContent=title;launcher.querySelector('small').textContent=description.length>104?description.slice(0,101)+'…':description;
+  launcher.setAttribute('aria-haspopup','dialog');launcher.setAttribute('aria-label','Open '+title);
+  card.classList.add('is-modal-inactive');modalContent.appendChild(card);card.hidden=false;
+  // Put launchers alongside sibling cards when in a grid; otherwise place beneath the section introduction.
+  if(card.parentElement===modalContent||card.parentElement?.classList.contains('workspace-tool-dialog-content')){}
+  const grid=section.querySelector('.workspace-grid');
+  if(grid&&grid.contains(launcher)){} 
+  const parent=section.querySelector('.workspace-grid')&&section.querySelector('.workspace-grid').contains(card)?section.querySelector('.workspace-grid'):section;
+  const anchor=parent===section?section.querySelector('.section-heading')?.nextElementSibling:parent.firstChild;
+  if(parent===section&&anchor)parent.insertBefore(launcher,anchor);else parent.appendChild(launcher);
+  launcher.addEventListener('click',()=>{
+    modalReturnFocus=launcher;modalTitle.textContent=title;
+    modalContent.querySelectorAll('.workspace-card').forEach(c=>{c.classList.remove('is-modal-active');c.classList.add('is-modal-inactive')});
+    card.classList.remove('is-modal-inactive');card.classList.add('is-modal-active');
+    toolModal.hidden=false;document.body.classList.add('workspace-modal-open');modalClose.focus();
+  });
+});
+modalClose?.addEventListener('click',closeWorkspaceTool);
+toolModal?.querySelectorAll('[data-modal-close]').forEach(el=>el.addEventListener('click',closeWorkspaceTool));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&toolModal&&!toolModal.hidden)closeWorkspaceTool()});
+
 })();
