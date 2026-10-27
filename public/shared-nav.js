@@ -15,6 +15,7 @@
     {label:'About',href:'/#about',key:'about'}
   ];
   const active = path==='/'?'home':path==='/products.html'?'products':path==='/free-tools.html'?'tools':path==='/workbench.html'?'workbench':path.startsWith('/quickpanel')?'quickpanel':path==='/browser-extension.html'?'extensions':path==='/tools.html'?'media':path==='/file-workspace.html'?'fileworkspace':'tools';
+  if(!document.querySelector('link[href^="/tech-wizard.css"]')){const theme=document.createElement('link');theme.rel='stylesheet';theme.href='/tech-wizard.css?v=1';document.head.appendChild(theme)}
   const style=document.createElement('style');style.id='yorphives-shared-nav-style';
   style.textContent=`
     .site-header{position:sticky!important;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:13px clamp(18px,3vw,44px);background:rgba(8,8,14,.96)!important;backdrop-filter:blur(16px);border-bottom:1px solid #242333!important}
@@ -80,7 +81,32 @@
     const main=document.querySelector('main');const title=document.querySelector('main h1')?.textContent?.replace(/\s+/g,' ').trim()||document.title.split('|')[0].trim();
     if(main&&!document.querySelector('.yh-breadcrumb')){const section=document.createElement('nav');section.className='yh-breadcrumb';section.setAttribute('aria-label','Breadcrumb');const ol=document.createElement('ol');const home=document.createElement('li');home.innerHTML='<a href="/">Home</a>';ol.appendChild(home);const current=document.createElement('li');current.setAttribute('aria-current','page');current.textContent=path==='/products.html'?'Products':path==='/free-tools.html'?'Free Tools':path==='/workbench.html'?'Workbench':path==='/tools.html'?'PDF & Images':path==='/browser-extension.html'?'Extensions':title;ol.appendChild(current);section.appendChild(ol);main.before(section)}
   }
-// Progressive Web App setup: manifest, service worker, and install prompt.
+// A short purpose panel makes each destination self-explanatory, including pages with minimal introductory copy.
+  const pageGuides={
+    '/products.html':{title:'Original YorpHives products',description:'Explore tools and software built by YorpHives. Check what is available, how each product works, and whether it is free or has separate access terms.',tag:'PRODUCT LAB'},
+    '/free-tools.html':{title:'Find a free tool for the task',description:'Search practical browser-based utilities by name or job. This directory is for free-to-use tools; choose a card to open the relevant tool and get to work.',tag:'FREE TOOL INDEX'},
+    '/workbench.html':{title:'Your everyday browser workbench',description:'Use focused mini-tools for notes, text cleanup, research capture, data tasks and repeatable workflows in one workspace.',tag:'WORKSPACE'},
+    '/tools.html':{title:'PDF and image toolkit',description:'Choose a task involving PDFs or images: convert, resize, merge, reorder, extract text, add watermarks or inspect files.',tag:'FILE UTILITIES'},
+    '/file-workspace.html':{title:'Convert and organize files',description:'Pick a file task, open its control panel, choose your files and configure the output. Processing is designed to happen in your browser where supported.',tag:'CONVERSION BAY'},
+    '/browser-extension.html':{title:'QuickPanel browser companion',description:'Learn what the YorpHives browser companion does, review supported browsers and installation options, and see its local-first features before installing.',tag:'BROWSER GEAR'},
+    '/quickpanel':{title:'QuickPanel — quick actions, right where you work',description:'Open handy text actions, saved snippets and page utilities from a compact browser-friendly workspace.',tag:'QUICK ACCESS'}
+  };
+  const guide=pageGuides[path];
+  if(guide&&!document.querySelector('.yh-page-guide')){
+    const main=document.querySelector('main')||document.querySelector('#app')||document.body;
+    const box=document.createElement('section');box.className='yh-page-guide';box.setAttribute('aria-label','What this page is for');
+    const inner=document.createElement('div');inner.className='yh-page-guide-inner';
+    const copy=document.createElement('div');copy.className='yh-page-guide-copy';
+    const label=document.createElement('span');label.className='yh-page-guide-label';label.textContent='SYSTEM GUIDE / PAGE PURPOSE';
+    const heading=document.createElement('h2');heading.textContent=guide.title;
+    const description=document.createElement('p');description.textContent=guide.description;
+    copy.append(label,heading,description);
+    const tag=document.createElement('span');tag.className='yh-page-guide-tag';tag.textContent=guide.tag;
+    inner.append(copy,tag);box.append(inner);
+    const breadcrumb=document.querySelector('.yh-breadcrumb');
+    if(breadcrumb&&breadcrumb.parentElement)breadcrumb.insertAdjacentElement('afterend',box);else main.insertBefore(box,main.firstChild);
+  }
+  // Progressive Web App setup: manifest, service worker, and install prompt.
   if(!document.querySelector('link[rel="manifest"]')){const manifest=document.createElement('link');manifest.rel='manifest';manifest.href='/manifest.webmanifest';document.head.appendChild(manifest)}
   if(!document.querySelector('meta[name="theme-color"]')){const theme=document.createElement('meta');theme.name='theme-color';theme.content='#08090e';document.head.appendChild(theme)}
   const installButton=document.getElementById('yhInstallApp');let deferredInstallPrompt=null;
