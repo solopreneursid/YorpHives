@@ -33,6 +33,7 @@ PHASE 0 — PRODUCT AND TECHNICAL FOUNDATION
 - Do not mark the product as Available until installable builds pass device testing.
 
 PHASE 1 — NATIVE APP FOUNDATION (ANDROID FIRST)
+- A separate minimal Flutter source scaffold has been prepared for Android-first work; progress and unverified items are tracked in /lifeos/NATIVE-STARTER-STATUS.txt. It is not compiled or release-ready yet.
 - Create the Flutter application source as a native application codebase, kept within the YorpHives product's version-control/release process. Do not create a separate YorpHives product or duplicate catalogue entry.
 - Implement app shell, navigation, design tokens, themes, localization-ready text, accessible components, error/empty/loading states, and first-run onboarding.
 - Add SQLite persistence, versioned migrations, repository interfaces and unit/widget/integration tests.
