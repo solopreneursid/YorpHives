@@ -1,0 +1,28 @@
+{
+  "id": "/lifeos/",
+  "name": "LifeOS by YorpHives",
+  "short_name": "LifeOS",
+  "description": "A personal dashboard for daily tasks, habits, goals, money and priorities.",
+  "start_url": "/lifeos/?source=installed-app",
+  "scope": "/lifeos/",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "background_color": "#10131b",
+  "theme_color": "#10131b",
+  "categories": [
+    "productivity",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "/lifeos/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
