@@ -17,9 +17,9 @@
 <div class="host-banner"><strong>Evidence boundary:</strong> a passing run confirms installation, activation, and the listed runtime checks in this browser-based WordPress environment only. It does not establish compatibility with every WordPress/PHP version, hosting provider, editor, or production site. Do not change catalogue verification to “verified” based on activation alone.</div>
 <section class="host-grid" id="pluginCards" aria-label="WordPress plugin test runners">
 <article class="host-card" data-plugin="content"><span class="test-tag">WordPress plugin</span><h2>YorpHives Content Check</h2><p class="host-meta">Checks ZIP install, activation, class loading, and editor metabox registration.</p><div class="host-actions"><button class="button button-primary" data-run="content">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-content-check.zip">Download ZIP</a></div><div class="host-status pending" id="status-content" role="status">Not run in this browser yet.</div></article>
-<article class="host-card" data-plugin="alt"><span class="test-tag">WordPress plugin</span><h2>YorpHives Image Alt Helper</h2><p class="host-meta">Checks ZIP install, activation, and image-alt review metabox registration.</p><div class="host-actions"><button class="button button-primary" data-run="alt">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-image-alt-helper.zip">Download ZIP</a></div><div class="host-status pending" id="status-alt" role="status">Not run in this browser yet.</div></article>
-<article class="host-card" data-plugin="link"><span class="test-tag">WordPress plugin</span><h2>YorpHives Link Audit</h2><p class="host-meta">Checks ZIP install, activation, and link-audit metabox registration.</p><div class="host-actions"><button class="button button-primary" data-run="link">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-link-audit.zip">Download ZIP</a></div><div class="host-status pending" id="status-link" role="status">Not run in this browser yet.</div></article>
-<article class="host-card" data-plugin="reading"><span class="test-tag">WordPress plugin</span><h2>YorpHives Reading Time</h2><p class="host-meta">Checks ZIP install, activation, shortcode registration, and output rendering.</p><div class="host-actions"><button class="button button-primary" data-run="reading">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-reading-time.zip">Download ZIP</a></div><div class="host-status pending" id="status-reading" role="status">Not run in this browser yet.</div></article>
+<article class="host-card" data-plugin="alt"><span class="test-tag">WordPress plugin</span><h2>YorpHives Image Alt Helper</h2><p class="host-meta">Checks ZIP install, activation, actual image-alt metabox rendering, and the three alt-text review states.</p><div class="host-actions"><button class="button button-primary" data-run="alt">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-image-alt-helper.zip">Download ZIP</a></div><div class="host-status pending" id="status-alt" role="status">Not run in this browser yet.</div></article>
+<article class="host-card" data-plugin="link"><span class="test-tag">WordPress plugin</span><h2>YorpHives Link Audit</h2><p class="host-meta">Checks ZIP install, activation, actual link-audit metabox rendering, and the expected link-review rules.</p><div class="host-actions"><button class="button button-primary" data-run="link">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-link-audit.zip">Download ZIP</a></div><div class="host-status pending" id="status-link" role="status">Not run in this browser yet.</div></article>
+<article class="host-card" data-plugin="reading"><span class="test-tag">WordPress plugin</span><h2>YorpHives Reading Time</h2><p class="host-meta">Checks ZIP install, activation, default shortcode output, custom attributes, and WPM clamping.</p><div class="host-actions"><button class="button button-primary" data-run="reading">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-reading-time.zip">Download ZIP</a></div><div class="host-status pending" id="status-reading" role="status">Not run in this browser yet.</div></article>
 </section>
 <section class="host-runner" id="runner" hidden>
 <h2 id="runnerTitle">WordPress runtime</h2><p class="host-meta" id="runnerIntro">Starting a fresh temporary environment.</p>
@@ -81,28 +81,69 @@ echo json_encode(['active'=>$active,'class_loaded'=>$class,'metabox_hook_registe
 require_once '/wordpress/wp-load.php';
 $active = in_array('yorphives-image-alt-helper/yorphives-image-alt-helper.php', (array) get_option('active_plugins', true), true);
 $renderer = function_exists('yhiah_render');
-echo json_encode(['active'=>$active,'renderer_function_loaded'=>$renderer,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
+$test_post_id = wp_insert_post(['post_title'=>'YorpHives Image Alt QA Draft','post_content'=>'<img src="missing.jpg"><img src="empty.jpg" alt=""><img src="present.jpg" alt="A useful description">','post_status'=>'draft','post_type'=>'post']);
+$metabox_rendered = false;
+$editor_support = false;
+if ($test_post_id && !is_wp_error($test_post_id)) {
+  $test_post = get_post($test_post_id);
+  do_action('add_meta_boxes', 'post', $test_post);
+  global $wp_meta_boxes;
+  $box = $wp_meta_boxes['post']['side']['default']['yhiah-box'] ?? null;
+  if ($box && is_callable($box['callback'])) {
+    ob_start();
+    call_user_func($box['callback'], $test_post);
+    $markup = ob_get_clean();
+    $metabox_rendered = strpos($markup, 'yhiah-run') !== false && strpos($markup, 'yhiah-results') !== false && strpos($markup, 'Review images') !== false;
+    $editor_support = strpos($markup, 'core/editor') !== false && strpos($markup, 'Missing alt attribute') !== false && strpos($markup, 'Empty alt text') !== false && strpos($markup, 'Alt text present') !== false;
+  }
+  wp_delete_post($test_post_id, true);
+}
+echo json_encode(['active'=>$active,'renderer_function_loaded'=>$renderer,'metabox_rendered'=>$metabox_rendered,'editor_support_code_present'=>$editor_support,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
  link:{name:'YorpHives Link Audit',zip:'/plugin-packages/yorphives-link-audit.zip',slug:'yorphives-link-audit',file:'yorphives-link-audit/yorphives-link-audit.php',php:`<?php
 require_once '/wordpress/wp-load.php';
 $active = in_array('yorphives-link-audit/yorphives-link-audit.php', (array) get_option('active_plugins', true), true);
 $renderer = function_exists('yhla_render');
-echo json_encode(['active'=>$active,'renderer_function_loaded'=>$renderer,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
+$test_post_id = wp_insert_post(['post_title'=>'YorpHives Link Audit QA Draft','post_content'=>'<a href="https://example.com">Readable link</a><a href="#">Placeholder</a><a href="https://example.org" target="_blank">External</a><a href="javascript:alert(1)"></a>','post_status'=>'draft','post_type'=>'post']);
+$metabox_rendered = false;
+$checks_present = false;
+if ($test_post_id && !is_wp_error($test_post_id)) {
+  $test_post = get_post($test_post_id);
+  do_action('add_meta_boxes', 'post', $test_post);
+  global $wp_meta_boxes;
+  $box = $wp_meta_boxes['post']['side']['default']['yhla-box'] ?? null;
+  if ($box && is_callable($box['callback'])) {
+    ob_start();
+    call_user_func($box['callback'], $test_post);
+    $markup = ob_get_clean();
+    $metabox_rendered = strpos($markup, 'yhla-run') !== false && strpos($markup, 'yhla-results') !== false && strpos($markup, 'Audit links') !== false;
+    $checks_present = strpos($markup, 'noopener') !== false && strpos($markup, 'javascript:') !== false && strpos($markup, 'placeholder destination') !== false;
+  }
+  wp_delete_post($test_post_id, true);
+}
+echo json_encode(['active'=>$active,'renderer_function_loaded'=>$renderer,'metabox_rendered'=>$metabox_rendered,'audit_rules_present'=>$checks_present,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
  reading:{name:'YorpHives Reading Time',zip:'/plugin-packages/yorphives-reading-time.zip',slug:'yorphives-reading-time',file:'yorphives-reading-time/yorphives-reading-time.php',php:`<?php
 require_once '/wordpress/wp-load.php';
 $active = in_array('yorphives-reading-time/yorphives-reading-time.php', (array) get_option('active_plugins', true), true);
 $shortcode = shortcode_exists('yorphives_reading_time');
 $rendered = '';
+$custom = '';
+$clamped = '';
 if ($shortcode) {
   $post_id = wp_insert_post(['post_title'=>'Temporary YorpHives QA Post','post_content'=>str_repeat('A simple testing sentence. ', 220),'post_status'=>'draft','post_type'=>'post']);
   if (!is_wp_error($post_id) && $post_id) {
     $GLOBALS['post'] = get_post($post_id);
     setup_postdata($GLOBALS['post']);
     $rendered = do_shortcode('[yorphives_reading_time]');
+    $custom = do_shortcode('[yorphives_reading_time wpm="440" label="Estimated" suffix="minutes"]');
+    $clamped = do_shortcode('[yorphives_reading_time wpm="10" label="Estimate" suffix="minutes"]');
     wp_reset_postdata();
     wp_delete_post($post_id, true);
   }
 }
-echo json_encode(['active'=>$active,'shortcode_registered'=>$shortcode,'rendered_output'=>wp_strip_all_tags($rendered),'output_nonempty'=>trim(wp_strip_all_tags($rendered))!=='','php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`}
+$plain = trim(wp_strip_all_tags($rendered));
+$custom_plain = trim(wp_strip_all_tags($custom));
+$clamped_plain = trim(wp_strip_all_tags($clamped));
+echo json_encode(['active'=>$active,'shortcode_registered'=>$shortcode,'rendered_output'=>$plain,'output_nonempty'=>$plain!=='','custom_output'=>$custom_plain,'custom_attributes_work'=>strpos($custom_plain,'Estimated')===0 && strpos($custom_plain,'minutes')!==false && strpos($custom_plain,'2')!==false,'wpm_clamp_output'=>$clamped_plain,'wpm_clamp_works'=>strpos($clamped_plain,'Estimate 11 minutes')===0,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`}
 };
 const $=s=>document.querySelector(s), log=$('#runnerLog'), frame=$('#playgroundFrame'), runner=$('#runner');
 let busy=false;
@@ -138,8 +179,14 @@ document.querySelectorAll('[data-run]').forEach(btn=>btn.addEventListener('click
   if(id==='content'&&!data.js_file_present)failed.push('Content Check JavaScript package asset');
   if(id==='content'&&!data.css_file_present)failed.push('Content Check stylesheet package asset');
   if((id==='alt'||id==='link')&&!data.renderer_function_loaded)failed.push('plugin renderer function loading');
+  if(id==='alt'&&!data.metabox_rendered)failed.push('actual Image Alt Helper metabox rendering');
+  if(id==='alt'&&!data.editor_support_code_present)failed.push('alt-state checks or Gutenberg-aware editor code');
+  if(id==='link'&&!data.metabox_rendered)failed.push('actual Link Audit metabox rendering');
+  if(id==='link'&&!data.audit_rules_present)failed.push('expected link-audit rules in rendered script');
   if(id==='reading'&&data.shortcode_registered!==true)failed.push('shortcode registration');
   if(id==='reading'&&data.output_nonempty!==true)failed.push('shortcode output rendering');
+  if(id==='reading'&&data.custom_attributes_work!==true)failed.push('custom WPM, label, and suffix attributes');
+  if(id==='reading'&&data.wpm_clamp_works!==true)failed.push('minimum WPM clamp');
   const summary='WP '+(data.wordpress||'?')+' · PHP '+(data.php||'?')+' · '+(failed.length?'Needs investigation: '+failed.join(', '):'Automated runtime checks passed');
   writeLog(summary);
   setStatus(id,summary,failed.length?'fail':'pass');

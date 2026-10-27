@@ -30,9 +30,11 @@ function yhiah_render($post) {
             const results = document.getElementById('yhiah-results');
             results.replaceChildren();
             try {
+                const blockEditor = window.wp && window.wp.data && typeof window.wp.data.select === 'function' ? window.wp.data.select('core/editor') : null;
+                const blockContent = blockEditor && typeof blockEditor.getEditedPostContent === 'function' ? String(blockEditor.getEditedPostContent() || '') : '';
                 const editor = window.tinymce && window.tinymce.get('content');
                 const textarea = document.getElementById('content');
-                const html = editor && !editor.isHidden() ? editor.getContent() : (textarea ? textarea.value : '');
+                const html = blockContent || (editor && !editor.isHidden() ? editor.getContent() : (textarea ? textarea.value : ''));
                 const doc = new DOMParser().parseFromString(html, 'text/html');
                 const images = Array.from(doc.querySelectorAll('img'));
                 const summary = document.createElement('p');

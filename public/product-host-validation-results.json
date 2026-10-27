@@ -1,20 +1,21 @@
 {
-  "reportVersion": 3,
+  "reportVersion": 4,
   "project": "YorpHives",
   "purpose": "Persistent evidence record for WordPress Playground validation. Passing automated smoke checks does not equal full product verification.",
   "lastUpdated": "2026-10-27",
+  "currentPackageStatusNote": "Content Check, Image Alt Helper, and Link Audit packages have changed since their recorded smoke runs. Re-run live WordPress checks before treating previous pass records as current. Reading Time now has expanded custom-attribute checks available in the runner; these have not yet been run.",
   "environment": {
     "runtime": "Official WordPress Playground browser runtime",
     "wordpress": "7.1.3",
     "php": "8.5.12",
     "environmentSelection": "Playground-selected current versions during each recorded run"
   },
-  "verificationPolicy": "Do not mark a product verified until installation, activation, product-specific runtime checks, manual editor/front-end behavior, and relevant compatibility checks have been recorded.",
+  "verificationPolicy": "Do not mark a product verified until installation, activation, product-specific runtime checks, manual editor/front-end behavior, and relevant compatibility checks have been recorded. When a tested package changes, the prior pass is historical until the updated package is retested.",
   "products": [
     {
       "id": "yorphives-content-check",
       "zip": "/plugin-packages/yorphives-content-check.zip",
-      "status": "automated-runtime-smoke-pass",
+      "status": "retest-required",
       "recordedRun": {
         "date": "2026-10-27",
         "wordpress": "7.1.3",
@@ -34,7 +35,7 @@
     {
       "id": "yorphives-image-alt-helper",
       "zip": "/plugin-packages/yorphives-image-alt-helper.zip",
-      "status": "automated-runtime-smoke-pass",
+      "status": "retest-required",
       "version": "1.0.1",
       "recordedRun": {
         "date": "2026-10-27",
@@ -54,7 +55,7 @@
     {
       "id": "yorphives-link-audit",
       "zip": "/plugin-packages/yorphives-link-audit.zip",
-      "status": "automated-runtime-smoke-pass",
+      "status": "retest-required",
       "recordedRun": {
         "date": "2026-10-27",
         "wordpress": "7.1.3",

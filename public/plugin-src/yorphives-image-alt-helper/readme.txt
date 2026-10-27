@@ -3,7 +3,7 @@ Contributors: yorphives
 Tags: accessibility, images, alt-text, editorial
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 
 Reviews image alt attributes in the current WordPress post/page editor content. It does not generate alt text, modify content, or send data externally.
