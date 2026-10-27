@@ -36,7 +36,8 @@ PHASE 1 — NATIVE APP FOUNDATION (ANDROID FIRST)
 - Add SQLite persistence, versioned migrations, repository interfaces and unit/widget/integration tests.
 - Add export/import with schema versioning and safe validation; never silently overwrite user data.
 - Provide sample data as an optional demo, not mixed into a user's real workspace by default.
-- Build a signed Android test package and test installation, upgrade, restart, offline use, backup and restore on real devices.
+- Build a signed Android test package and test installation, upgrade, restart, offline use, backup and restore on real devices. Publish it through /lifeos/downloads.html only after release metadata, checksum and acceptance evidence are recorded.
+- Make the user-facing release a single obvious platform-specific download action; keep installation instructions and checksum/version details beside the artifact. Never link to a missing or unverified package.
 
 PHASE 2 — CORE DAILY WORKFLOWS
 - Today dashboard with priorities, overdue items, upcoming commitments and an end-of-day review.

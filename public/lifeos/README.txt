@@ -4,6 +4,6 @@ Direction: cross-platform native-capable personal productivity application. The 
 
 Recommended stack: Flutter/Dart shared codebase; SQLite local-first persistence; Android first, then iOS and desktop after validation. Optional authenticated sync is a later, opt-in phase and is not active.
 
-Read /lifeos/ROADMAP.txt for phased delivery and /lifeos/NATIVE-APP-ARCHITECTURE.txt for the proposed technical architecture, data model, testing guardrails and migration strategy.
+Read /lifeos/ROADMAP.txt for phased delivery, /lifeos/NATIVE-APP-ARCHITECTURE.txt for the proposed technical architecture, and /lifeos/NATIVE-RELEASE-MANIFEST.txt for the one-click download and release-artifact contract. The platform download center is /lifeos/downloads.html.
 
 Current prototype: tasks, habits, goals, manual expenses/subscriptions, study/career items, reminders, document references, JSON backup/import and PWA shell. No native package, Flutter codebase, native notifications, accounts or cloud sync have been delivered yet. Do not use the prototype for highly sensitive data.

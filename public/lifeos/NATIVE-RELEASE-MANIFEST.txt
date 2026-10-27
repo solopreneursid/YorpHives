@@ -1,0 +1,28 @@
+LifeOS Native Release Manifest
+Product: LifeOS by YorpHives
+Download center: https://yorphives.hatchable.site/lifeos/downloads.html
+Status: Native builds not yet published
+Current preview: https://yorphives.hatchable.site/lifeos/
+
+Release rule:
+Never expose a platform download button unless the corresponding artifact exists, its checksum and version are recorded, and the platform acceptance checklist has passed.
+
+Planned artifacts:
+- Android: signed APK for direct download; AAB may be used for store distribution.
+- Windows: signed or clearly documented installer/package.
+- macOS: package with verified signing/notarization path.
+- Linux: tested package format and supported-distribution notes.
+- iOS: supported Apple distribution flow; not a generic direct-download IPA.
+
+Required release metadata per artifact:
+- semantic version and build number
+- platform and minimum supported OS version
+- artifact URL and file size
+- SHA-256 checksum
+- build date and source revision
+- signing status
+- known issues and upgrade notes
+- install, offline launch, persistence, backup/restore, and upgrade test evidence
+
+Current limitation:
+Hatchable's static web deployment does not itself produce Flutter binaries. A compatible Flutter build environment and artifact publishing step are required before native downloads can be enabled. Do not represent the browser/PWA preview as a native installer.
