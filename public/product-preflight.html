@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product Preflight QA | YorpHives</title>
+<meta name="description" content="Automated source and route preflight checks for YorpHives product releases.">
+<link rel="canonical" href="https://yorphives.hatchable.site/product-preflight.html">
+<link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/refinement.css">
+<style>
+.qa-wrap{max-width:1000px;margin:auto;padding:56px 22px 80px}.qa-wrap h1{font-size:clamp(34px,5vw,54px);line-height:1.08}.qa-lead{max-width:780px;color:#b2b0c3;line-height:1.8}.qa-panel{margin-top:24px;padding:22px;border:1px solid #343047;border-radius:16px;background:#12121d}.qa-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.qa-status{color:#c7baff;font-size:14px}.qa-results{display:grid;gap:9px;margin-top:20px}.qa-result{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:13px;border:1px solid #343047;border-radius:10px;overflow-wrap:anywhere}.qa-result strong{font-size:12px;text-transform:uppercase;letter-spacing:.08em}.qa-pass strong{color:#8fe0b0}.qa-warn strong{color:#f2d18b}.qa-fail strong{color:#ff9caa}.qa-result p{margin:0;color:#d8d5e8;font-size:14px;line-height:1.6}.qa-note{font-size:13px;color:#aaa8bd;line-height:1.75}.qa-result a{color:#c7baff}
+</style></head>
+<body><main class="qa-wrap">
+<p class="eyebrow">YORPHIVES / RELEASE ENGINEERING</p>
+<h1>Product preflight.<br><span class="muted-heading">Catch avoidable release issues.</span></h1>
+<p class="qa-lead">Run automated checks against the currently published catalogue and package files before preparing a release. This checks metadata, same-site destinations, internal anchors, extension manifests and source-file availability. It does not run a real browser extension, WordPress, or VS Code, and it cannot block Hatchable's Deploy action.</p>
+<section class="qa-panel">
+<div class="qa-actions"><button class="button button-primary" id="runQa" type="button">Run preflight checks</button><a class="button button-ghost" href="/product-release-checklist.html">Manual release checklist ↗</a><span class="qa-status" id="qaStatus" role="status" aria-live="polite">Ready to check the live version.</span></div>
+<div class="qa-results" id="qaResults" aria-live="polite"></div>
+<p class="qa-note">Important: these checks run on the version currently published at this URL, not unsaved draft files. Run Hatchable's deployment dry-run separately. Treat a failed result as a stop-and-investigate signal; a passing result is not proof of end-to-end product functionality.</p>
+</section></main>
+<script>
+(() => {
+'use strict';
+const $=s=>document.querySelector(s), results=$('#qaResults'), status=$('#qaStatus');
+const required=['id','name','type','group','description','url','status','access','platform','keywords','lifecycleStatus','compatibilityNotes','installation','permissions','verification'];
+const states=['planned','testing','available','maintenance','retired'];
+const groups=['apps','extensions','agents','plugins'];
+const checks=[];
+function report(level,title,detail){checks.push({level,title,detail});}
+async function fetchText(path){const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw new Error(path+' returned HTTP '+r.status);return await r.text();}
+async function checkRoute(path,hash){
+ const html=await fetchText(path);
+ if(hash){const doc=new DOMParser().parseFromString(html,'text/html');const id=decodeURIComponent(hash.slice(1));if(!doc.getElementById(id)&&!(path.endsWith('/workbench.html')&&id.startsWith('tool-')&&doc.querySelector('[data-tool="'+id.slice(5).replace(/"/g,'')+'"]')))throw new Error('Missing anchor '+hash+' in '+path);}
+ return html;
+}
+async function run(){
+ checks.length=0;results.replaceChildren();status.textContent='Running checks…';$('#runQa').disabled=true;
+ try{
+  let data;
+  try{data=JSON.parse(await fetchText('/product-catalog.json'));report('pass','Catalogue JSON','Published catalogue parses as valid JSON.');}
+  catch(e){report('fail','Catalogue JSON',e.message);throw e;}
+  if(data.schemaVersion!==1||!Array.isArray(data.products)||!Array.isArray(data.groups))report('fail','Catalogue structure','Unsupported schema version or missing arrays.');
+  else report('pass','Catalogue structure','Schema version 1; '+data.products.length+' products and '+data.groups.length+' groups.');
+  const gids=data.groups.map(g=>g.id), ids=data.products.map(p=>p.id);
+  if(new Set(gids).size!==gids.length)report('fail','Unique group IDs','Duplicate group IDs found.');else report('pass','Unique group IDs','No duplicate group IDs.');
+  if(new Set(ids).size!==ids.length)report('fail','Unique product IDs','Duplicate product IDs found.');else report('pass','Unique product IDs','No duplicate product IDs.');
+  const missing=[];
+  data.products.forEach(p=>{required.forEach(k=>{if(typeof p[k]!=='string'||!p[k].trim())missing.push((p.name||p.id||'Unknown')+': '+k);});if(!gids.includes(p.group))missing.push((p.name||p.id)+': invalid group');if(!states.includes(p.lifecycleStatus))missing.push((p.name||p.id)+': invalid lifecycle');if(!['verified','not-independently-verified','needs-retest'].includes(p.verification))missing.push((p.name||p.id)+': invalid verification');if(!p.url.startsWith('/')||p.url.startsWith('//'))missing.push((p.name||p.id)+': URL must be same-site path');});
+  if(missing.length)report('fail','Required product metadata',missing.join(' | '));else report('pass','Required product metadata','All products have required fields, valid groups, lifecycle, verification and same-site paths.');
+  try{const schema=JSON.parse(await fetchText('/product-catalog.schema.json'));if(schema.$schema&&Array.isArray(schema.required)&&schema.required.includes('products'))report('pass','Schema file','Published JSON Schema parses and declares required catalogue fields.');else report('warn','Schema file','Schema parses but expected required fields were not found.');}catch(e){report('fail','Schema file',e.message);}
+  const destinations=[...new Map(data.products.map(p=>[p.url,p.url])).values()];
+  const destinationResults=await Promise.all(destinations.map(async raw=>{try{const u=new URL(raw,location.origin);if(u.origin!==location.origin)throw new Error('External destination rejected');await checkRoute(u.pathname,u.hash);return {ok:true,url:raw};}catch(e){return {ok:false,url:raw,error:e.message};}}));
+  const bad=destinationResults.filter(x=>!x.ok);if(bad.length)report('fail','Product destinations',bad.map(x=>x.url+' — '+x.error).join(' | '));else report('pass','Product destinations',destinationResults.length+' unique destinations and anchors loaded successfully.');
+  const packageFiles=[
+   '/tab-tidy/manifest.json','/tab-tidy/popup.html','/tab-tidy/popup.js','/tab-tidy/popup.css','/tab-tidy/README.txt',
+   '/quickpanel/manifest.json','/quickpanel/sw.js','/quickpanel/app.js',
+   '/plugin-src/wordpress-yorphives-content-check/yorphives-content-check.php','/plugin-src/wordpress-yorphives-content-check/content-check.js','/plugin-src/wordpress-yorphives-content-check/content-check.css',
+   '/plugin-src/yorphives-image-alt-helper/yorphives-image-alt-helper.php','/plugin-src/yorphives-link-audit/yorphives-link-audit.php','/plugin-src/yorphives-reading-time/yorphives-reading-time.php',
+   '/plugin-src/yorphives-vscode-toolkit/package.json','/plugin-src/yorphives-vscode-toolkit/extension.js'
+  ];
+  const fileResults=await Promise.all(packageFiles.map(async path=>{try{return {path,text:await fetchText(path)};}catch(e){return {path,error:e.message};}}));
+  const absent=fileResults.filter(x=>x.error);if(absent.length)report('fail','Extension/plugin source files',absent.map(x=>x.path+' — '+x.error).join(' | '));else report('pass','Extension/plugin source files',fileResults.length+' expected source/documentation files are served.');
+  for(const path of ['/tab-tidy/manifest.json','/quickpanel/manifest.json','/plugin-src/yorphives-vscode-toolkit/package.json']){
+   const item=fileResults.find(x=>x.path===path);if(!item||item.error)continue;
+   try{const j=JSON.parse(item.text);if(path.endsWith('manifest.json')){if(j.manifest_version!==3||!j.name||!j.action)throw new Error('Missing expected Manifest V3 metadata/action');}else if(!j.name||!j.main||!j.engines)throw new Error('Missing VS Code package metadata');report('pass','Package metadata: '+path,'Manifest/package JSON parses and required metadata is present.');}
+   catch(e){report('fail','Package metadata: '+path,e.message);}
+  }
+  for(const item of fileResults.filter(x=>x.path.endsWith('.js')&&!x.error)){
+   try{new Function(item.text);report('pass','JavaScript syntax: '+item.path,'Parses without a syntax error (not a runtime test).');}
+   catch(e){report('fail','JavaScript syntax: '+item.path,e.message);}
+  }
+  const php=fileResults.filter(x=>x.path.endsWith('.php')&&!x.error);
+  if(php.length&&php.every(x=>/Plugin Name:/.test(x.text)&&/if\s*\(!defined\(['"]ABSPATH['"]\)\)\s*\{\s*exit;\s*\}/.test(x.text)))report('pass','WordPress source headers','Found plugin headers and direct-access guards in '+php.length+' PHP files; PHP runtime/lint was not run.');
+  else report('warn','WordPress source headers','One or more PHP source files lack an expected header/guard, or files were unavailable.');
+ }catch(e){if(!checks.some(c=>c.level==='fail'))report('fail','Preflight runner',e.message);}
+ finally{
+  results.replaceChildren();
+  checks.forEach(c=>{const row=document.createElement('div');row.className='qa-result qa-'+c.level;const label=document.createElement('strong');label.textContent=c.level;const body=document.createElement('div');const title=document.createElement('p');title.textContent=c.title;title.style.fontWeight='700';const detail=document.createElement('p');detail.textContent=c.detail;body.append(title,detail);row.append(label,body);results.append(row);});
+  const fails=checks.filter(c=>c.level==='fail').length,warns=checks.filter(c=>c.level==='warn').length;
+  status.textContent=fails?fails+' failed · '+warns+' warnings · investigate before release':warns?'No failures · '+warns+' warnings · manual review still required':'Automated checks passed · manual functional testing still required';
+  $('#runQa').disabled=false;
+ }
+}
+$('#runQa').addEventListener('click',run);
+})();
+</script><script src="/shared-nav.js" defer></script></body></html>
