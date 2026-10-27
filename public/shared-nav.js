@@ -2,18 +2,18 @@
   const path = location.pathname.replace(/\/+$/, '') || '/';
   const links = [
     {label:'Home',href:'/',key:'home'},
-    {label:'Services',href:'/services.html',key:'services'},
-    {label:'Portfolio',href:'/portfolio.html',key:'portfolio'},
-    {label:'Products',href:'/products.html',key:'products'},
+    {label:'Apps & Products',href:'/products.html',key:'products'},
     {label:'Free Tools',href:'/free-tools.html',key:'tools'},
-    {label:'Workbench',href:'/workbench.html',key:'workbench'}
+    {label:'Workbench',href:'/workbench.html',key:'workbench'},
+    {label:'Extensions',href:'/browser-extension.html',key:'extensions'},
+    {label:'Plugins',href:'/plugins.html',key:'plugins'}
   ];
   const more = [
     {label:'QuickPanel',href:'/quickpanel/',key:'quickpanel'},
-    {label:'Extensions',href:'/browser-extension.html',key:'extensions'},
-    {label:'Plugins',href:'/plugins.html',key:'plugins'},
     {label:'PDF & Images',href:'/tools.html',key:'media'},
     {label:'File Conversion Workspace',href:'/file-workspace.html',key:'fileworkspace'},
+    {label:'Services',href:'/services.html',key:'services'},
+    {label:'Portfolio',href:'/portfolio.html',key:'portfolio'},
     {label:'About',href:'/#about',key:'about'},
     {label:'FAQ',href:'/#faq',key:'faq'},
     {label:'Contact / Enquiries',href:'/#request',key:'contact'}
@@ -72,7 +72,7 @@
     const menu=document.createElement('div');menu.className='yh-more-menu';
     more.forEach(item=>{const a=document.createElement('a');a.href=item.href;a.textContent=item.label;if(item.key===active)a.setAttribute('aria-current','page');menu.appendChild(a)});
     details.append(summary,menu);nav.appendChild(details);
-    const cta=document.createElement('a');cta.className='nav-cta';cta.href='/#request';cta.textContent='Start a project ↗';nav.appendChild(cta);
+    const cta=document.createElement('a');cta.className='nav-cta';cta.href='/products.html';cta.textContent='Explore apps ↗';nav.appendChild(cta);
     const install=document.createElement('button');install.type='button';install.className='yh-install-app';install.id='yhInstallApp';install.textContent='Install app ↓';install.setAttribute('aria-label','Install YorpHives as an app');nav.appendChild(install);
     const oldToggle=header.querySelector('.menu-toggle');if(oldToggle)oldToggle.remove();
     let toggle=header.querySelector('.yh-menu-toggle');
