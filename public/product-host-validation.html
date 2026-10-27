@@ -31,7 +31,8 @@
 <h2 id="recordedEvidenceTitle">Latest recorded automated results</h2>
 <p class="host-meta">These are persistent results from completed runs, separate from the current browser session. Manual editor/front-end checks remain pending.</p>
 <div id="recordedEvidenceCards" class="host-grid"><p class="host-note">Loading recorded results…</p></div>
-<p class="host-small">Full evidence and limitations: <a href="/product-host-validation-results.json">View the raw validation record ↗</a></p>
+<div class="host-actions"><button class="button button-ghost" id="exportSessionEvidence" type="button">Export this tab's run evidence (JSON)</button><a class="button button-ghost" href="/product-host-validation-results.json">View the recorded validation record ↗</a></div>
+<p class="host-small">The export contains only results from runs completed in this browser tab. It does not update the public record or mark any product verified.</p>
 </section>
 <h2>After the automated checks</h2>
 <ol class="host-steps">
@@ -151,6 +152,16 @@ function writeLog(msg){log.textContent+=((log.textContent&&log.textContent!=='Wa
 function setStatus(id,text,kind){const el=$('#status-'+id);el.textContent=text;el.className='host-status '+kind}
 async function loadRecordedEvidence(){const root=$('#recordedEvidenceCards');try{const response=await fetch('/product-host-validation-results.json',{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const report=await response.json();root.replaceChildren();report.products.forEach(product=>{const card=document.createElement('article');card.className='host-card';const title=document.createElement('h2');title.textContent=product.id.replace(/^yorphives-/,'YorpHives ').replace(/-/g,' ');const status=document.createElement('div');const passed=product.status==='automated-runtime-smoke-pass';status.className='host-status '+(passed?'pass':'pending');status.textContent=passed?'Automated runtime smoke test passed':'Retest or additional validation pending';const env=document.createElement('p');env.className='host-meta';const run=product.recordedRun;env.textContent=run?'WordPress '+run.wordpress+' · PHP '+run.php+' · '+run.date:'No completed run recorded';const note=document.createElement('p');note.className='host-note';note.textContent=(product.manualChecksStatus==='pending'?'Manual feature checks still pending. ':'')+(product.version?'Package version '+product.version+'.':'');card.append(title,status,env,note);root.append(card)});}catch(error){root.textContent='Recorded results could not be loaded: '+error.message;}}
 loadRecordedEvidence();
+$('#exportSessionEvidence').addEventListener('click',()=>{
+ try {
+  const key='yorphives-host-validation-results';
+  const reports=JSON.parse(sessionStorage.getItem(key)||'[]');
+  if(!reports.length){alert('No completed test runs in this tab yet. Run a plugin test first.');return;}
+  const blob=new Blob([JSON.stringify({project:'YorpHives',exportedAt:new Date().toISOString(),scope:'Browser-tab session evidence; not independently verified',runs:reports},null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='yorphives-wordpress-validation-session.json';document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);
+ } catch(error){alert('Could not export session evidence: '+error.message);}
+});
 document.querySelectorAll('[data-run]').forEach(btn=>btn.addEventListener('click',async()=>{
  if(busy)return;busy=true;document.querySelectorAll('[data-run]').forEach(b=>b.disabled=true);
  const id=btn.dataset.run,c=config[id];runner.hidden=false;$('#runnerTitle').textContent='Testing: '+c.name;$('#runnerIntro').textContent='Fresh temporary WordPress · Playground-selected current PHP and WordPress versions';log.textContent='Preparing browser-based WordPress…';frame.src='about:blank';runner.scrollIntoView({behavior:'smooth',block:'start'});setStatus(id,'Running real WordPress install and runtime checks…','pending');
