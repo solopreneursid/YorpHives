@@ -16,6 +16,7 @@
   ];
   const active = path==='/'?'home':path==='/products.html'?'products':path==='/free-tools.html'?'tools':path==='/workbench.html'?'workbench':path.startsWith('/quickpanel')?'quickpanel':path==='/browser-extension.html'?'extensions':path==='/tools.html'?'media':path==='/file-workspace.html'?'fileworkspace':'tools';
   if(!document.querySelector('link[href^="/tech-wizard.css"]')){const theme=document.createElement('link');theme.rel='stylesheet';theme.href='/tech-wizard.css?v=1';document.head.appendChild(theme)}
+  if(!document.querySelector('link[data-yh-unified-polish]')){const polish=document.createElement('link');polish.rel='stylesheet';polish.href='/site-wide-polish.css?v=1';polish.dataset.yhUnifiedPolish='true';document.head.appendChild(polish)}
   const style=document.createElement('style');style.id='yorphives-shared-nav-style';
   style.textContent=`
     .site-header{position:sticky!important;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:13px clamp(18px,3vw,44px);background:rgba(8,8,14,.96)!important;backdrop-filter:blur(16px);border-bottom:1px solid #242333!important}
@@ -91,7 +92,7 @@
     '/browser-extension.html':{title:'QuickPanel browser companion',description:'Learn what the YorpHives browser companion does, review supported browsers and installation options, and see its local-first features before installing.',tag:'BROWSER GEAR'},
     '/quickpanel':{title:'QuickPanel — quick actions, right where you work',description:'Open handy text actions, saved snippets and page utilities from a compact browser-friendly workspace.',tag:'QUICK ACCESS'}
   };
-  const guide=pageGuides[path];
+  const guide=pageGuides[path]||(path.endsWith('.html')?{title:(document.querySelector('main h1')?.textContent||document.title.split('|')[0]||'YorpHives tool').replace(/\\s+/g,' ').trim(),description:document.querySelector('meta[name="description"]')?.content||'Use this YorpHives page to complete the task described by its title. Check the available controls and follow the on-page guidance.',tag:path==='/plugins.html'?'PLUGIN WORKSHOP':path==='/offline.html'?'OFFLINE GUIDE':'TOOL INTERFACE'}:null);
   if(guide&&!document.querySelector('.yh-page-guide')){
     const main=document.querySelector('main')||document.querySelector('#app')||document.body;
     const box=document.createElement('section');box.className='yh-page-guide';box.setAttribute('aria-label','What this page is for');
