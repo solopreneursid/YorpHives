@@ -86,12 +86,17 @@ document.querySelectorAll('[data-run]').forEach(btn=>btn.addEventListener('click
  if(busy)return;busy=true;document.querySelectorAll('[data-run]').forEach(b=>b.disabled=true);
  const id=btn.dataset.run,c=config[id];runner.hidden=false;$('#runnerTitle').textContent='Testing: '+c.name;$('#runnerIntro').textContent='Fresh temporary WordPress · PHP 8.3 · latest supported WordPress';log.textContent='Preparing browser-based WordPress…';frame.src='about:blank';runner.scrollIntoView({behavior:'smooth',block:'start'});setStatus(id,'Running real WordPress install and runtime checks…','pending');
  try{
-  const {startPlaygroundWeb}=await import('https://playground.wordpress.net/client/index.js');
-  const zipResponse=await fetch(c.zip,{cache:'no-store'});if(!zipResponse.ok)throw new Error('Plugin ZIP returned HTTP '+zipResponse.status);const zipBytes=new Uint8Array(await zipResponse.arrayBuffer());let zipBinary='';for(let i=0;i<zipBytes.length;i+=32768)zipBinary+=String.fromCharCode(...zipBytes.subarray(i,i+32768));const zipDataUrl='data:application/zip;base64,'+btoa(zipBinary);writeLog('Package downloaded ('+zipBytes.length+' bytes); using an inline data URL to avoid cross-origin ZIP-fetch restrictions.');
-  const blueprint={landingPage:'/wp-admin/plugins.php',preferredVersions:{php:'8.3',wp:'latest'},features:{networking:true},steps:[{step:'login',username:'admin',password:'password'},{step:'installPlugin',pluginData:{resource:'url',url:zipDataUrl},options:{activate:true}}]};
-  writeLog('Starting WordPress Playground and installing '+c.name+'…');
-  const client=await startPlaygroundWeb({iframe:frame,remoteUrl:'https://playground.wordpress.net/remote.html',blueprint});
-  writeLog('Playground started. Running PHP checks against the active WordPress instance…');
+  const {startPlaygroundWeb,login,installPlugin}=await import('https://playground.wordpress.net/client/index.js');
+  const zipResponse=await fetch(c.zip,{cache:'no-store'});if(!zipResponse.ok)throw new Error('Plugin ZIP returned HTTP '+zipResponse.status);const zipBytes=new Uint8Array(await zipResponse.arrayBuffer());writeLog('Package downloaded ('+zipBytes.length+' bytes).');
+  writeLog('Starting a clean WordPress Playground instance…');
+  const client=await startPlaygroundWeb({iframe:frame,remoteUrl:'https://playground.wordpress.net/remote.html'});
+  writeLog('Waiting for the WordPress runtime to become ready…');await client.isReady();
+  writeLog('WordPress runtime ready. Signing in to the temporary administrator…');
+  await login(client,{username:'admin',password:'password'});
+  writeLog('Installing and activating '+c.name+'…');
+  const pluginFile=new File([zipBytes],c.slug+'.zip',{type:'application/zip'});
+  await installPlugin(client,{pluginData:pluginFile,options:{activate:true}});
+  writeLog('Plugin installation step completed. Running PHP checks against WordPress…');
   const result=await client.run({code:c.php});
   const raw=result?.text??result?.output??JSON.stringify(result);
   writeLog('PHP response: '+raw);
