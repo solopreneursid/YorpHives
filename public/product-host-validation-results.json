@@ -1,14 +1,67 @@
 {
-  "reportVersion": 1,
+  "reportVersion": 2,
   "project": "YorpHives",
-  "purpose": "Define evidence fields for real WordPress Playground validation. This static baseline does not claim tests have passed.",
-  "environment": "Official WordPress Playground in a browser, PHP 8.3, latest supported WordPress at run time.",
-  "verificationPolicy": "Do not mark a product verified until install, activation, product-specific runtime checks, manual editor/front-end behavior, and relevant compatibility checks have been recorded.",
+  "purpose": "Persistent evidence record for WordPress Playground validation. Passing automated smoke checks does not equal full product verification.",
+  "lastUpdated": "2026-10-27",
+  "environment": {
+    "runtime": "Official WordPress Playground browser runtime",
+    "wordpress": "7.1.3",
+    "php": "8.5.12",
+    "environmentSelection": "Playground-selected current versions during the recorded Content Check run"
+  },
+  "verificationPolicy": "Do not mark a product verified until installation, activation, product-specific runtime checks, manual editor/front-end behavior, and relevant compatibility checks have been recorded.",
   "products": [
-    {"id":"yorphives-content-check","zip":"/plugin-packages/yorphives-content-check.zip","automatedChecks":["ZIP install","plugin activation","PHP class loading","editor metabox registration"],"manualChecks":["Open a disposable post in the editor","Run Check this draft","Confirm warnings are relevant and advisory"]},
-    {"id":"yorphives-image-alt-helper","zip":"/plugin-packages/yorphives-image-alt-helper.zip","automatedChecks":["ZIP install","plugin activation","editor metabox registration"],"manualChecks":["Create a test post with images","Run Review images","Check missing, empty, and present alt labels"]},
-    {"id":"yorphives-link-audit","zip":"/plugin-packages/yorphives-link-audit.zip","automatedChecks":["ZIP install","plugin activation","editor metabox registration"],"manualChecks":["Test readable links, empty labels, placeholder destinations, javascript: links, and target=_blank without rel=noopener"]},
-    {"id":"yorphives-reading-time","zip":"/plugin-packages/yorphives-reading-time.zip","automatedChecks":["ZIP install","plugin activation","shortcode registration","shortcode output rendering"],"manualChecks":["Add [yorphives_reading_time] to a test post","Check estimate on front end","Check custom wpm, label, and suffix attributes"]}
+    {
+      "id": "yorphives-content-check",
+      "zip": "/plugin-packages/yorphives-content-check.zip",
+      "status": "automated-runtime-smoke-pass",
+      "recordedRun": {
+        "date": "2026-10-27",
+        "wordpress": "7.1.3",
+        "php": "8.5.12",
+        "checks": {
+          "pluginActivated": true,
+          "classLoaded": true,
+          "metaboxHookRegistered": true
+        },
+        "notes": "A first attempt using do_action('add_meta_boxes', 'post') caused a WordPress critical-error response. The smoke test was changed to inspect the registered hook without invoking the full metabox lifecycle. A fresh run then passed the installation, activation, class-loading, and hook-registration checks."
+      },
+      "automatedChecks": ["ZIP install", "plugin activation", "PHP class loading", "editor metabox hook registration"],
+      "manualChecks": ["Open a disposable post in the editor", "Run Check this draft", "Confirm warnings are relevant and advisory"],
+      "manualChecksStatus": "pending"
+    },
+    {
+      "id": "yorphives-image-alt-helper",
+      "zip": "/plugin-packages/yorphives-image-alt-helper.zip",
+      "status": "fix-published-runtime-retest-pending",
+      "fix": "Version 1.0.1 rewrites the editor renderer to avoid a PHP string-quoting parse error and render labels via DOM text nodes. A rebuilt ZIP has been published; rerun installation and activation against that package.",
+      "automatedChecks": ["ZIP install", "plugin activation", "renderer function loading"],
+      "manualChecks": ["Create a test post with images", "Run Review images", "Check missing, empty, and present alt labels"],
+      "manualChecksStatus": "pending"
+    },
+    {
+      "id": "yorphives-link-audit",
+      "zip": "/plugin-packages/yorphives-link-audit.zip",
+      "status": "not-run",
+      "automatedChecks": ["ZIP install", "plugin activation", "renderer function loading"],
+      "manualChecks": ["Test readable links, empty labels, placeholder destinations, javascript: links, and target=_blank without rel=noopener"],
+      "manualChecksStatus": "pending"
+    },
+    {
+      "id": "yorphives-reading-time",
+      "zip": "/plugin-packages/yorphives-reading-time.zip",
+      "status": "not-run",
+      "automatedChecks": ["ZIP install", "plugin activation", "shortcode registration", "shortcode output rendering"],
+      "manualChecks": ["Add [yorphives_reading_time] to a test post", "Check estimate on front end", "Check custom wpm, label, and suffix attributes"],
+      "manualChecksStatus": "pending"
+    }
   ],
-  "notClaimed": ["Production hosting compatibility","All supported PHP/WordPress versions","Complete security audit","All editor/browser compatibility","Verification catalogue status change"]
+  "notClaimed": [
+    "Production hosting compatibility",
+    "Compatibility across all PHP and WordPress versions",
+    "Complete security audit",
+    "All editor/browser compatibility",
+    "Full manual feature verification",
+    "Catalogue verification status change"
+  ]
 }
