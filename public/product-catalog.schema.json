@@ -8,7 +8,9 @@
     "schemaVersion",
     "lastReviewed",
     "groups",
-    "products"
+    "products",
+    "lifecycleStatuses",
+    "releaseChecklist"
   ],
   "properties": {
     "schemaVersion": {
@@ -61,7 +63,12 @@
           "status",
           "access",
           "platform",
-          "keywords"
+          "keywords",
+          "lifecycleStatus",
+          "compatibilityNotes",
+          "installation",
+          "permissions",
+          "verification"
         ],
         "properties": {
           "id": {
@@ -108,10 +115,78 @@
           },
           "keywords": {
             "type": "string"
+          },
+          "lifecycleStatus": {
+            "enum": [
+              "planned",
+              "testing",
+              "available",
+              "maintenance",
+              "retired"
+            ]
+          },
+          "compatibilityNotes": {
+            "type": "string",
+            "minLength": 1
+          },
+          "installation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "permissions": {
+            "type": "string",
+            "minLength": 1
+          },
+          "verification": {
+            "enum": [
+              "verified",
+              "not-independently-verified",
+              "needs-retest"
+            ]
           }
         },
         "additionalProperties": false
       }
+    },
+    "lifecycleStatuses": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "description"
+        ],
+        "properties": {
+          "id": {
+            "enum": [
+              "planned",
+              "testing",
+              "available",
+              "maintenance",
+              "retired"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "releaseChecklist": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 5
     }
   },
   "additionalProperties": false

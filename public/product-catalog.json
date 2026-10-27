@@ -39,7 +39,12 @@
       "status": "Available now",
       "access": "Free currently",
       "platform": "Modern browsers",
-      "keywords": "quickpanel text snippets page capture clipboard productivity"
+      "keywords": "quickpanel text snippets page capture clipboard productivity",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "Modern browsers",
+      "installation": "Open the linked web application in a modern browser.",
+      "permissions": "No browser-extension permissions. Review the destination page for any data handling or local storage details.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "workbench",
@@ -53,7 +58,12 @@
       "status": "Available now",
       "access": "Free currently",
       "platform": "Web",
-      "keywords": "workbench productivity research notes checklist privacy workflow"
+      "keywords": "workbench productivity research notes checklist privacy workflow",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "Web",
+      "installation": "Open the linked web application in a modern browser.",
+      "permissions": "No browser-extension permissions. Review the destination page for any data handling or local storage details.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "pdf-image-toolkit",
@@ -66,7 +76,12 @@
       "status": "Available now",
       "access": "Free tools",
       "platform": "Web",
-      "keywords": "pdf image merge compress convert resize"
+      "keywords": "pdf image merge compress convert resize",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "Web",
+      "installation": "Open the linked web application in a modern browser.",
+      "permissions": "No browser-extension permissions. Review the destination page for any data handling or local storage details.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "local-productivity-suite",
@@ -80,7 +95,12 @@
       "status": "Manual install",
       "access": "Free",
       "platform": "Compatible Chromium browsers",
-      "keywords": "local productivity text cleanup clipboard snippets page notes research"
+      "keywords": "local productivity text cleanup clipboard snippets page notes research",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "Compatible Chromium browsers",
+      "installation": "Download the package from the linked instructions page and install manually in a compatible browser; review permissions first.",
+      "permissions": "Browser extension permissions depend on the package manifest. Review the manifest and installation documentation before enabling.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "quickpanel-extension",
@@ -93,7 +113,12 @@
       "status": "Manual install",
       "access": "Free currently",
       "platform": "Chromium browsers",
-      "keywords": "quickpanel extension text snippets page capture"
+      "keywords": "quickpanel extension text snippets page capture",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "Chromium browsers",
+      "installation": "Download the package from the linked instructions page and install manually in a compatible browser; review permissions first.",
+      "permissions": "Browser extension permissions depend on the package manifest. Review the manifest and installation documentation before enabling.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "tab-tidy",
@@ -106,7 +131,12 @@
       "status": "Manual install",
       "access": "Free",
       "platform": "Chromium browsers",
-      "keywords": "tabs tidy duplicate urls session browser"
+      "keywords": "tabs tidy duplicate urls session browser",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "Chromium browsers",
+      "installation": "Download the package from the linked instructions page and install manually in a compatible browser; review permissions first.",
+      "permissions": "Browser extension permissions depend on the package manifest. Review the manifest and installation documentation before enabling.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "focus-fence",
@@ -119,7 +149,12 @@
       "status": "Manual install",
       "access": "Free",
       "platform": "Chromium browsers",
-      "keywords": "focus fence block websites timer productivity"
+      "keywords": "focus fence block websites timer productivity",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "Chromium browsers",
+      "installation": "Download the package from the linked instructions page and install manually in a compatible browser; review permissions first.",
+      "permissions": "Browser extension permissions depend on the package manifest. Review the manifest and installation documentation before enabling.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "research-assistant",
@@ -133,7 +168,12 @@
       "status": "Available in Workbench",
       "access": "Free currently",
       "platform": "Web",
-      "keywords": "research source collector clips reading queue citations report"
+      "keywords": "research source collector clips reading queue citations report",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "Web",
+      "installation": "Open the linked Workbench destination and follow the in-product instructions.",
+      "permissions": "No browser-extension permissions. Review the destination page for any data handling or local storage details.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "job-organizer",
@@ -146,7 +186,12 @@
       "status": "Available in Workbench",
       "access": "Free currently",
       "platform": "Web",
-      "keywords": "job application organizer tracker checklist"
+      "keywords": "job application organizer tracker checklist",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "Web",
+      "installation": "Open the linked Workbench destination and follow the in-product instructions.",
+      "permissions": "No browser-extension permissions. Review the destination page for any data handling or local storage details.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "workflow-builder",
@@ -159,7 +204,12 @@
       "status": "Available in Workbench",
       "access": "Free currently",
       "platform": "Web",
-      "keywords": "workflow builder templates reusable steps automation checklist"
+      "keywords": "workflow builder templates reusable steps automation checklist",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "Web",
+      "installation": "Open the linked Workbench destination and follow the in-product instructions.",
+      "permissions": "No browser-extension permissions. Review the destination page for any data handling or local storage details.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "content-check",
@@ -173,7 +223,12 @@
       "status": "Download package",
       "access": "Free",
       "platform": "WordPress",
-      "keywords": "wordpress plugin content editorial checklist SEO"
+      "keywords": "wordpress plugin content editorial checklist SEO",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "WordPress",
+      "installation": "Download the plugin ZIP and install it through the supported host application's plugin installation flow.",
+      "permissions": "Runs within the WordPress installation. Review the package source and required WordPress capabilities before activation.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "developer-toolkit",
@@ -186,7 +241,12 @@
       "status": "Source package; not Marketplace-published",
       "access": "Free",
       "platform": "VS Code-compatible editors",
-      "keywords": "vscode visual studio code developer json URL text stats camelcase"
+      "keywords": "vscode visual studio code developer json URL text stats camelcase",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "VS Code-compatible editors",
+      "installation": "Download the source package and follow the linked VS Code-compatible editor instructions; it is not a signed VSIX or Marketplace release.",
+      "permissions": "Editor extension commands; review source and declared capabilities before installing.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "image-alt-helper",
@@ -199,7 +259,12 @@
       "status": "Download package",
       "access": "Free",
       "platform": "WordPress",
-      "keywords": "wordpress image alt accessibility"
+      "keywords": "wordpress image alt accessibility",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "WordPress",
+      "installation": "Download the plugin ZIP and install it through the supported host application's plugin installation flow.",
+      "permissions": "Runs within the WordPress installation. Review the package source and required WordPress capabilities before activation.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "link-audit",
@@ -212,7 +277,12 @@
       "status": "Download package",
       "access": "Free",
       "platform": "WordPress",
-      "keywords": "wordpress links audit quality security"
+      "keywords": "wordpress links audit quality security",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "WordPress",
+      "installation": "Download the plugin ZIP and install it through the supported host application's plugin installation flow.",
+      "permissions": "Runs within the WordPress installation. Review the package source and required WordPress capabilities before activation.",
+      "verification": "not-independently-verified"
     },
     {
       "id": "reading-time",
@@ -225,7 +295,49 @@
       "status": "Download package",
       "access": "Free",
       "platform": "WordPress",
-      "keywords": "wordpress reading time publishing shortcode"
+      "keywords": "wordpress reading time publishing shortcode",
+      "lifecycleStatus": "available",
+      "compatibilityNotes": "WordPress",
+      "installation": "Download the plugin ZIP and install it through the supported host application's plugin installation flow.",
+      "permissions": "Runs within the WordPress installation. Review the package source and required WordPress capabilities before activation.",
+      "verification": "not-independently-verified"
     }
+  ],
+  "lifecycleStatuses": [
+    {
+      "id": "planned",
+      "label": "Planned",
+      "description": "Not yet released; do not present as currently usable."
+    },
+    {
+      "id": "testing",
+      "label": "Testing",
+      "description": "Available only for evaluation; known limitations should be stated."
+    },
+    {
+      "id": "available",
+      "label": "Available",
+      "description": "Published for intended use; compatibility and access information must be stated."
+    },
+    {
+      "id": "maintenance",
+      "label": "Maintenance",
+      "description": "Existing users may continue using it, but new adoption may be limited."
+    },
+    {
+      "id": "retired",
+      "label": "Retired",
+      "description": "No longer recommended for new use; provide a replacement or archive note where possible."
+    }
+  ],
+  "releaseChecklist": [
+    "Confirm the destination route or anchor exists and loads successfully.",
+    "Run the product's core task end-to-end in its stated supported environment.",
+    "Confirm install/download instructions work and the package matches the product described.",
+    "Inspect extension permissions or host-app capabilities and document them plainly.",
+    "Confirm access terms, dependencies, data handling and platform compatibility.",
+    "Set lifecycleStatus truthfully; do not mark unreleased work as available, and disclose verification separately.",
+    "Record verification details only after a real test; update lastReviewed after review.",
+    "Check keyboard navigation, responsive layout, error states and basic accessibility."
   ]
 }

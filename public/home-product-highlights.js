@@ -21,7 +21,17 @@
         throw new Error('Unsupported catalogue data');
       }
       const groupNames = new Map(data.groups.map(group => [group.id, group.title]));
-      const featured = data.products.filter(product => product.featured === true && product.name && product.url && product.group && product.status && product.access && product.platform);
+      const ids = data.products.map(product => product.id);
+      if (new Set(ids).size !== ids.length) throw new Error('Duplicate product IDs');
+      if (new Set(data.groups.map(group => group.id)).size !== data.groups.length) throw new Error('Duplicate product groups');
+      const required = ['id','name','type','group','description','url','status','access','platform','keywords','lifecycleStatus','compatibilityNotes','installation','permissions','verification'];
+      data.products.forEach(product => {
+        if (required.some(key => typeof product[key] !== 'string' || !product[key].trim())) throw new Error('Incomplete metadata for ' + (product.name || product.id || 'unnamed product'));
+        if (!groupNames.has(product.group)) throw new Error('Unknown category for ' + product.name);
+        if (!['planned','testing','available','maintenance','retired'].includes(product.lifecycleStatus)) throw new Error('Invalid lifecycle status for ' + product.name);
+        if (!product.url.startsWith('/') || product.url.startsWith('//')) throw new Error('Invalid destination for ' + product.name);
+      });
+      const featured = data.products.filter(product => product.featured === true);
       if (!featured.length) throw new Error('No featured products are configured');
 
       grid.replaceChildren();
@@ -30,7 +40,7 @@
         const top = el('div', 'product-top');
         const iconClass = product.group === 'apps' ? 'icon-violet' : product.group === 'extensions' ? 'icon-blue' : product.group === 'agents' ? 'icon-pink' : 'icon-blue';
         top.append(el('span', 'product-icon ' + iconClass, product.icon || '◇'));
-        top.append(el('span', 'status-pill', product.status));
+        top.append(el('span', 'status-pill', product.lifecycleStatus.toUpperCase() + ' · ' + product.status));
         card.append(top);
         card.append(el('div', 'product-kicker', groupNames.get(product.group) || product.type || 'YorpHives product'));
         card.append(el('h3', '', product.name));

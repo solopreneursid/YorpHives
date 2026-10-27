@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product Release Checklist | YorpHives</title>
+<meta name="description" content="The release checks YorpHives uses to keep product availability, compatibility, installation and permissions clear.">
+<link rel="canonical" href="https://yorphives.hatchable.site/product-release-checklist.html">
+<link rel="stylesheet" href="/theme.css">
+<link rel="stylesheet" href="/refinement.css">
+<style>
+.release-wrap{max-width:980px;margin:0 auto;padding:64px 22px 80px}.release-wrap h1{font-size:clamp(34px,5vw,56px);line-height:1.08}.release-intro{max-width:760px;color:#b2b0c3;line-height:1.85}.release-group{margin-top:28px;padding:24px;border:1px solid #343047;border-radius:16px;background:#12121d}.release-group h2{font-size:20px;margin-top:0}.release-check{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid #29263a;color:#d8d5e8;line-height:1.65}.release-check:last-child{border-bottom:0}.release-check input{margin-top:5px;accent-color:#a99ae8;width:17px;height:17px;flex:none}.release-note{color:#a9a7bb;font-size:13px;line-height:1.75}.release-statuses{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.release-status{padding:13px;border:1px solid #343047;border-radius:10px}.release-status strong{display:block;color:#eee9ff;margin-bottom:6px}.release-status span{font-size:12px;color:#aaa8bd;line-height:1.6}.release-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.release-progress{color:#c7baff;font-size:13px;margin-top:12px}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="release-wrap">
+<p class="eyebrow">PRODUCT QUALITY / PUBLISHING STANDARD</p>
+<h1>Release responsibly.<br><span class="muted-heading">Keep every claim verifiable.</span></h1>
+<p class="release-intro">This checklist is a repeatable pre-release workflow for YorpHives products. It is not proof that every existing package has passed every test. Product records separately state their lifecycle and whether the latest release has been independently verified.</p>
+<section class="release-group">
+<h2>Lifecycle states</h2>
+<div class="release-statuses">
+<div class="release-status"><strong>Planned</strong><span>Not released. Do not imply that it can be used now.</span></div>
+<div class="release-status"><strong>Testing</strong><span>Evaluation build; limitations and testing scope must be clear.</span></div>
+<div class="release-status"><strong>Available</strong><span>Published for intended use, with access and compatibility stated.</span></div>
+<div class="release-status"><strong>Maintenance</strong><span>Existing users may continue, but active development or new adoption is limited.</span></div>
+<div class="release-status"><strong>Retired</strong><span>No longer recommended for new use; point to a replacement or archive where possible.</span></div>
+</div>
+</section>
+<section class="release-group">
+<h2>Pre-release checks</h2>
+<p class="release-note">Use this interactive checklist during a release review. Your checked items are saved only in this browser and are not a server-side approval record.</p>
+<div id="releaseChecks"></div>
+<p class="release-progress" id="releaseProgress" role="status">0 checks complete</p>
+<div class="release-actions"><button class="button button-primary" id="resetChecks" type="button">Reset checklist</button><a class="button button-ghost" href="/products.html">Open product catalogue ↗</a></div>
+</section>
+<section class="release-group">
+<h2>Catalogue rules</h2>
+<ul class="release-note">
+<li>Each product needs a unique ID and a valid category reference.</li>
+<li>Product destinations must be same-site paths; internal page anchors must exist.</li>
+<li>Lifecycle, access terms, compatibility, installation and permission notes must be explicit.</li>
+<li>Do not invent release dates or claim verification that has not been performed.</li>
+<li>Keep Free Tools separate from products that may later have paid access.</li>
+</ul>
+</section>
+</main>
+<script>
+(() => {
+ const checks = [
+  'Confirm the product destination and any internal anchor exist and load successfully.',
+  'Run the core task end-to-end in the stated supported environment.',
+  'Test the installation or download steps from a clean starting point.',
+  'Inspect extension permissions or host-application capabilities and explain them plainly.',
+  'Confirm compatibility, dependencies, access terms and data-handling claims.',
+  'Check keyboard navigation, responsive layout, error states and basic accessibility.',
+  'Set the correct lifecycle status and disclose limitations or known issues.',
+  'Set verification to verified only after recording a real test; otherwise flag it for retest.',
+  'Review the product metadata, search keywords, destination and related documentation.',
+  'Update the catalogue review date after the review is complete.'
+ ];
+ const key = 'yorphives-product-release-checklist-v1';
+ const root = document.getElementById('releaseChecks');
+ const progress = document.getElementById('releaseProgress');
+ let saved = {};
+ try { saved = JSON.parse(localStorage.getItem(key) || '{}') || {}; } catch (_) { saved = {}; }
+ function render() {
+   root.replaceChildren();
+   checks.forEach((label, index) => {
+     const row = document.createElement('label');
+     row.className = 'release-check';
+     const box = document.createElement('input');
+     box.type = 'checkbox';
+     box.checked = saved[index] === true;
+     box.addEventListener('change', () => {
+       saved[index] = box.checked;
+       try { localStorage.setItem(key, JSON.stringify(saved)); } catch (_) {}
+       update();
+     });
+     const text = document.createElement('span');
+     text.textContent = label;
+     row.append(box, text);
+     root.append(row);
+   });
+   update();
+ }
+ function update() {
+   const done = checks.filter((_, index) => saved[index] === true).length;
+   progress.textContent = done + ' of ' + checks.length + ' checks complete in this browser';
+ }
+ document.getElementById('resetChecks').addEventListener('click', () => {
+   saved = {};
+   try { localStorage.removeItem(key); } catch (_) {}
+   render();
+ });
+ render();
+})();
+</script>
+<script src="/shared-nav.js" defer></script>
+</body>
+</html>
