@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WordPress Host Validation | YorpHives</title>
+<meta name="description" content="Run real WordPress Playground activation and runtime checks for YorpHives plugins, with test evidence and limitations clearly recorded.">
+<link rel="canonical" href="https://yorphives.hatchable.site/product-host-validation.html">
+<link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/refinement.css">
+<style>
+.host-wrap{max-width:1100px;margin:auto;padding:48px 22px 80px}.host-wrap h1{font-size:clamp(34px,5vw,54px);line-height:1.08}.host-lead{max-width:850px;color:#b2b0c3;line-height:1.8}.host-banner{margin:22px 0;padding:18px 20px;border:1px solid #765d2b;background:#211b12;border-radius:14px;line-height:1.7}.host-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:24px 0}.host-card{border:1px solid #343047;border-radius:14px;background:#12121d;padding:18px;min-width:0}.host-card h2{font-size:19px;margin:0 0 8px}.host-meta,.host-note{color:#b7b3c9;font-size:13px;line-height:1.65}.host-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}.host-actions .button{cursor:pointer}.host-status{margin-top:12px;padding:10px;border-radius:8px;background:#1a1928;color:#d9d4ed;font-size:13px;line-height:1.6;overflow-wrap:anywhere}.host-status.pass{border:1px solid #246b4b;color:#a6e4bd}.host-status.fail{border:1px solid #7c3444;color:#ffb2bf}.host-status.pending{border:1px solid #6a5730;color:#e8ca8d}.host-steps{line-height:1.8}.host-steps li{margin:.3rem 0}.host-frame{width:100%;height:520px;border:1px solid #343047;border-radius:12px;background:#fff;margin-top:18px}.host-runner{margin-top:20px;padding:18px;border:1px solid #343047;border-radius:14px;background:#12121d}.host-runner[hidden]{display:none}.host-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.host-small{font-size:12px;color:#aaa8bd;line-height:1.7}.host-progress{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.7 ui-monospace,monospace;background:#0b0b12;padding:12px;border-radius:8px;max-height:280px;overflow:auto}
+</style>
+</head>
+<body><main class="host-wrap">
+<p class="eyebrow">YORPHIVES / RELEASE ENGINEERING</p>
+<h1>Real WordPress validation.<br><span class="muted-heading">Run the plugins, not just the source checks.</span></h1>
+<p class="host-lead">This page starts a temporary WordPress installation inside your browser using the official WordPress Playground runtime. Each plugin gets its own clean instance, is installed from the published YorpHives ZIP, and is activated before PHP-level checks run. No YorpHives account or paid hosting is required.</p>
+<div class="host-banner"><strong>Evidence boundary:</strong> a passing run confirms installation, activation, and the listed runtime checks in this browser-based WordPress environment only. It does not establish compatibility with every WordPress/PHP version, hosting provider, editor, or production site. Do not change catalogue verification to “verified” based on activation alone.</div>
+<section class="host-grid" id="pluginCards" aria-label="WordPress plugin test runners">
+<article class="host-card" data-plugin="content"><span class="test-tag">WordPress plugin</span><h2>YorpHives Content Check</h2><p class="host-meta">Checks ZIP install, activation, class loading, and editor metabox registration.</p><div class="host-actions"><button class="button button-primary" data-run="content">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-content-check.zip">Download ZIP</a></div><div class="host-status pending" id="status-content" role="status">Not run in this browser yet.</div></article>
+<article class="host-card" data-plugin="alt"><span class="test-tag">WordPress plugin</span><h2>YorpHives Image Alt Helper</h2><p class="host-meta">Checks ZIP install, activation, and image-alt review metabox registration.</p><div class="host-actions"><button class="button button-primary" data-run="alt">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-image-alt-helper.zip">Download ZIP</a></div><div class="host-status pending" id="status-alt" role="status">Not run in this browser yet.</div></article>
+<article class="host-card" data-plugin="link"><span class="test-tag">WordPress plugin</span><h2>YorpHives Link Audit</h2><p class="host-meta">Checks ZIP install, activation, and link-audit metabox registration.</p><div class="host-actions"><button class="button button-primary" data-run="link">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-link-audit.zip">Download ZIP</a></div><div class="host-status pending" id="status-link" role="status">Not run in this browser yet.</div></article>
+<article class="host-card" data-plugin="reading"><span class="test-tag">WordPress plugin</span><h2>YorpHives Reading Time</h2><p class="host-meta">Checks ZIP install, activation, shortcode registration, and output rendering.</p><div class="host-actions"><button class="button button-primary" data-run="reading">Run WordPress test</button><a class="button button-ghost" href="/plugin-packages/yorphives-reading-time.zip">Download ZIP</a></div><div class="host-status pending" id="status-reading" role="status">Not run in this browser yet.</div></article>
+</section>
+<section class="host-runner" id="runner" hidden>
+<h2 id="runnerTitle">WordPress runtime</h2><p class="host-meta" id="runnerIntro">Starting a fresh temporary environment.</p>
+<div class="host-progress" id="runnerLog" role="log" aria-live="polite">Waiting to start…</div>
+<iframe id="playgroundFrame" class="host-frame" title="Temporary WordPress Playground site"></iframe>
+<p class="host-small">The WordPress site runs in the embedded Playground frame. Do not enter personal data or real customer content. Test state is temporary unless you choose to save it in Playground.</p>
+</section>
+<h2>After the automated checks</h2>
+<ol class="host-steps">
+<li>Open the embedded WordPress admin and create a disposable test post.</li>
+<li>For Content Check, Image Alt Helper, and Link Audit, open the post editor and manually run the corresponding metabox action against sample content.</li>
+<li>For Reading Time, place <code>[yorphives_reading_time]</code> in a test post and verify that the front end renders a sensible estimate.</li>
+<li>Open Playground’s Dev Tools → Logs if any warning or error appears, and retain the output before changing plugin code.</li>
+</ol>
+<p class="host-note">This page records results only in the current browser session; it does not write to the public catalogue or mark products as verified. Results reset when this page is reloaded.</p>
+<div class="host-links"><a class="button button-primary" href="/product-functional-test-results.html">Functional test record ↗</a><a class="button button-ghost" href="/product-preflight.html">Run source preflight ↗</a><a class="button button-ghost" href="https://developer.wordpress.org/playground/handbook/quick-start-guide/" target="_blank" rel="noopener noreferrer">Playground guide ↗</a></div>
+</main>
+<script type="module">
+const config={
+ content:{name:'YorpHives Content Check',zip:'/plugin-packages/yorphives-content-check.zip',slug:'yorphives-content-check',file:'yorphives-content-check/yorphives-content-check.php',checks:[['plugin active',"$active"],['plugin class loaded',"$class"],['editor metabox registered',"$box"]],php:`<?php
+require_once '/wordpress/wp-load.php';
+$active = in_array('yorphives-content-check/yorphives-content-check.php', (array) get_option('active_plugins', true), true);
+$class = class_exists('YorpHives_Content_Check');
+do_action('add_meta_boxes', 'post');
+global $wp_meta_boxes;
+$box = isset($wp_meta_boxes['post']['side']['high']['yorphives-content-check']) || isset($wp_meta_boxes['post']['side']['default']['yorphives-content-check']) || isset($wp_meta_boxes['post']['normal']['high']['yorphives-content-check']);
+echo json_encode(['active'=>$active,'class_loaded'=>$class,'metabox_registered'=>$box,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
+ alt:{name:'YorpHives Image Alt Helper',zip:'/plugin-packages/yorphives-image-alt-helper.zip',slug:'yorphives-image-alt-helper',file:'yorphives-image-alt-helper/yorphives-image-alt-helper.php',php:`<?php
+require_once '/wordpress/wp-load.php';
+$active = in_array('yorphives-image-alt-helper/yorphives-image-alt-helper.php', (array) get_option('active_plugins', true), true);
+do_action('add_meta_boxes', 'post');
+global $wp_meta_boxes;
+$box = isset($wp_meta_boxes['post']['side']['default']['yhia-box']) || isset($wp_meta_boxes['post']['side']['high']['yhia-box']) || isset($wp_meta_boxes['post']['normal']['high']['yhia-box']);
+echo json_encode(['active'=>$active,'metabox_registered'=>$box,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
+ link:{name:'YorpHives Link Audit',zip:'/plugin-packages/yorphives-link-audit.zip',slug:'yorphives-link-audit',file:'yorphives-link-audit/yorphives-link-audit.php',php:`<?php
+require_once '/wordpress/wp-load.php';
+$active = in_array('yorphives-link-audit/yorphives-link-audit.php', (array) get_option('active_plugins', true), true);
+do_action('add_meta_boxes', 'post');
+global $wp_meta_boxes;
+$box = isset($wp_meta_boxes['post']['side']['default']['yhla-box']) || isset($wp_meta_boxes['post']['side']['high']['yhla-box']) || isset($wp_meta_boxes['post']['normal']['high']['yhla-box']);
+echo json_encode(['active'=>$active,'metabox_registered'=>$box,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
+ reading:{name:'YorpHives Reading Time',zip:'/plugin-packages/yorphives-reading-time.zip',slug:'yorphives-reading-time',file:'yorphives-reading-time/yorphives-reading-time.php',php:`<?php
+require_once '/wordpress/wp-load.php';
+$active = in_array('yorphives-reading-time/yorphives-reading-time.php', (array) get_option('active_plugins', true), true);
+$shortcode = shortcode_exists('yorphives_reading_time');
+$rendered = '';
+if ($shortcode) {
+  $post_id = wp_insert_post(['post_title'=>'Temporary YorpHives QA Post','post_content'=>str_repeat('A simple testing sentence. ', 220),'post_status'=>'draft','post_type'=>'post']);
+  if (!is_wp_error($post_id) && $post_id) {
+    $GLOBALS['post'] = get_post($post_id);
+    setup_postdata($GLOBALS['post']);
+    $rendered = do_shortcode('[yorphives_reading_time]');
+    wp_reset_postdata();
+    wp_delete_post($post_id, true);
+  }
+}
+echo json_encode(['active'=>$active,'shortcode_registered'=>$shortcode,'rendered_output'=>wp_strip_all_tags($rendered),'output_nonempty'=>trim(wp_strip_all_tags($rendered))!=='','php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`}
+};
+const $=s=>document.querySelector(s), log=$('#runnerLog'), frame=$('#playgroundFrame'), runner=$('#runner');
+let busy=false;
+function writeLog(msg){log.textContent+=((log.textContent&&log.textContent!=='Waiting to start…')?'\n':'')+msg;log.scrollTop=log.scrollHeight}
+function setStatus(id,text,kind){const el=$('#status-'+id);el.textContent=text;el.className='host-status '+kind}
+document.querySelectorAll('[data-run]').forEach(btn=>btn.addEventListener('click',async()=>{
+ if(busy)return;busy=true;document.querySelectorAll('[data-run]').forEach(b=>b.disabled=true);
+ const id=btn.dataset.run,c=config[id];runner.hidden=false;$('#runnerTitle').textContent='Testing: '+c.name;$('#runnerIntro').textContent='Fresh temporary WordPress · PHP 8.3 · latest supported WordPress';log.textContent='Preparing browser-based WordPress…';frame.src='about:blank';runner.scrollIntoView({behavior:'smooth',block:'start'});setStatus(id,'Running real WordPress install and runtime checks…','pending');
+ try{
+  const {startPlaygroundWeb}=await import('https://playground.wordpress.net/client/index.js');
+  const blueprint={landingPage:'/wp-admin/plugins.php',preferredVersions:{php:'8.3',wp:'latest'},features:{networking:true},steps:[{step:'login',username:'admin',password:'password'},{step:'installPlugin',pluginData:{resource:'url',url:new URL(c.zip,location.origin).href},options:{activate:true}}]};
+  writeLog('Starting WordPress Playground and installing '+c.name+'…');
+  const client=await startPlaygroundWeb({iframe:frame,remoteUrl:'https://playground.wordpress.net/remote.html',blueprint});
+  writeLog('Playground started. Running PHP checks against the active WordPress instance…');
+  const result=await client.run({code:c.php});
+  const raw=result?.text??result?.output??JSON.stringify(result);
+  writeLog('PHP response: '+raw);
+  let data;try{const m=raw.match(/\{[\s\S]*\}/);if(m)data=JSON.parse(m[0])}catch{}
+  if(!data)throw new Error('WordPress did not return parseable test evidence. Inspect Playground logs and PHP response above.');
+  const failed=[];
+  if(data.active!==true)failed.push('plugin activation');
+  if(id==='content'&&data.class_loaded!==true)failed.push('plugin class loading');
+  if(id==='content'&&!data.metabox_registered)failed.push('editor metabox registration');
+  if((id==='alt'||id==='link')&&!data.metabox_registered)failed.push('editor metabox registration');
+  if(id==='reading'&&data.shortcode_registered!==true)failed.push('shortcode registration');
+  if(id==='reading'&&data.output_nonempty!==true)failed.push('shortcode output rendering');
+  const summary='WP '+(data.wordpress||'?')+' · PHP '+(data.php||'?')+' · '+(failed.length?'Needs investigation: '+failed.join(', '):'Automated runtime checks passed');
+  writeLog(summary);
+  setStatus(id,summary,failed.length?'fail':'pass');
+  const report={date:new Date().toISOString(),plugin:c.name,wordpress:data.wordpress||null,php:data.php||null,evidence:data,failed,scope:'Browser-based WordPress Playground; manual editor/front-end testing still required.'};
+  try{const key='yorphives-host-validation-results';const all=JSON.parse(sessionStorage.getItem(key)||'[]');all.push(report);sessionStorage.setItem(key,JSON.stringify(all));writeLog('Session evidence saved locally in this tab.')}catch{}
+ }catch(e){writeLog('TEST DID NOT COMPLETE: '+(e?.stack||e));setStatus(id,'Test did not complete. See the runtime log; no pass is recorded.','fail')}
+ finally{busy=false;document.querySelectorAll('[data-run]').forEach(b=>b.disabled=false)}
+}));
+</script><script src="/shared-nav.js" defer></script></body></html>

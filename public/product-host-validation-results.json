@@ -1,0 +1,14 @@
+{
+  "reportVersion": 1,
+  "project": "YorpHives",
+  "purpose": "Define evidence fields for real WordPress Playground validation. This static baseline does not claim tests have passed.",
+  "environment": "Official WordPress Playground in a browser, PHP 8.3, latest supported WordPress at run time.",
+  "verificationPolicy": "Do not mark a product verified until install, activation, product-specific runtime checks, manual editor/front-end behavior, and relevant compatibility checks have been recorded.",
+  "products": [
+    {"id":"yorphives-content-check","zip":"/plugin-packages/yorphives-content-check.zip","automatedChecks":["ZIP install","plugin activation","PHP class loading","editor metabox registration"],"manualChecks":["Open a disposable post in the editor","Run Check this draft","Confirm warnings are relevant and advisory"]},
+    {"id":"yorphives-image-alt-helper","zip":"/plugin-packages/yorphives-image-alt-helper.zip","automatedChecks":["ZIP install","plugin activation","editor metabox registration"],"manualChecks":["Create a test post with images","Run Review images","Check missing, empty, and present alt labels"]},
+    {"id":"yorphives-link-audit","zip":"/plugin-packages/yorphives-link-audit.zip","automatedChecks":["ZIP install","plugin activation","editor metabox registration"],"manualChecks":["Test readable links, empty labels, placeholder destinations, javascript: links, and target=_blank without rel=noopener"]},
+    {"id":"yorphives-reading-time","zip":"/plugin-packages/yorphives-reading-time.zip","automatedChecks":["ZIP install","plugin activation","shortcode registration","shortcode output rendering"],"manualChecks":["Add [yorphives_reading_time] to a test post","Check estimate on front end","Check custom wpm, label, and suffix attributes"]}
+  ],
+  "notClaimed": ["Production hosting compatibility","All supported PHP/WordPress versions","Complete security audit","All editor/browser compatibility","Verification catalogue status change"]
+}
