@@ -43,10 +43,17 @@ const config={
 require_once '/wordpress/wp-load.php';
 $active = in_array('yorphives-content-check/yorphives-content-check.php', (array) get_option('active_plugins', true), true);
 $class = class_exists('YorpHives_Content_Check');
-do_action('add_meta_boxes', 'post');
-global $wp_meta_boxes;
-$box = isset($wp_meta_boxes['post']['side']['high']['yorphives-content-check']) || isset($wp_meta_boxes['post']['side']['default']['yorphives-content-check']) || isset($wp_meta_boxes['post']['normal']['high']['yorphives-content-check']);
-echo json_encode(['active'=>$active,'class_loaded'=>$class,'metabox_registered'=>$box,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
+$hook_registered = false;
+global $wp_filter;
+if (isset($wp_filter['add_meta_boxes']->callbacks)) {
+  foreach ($wp_filter['add_meta_boxes']->callbacks as $callbacks) {
+    foreach ($callbacks as $callback) {
+      $fn = $callback['function'] ?? null;
+      if (is_array($fn) && isset($fn[0]) && is_object($fn[0]) && get_class($fn[0]) === 'YorpHives_Content_Check' && ($fn[1] ?? '') === 'add_box') $hook_registered = true;
+    }
+  }
+}
+echo json_encode(['active'=>$active,'class_loaded'=>$class,'metabox_hook_registered'=>$hook_registered,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
  alt:{name:'YorpHives Image Alt Helper',zip:'/plugin-packages/yorphives-image-alt-helper.zip',slug:'yorphives-image-alt-helper',file:'yorphives-image-alt-helper/yorphives-image-alt-helper.php',php:`<?php
 require_once '/wordpress/wp-load.php';
 $active = in_array('yorphives-image-alt-helper/yorphives-image-alt-helper.php', (array) get_option('active_plugins', true), true);
@@ -105,7 +112,7 @@ document.querySelectorAll('[data-run]').forEach(btn=>btn.addEventListener('click
   const failed=[];
   if(data.active!==true)failed.push('plugin activation');
   if(id==='content'&&data.class_loaded!==true)failed.push('plugin class loading');
-  if(id==='content'&&!data.metabox_registered)failed.push('editor metabox registration');
+  if(id==='content'&&!data.metabox_hook_registered)failed.push('editor metabox hook registration');
   if((id==='alt'||id==='link')&&!data.metabox_registered)failed.push('editor metabox registration');
   if(id==='reading'&&data.shortcode_registered!==true)failed.push('shortcode registration');
   if(id==='reading'&&data.output_nonempty!==true)failed.push('shortcode output rendering');
