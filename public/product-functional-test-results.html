@@ -13,15 +13,15 @@
 <p class="eyebrow">YORPHIVES / RELEASE ENGINEERING</p>
 <h1>Functional test record.<br><span class="muted-heading">Evidence before verification.</span></h1>
 <p class="test-lead">This report records what was exercised, where it was exercised, and what remains untested. A source or mocked-API test is not treated as a substitute for installing a product in its intended host application.</p>
-<div class="test-banner"><strong>Verification policy:</strong> product catalogue verification statuses remain unchanged until the corresponding product passes tests in its intended environment. Some checks below ran in a real browser, but Tab Tidy and the VS Code toolkit used mocked host APIs; the WordPress plugins were not installed in WordPress.</div>
-<div class="test-summary" id="testSummary"><div><strong>2026-10-27</strong><span class="test-meta">Test date</span></div><div><strong>v89</strong><span class="test-meta">Site version tested</span></div><div><strong>Partial</strong><span class="test-meta">Overall result</span></div></div>
+<div class="test-banner"><strong>Verification policy:</strong> product catalogue verification statuses remain unchanged until the corresponding product passes tests in its intended environment. Some checks ran in real browser sessions, while Tab Tidy and the VS Code toolkit used mocked host APIs. Earlier WordPress plugin package versions passed automated WordPress Playground smoke tests; updated Content Check, Image Alt Helper, and Link Audit packages now require fresh runtime runs. Manual editor and front-end behavior remains unverified.</div>
+<div class="test-summary" id="testSummary"><div><strong>2026-10-27</strong><span class="test-meta">Test date</span></div><div><strong>v89</strong><span class="test-meta">Initial functional-suite version</span></div><div><strong>Partial</strong><span class="test-meta">Overall result</span></div></div>
 <section id="testResults" class="test-grid" aria-live="polite">
 <article class="test-card"><h2>Loading test record…</h2><p class="test-meta">Reading the published test-results file.</p></article>
 </section>
 <h2>Remaining real-environment tests</h2>
 <ul class="test-list">
 <li>Install Tab Tidy in a real Chromium browser; test permissions, actual tabs, duplicate detection, grouping and export.</li>
-<li>Install each WordPress plugin in a test WordPress site; run PHP lint, activation, editor or shortcode tests, and check permission/security behavior.</li>
+<li>Re-run the updated Content Check, Image Alt Helper, and Link Audit ZIPs in WordPress Playground; inspect the real editor behavior. Run Reading Time's expanded custom-attribute checks and verify its output on a front-end page.</li>
 <li>Install the Developer Toolkit in VS Code and run all four commands against real files and selections.</li>
 <li>Test QuickPanel export/import round-trip, offline reload, clipboard permissions and PWA installation.</li>
 </ul>

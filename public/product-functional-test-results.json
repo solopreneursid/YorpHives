@@ -7,6 +7,7 @@
   "verificationPolicy": "Do not change product verification metadata until each product has been tested in its intended host environment.",
   "environment": [
     "Real browser automation session against the live QuickPanel site.",
+    "Separate WordPress Playground smoke tests on WordPress 7.1.3 / PHP 8.5.12 passed for the original versions of all four WordPress plugin packages. Updated package retests and manual editor/front-end checks remain pending.",
     "Real browser DOM session loading Tab Tidy popup UI with a mocked chrome.tabs API; this is not an installed extension test.",
     "JavaScript harness with mocked VS Code API; this is not a real VS Code installation.",
     "Published source/package URL checks for the four WordPress plugins; no WordPress host or PHP runtime was available."
@@ -65,58 +66,63 @@
     },
     {
       "product": "YorpHives Content Check",
-      "status": "package-source-checks-only",
-      "environment": "Published PHP text source and package assets",
-      "passed": 4,
+      "status": "retest-required",
+      "environment": "Previous package smoke-tested in WordPress Playground; updated Gutenberg-aware JavaScript exercised in a simulated editor harness",
+      "passed": 5,
       "failed": 0,
       "checks": [
-        "Source URL available",
-        "WordPress plugin header present",
-        "ABSPATH direct-access guard present",
-        "Capability check present"
+        "Previous ZIP installation and activation",
+        "Previous PHP class and metabox hook checks",
+        "Updated block-editor content retrieval simulation",
+        "Classic-editor fallback simulation",
+        "Content-check results generated from representative draft data"
       ],
-      "notes": "Not installed in WordPress. PHP lint, editor metabox, permissions, and content checks remain unverified."
+      "notes": "The current package includes a Gutenberg-aware script and was rebuilt. The previous WordPress smoke pass is historical; rerun the current ZIP and verify actual metabox rendering and the Check this draft interaction. No PHP lint or manual editor session has been recorded for the current package."
     },
     {
       "product": "YorpHives Image Alt Helper",
-      "status": "package-source-checks-only",
-      "environment": "Published PHP text source and package assets",
-      "passed": 4,
+      "status": "retest-required",
+      "environment": "Previous package smoke-tested in WordPress Playground; updated inline script exercised in a simulated DOM harness",
+      "passed": 6,
       "failed": 0,
       "checks": [
-        "Source URL available",
-        "WordPress plugin header present",
-        "ABSPATH direct-access guard present",
-        "Capability check present"
+        "Previous ZIP installation and activation",
+        "Previous renderer function loading",
+        "Gutenberg content retrieval simulation",
+        "Missing alt attribute detection",
+        "Empty alt text detection",
+        "Populated alt text recognition"
       ],
-      "notes": "Not installed in WordPress. PHP lint and editor image-analysis behavior remain unverified."
+      "notes": "The current Gutenberg-aware PHP/inline-script package was rebuilt. The prior WordPress smoke pass is historical; rerun the current ZIP and manually verify Review images in the real editor. Simulated DOM checks are not an actual WordPress editor test."
     },
     {
       "product": "YorpHives Link Audit",
-      "status": "package-source-checks-only",
-      "environment": "Published PHP text source and package assets",
-      "passed": 4,
+      "status": "retest-required",
+      "environment": "Previous package smoke-tested in WordPress Playground; updated inline script exercised in a simulated DOM harness",
+      "passed": 5,
       "failed": 0,
       "checks": [
-        "Source URL available",
-        "WordPress plugin header present",
-        "ABSPATH direct-access guard present",
-        "Capability check present"
+        "Previous ZIP installation and activation",
+        "Previous renderer function loading",
+        "Gutenberg content retrieval simulation",
+        "Placeholder and javascript: destination checks",
+        "Empty label and target=_blank rel=noopener checks"
       ],
-      "notes": "Not installed in WordPress. PHP lint and editor link-audit behavior remain unverified."
+      "notes": "The current Gutenberg-aware package was rebuilt. The previous WordPress smoke pass is historical; rerun the current ZIP and manually verify Audit links against real editor content. Simulated DOM checks are not an actual WordPress editor test."
     },
     {
       "product": "YorpHives Reading Time",
-      "status": "package-source-checks-only",
-      "environment": "Published PHP text source and package assets",
-      "passed": 3,
+      "status": "partial-pass",
+      "environment": "WordPress Playground smoke test on the previous package; expanded shortcode checks prepared in the current runner but not yet run",
+      "passed": 4,
       "failed": 0,
       "checks": [
-        "Source URL available",
-        "WordPress plugin header present",
-        "ABSPATH direct-access guard present"
+        "Previous ZIP installation and activation",
+        "Previous shortcode registration",
+        "Previous non-empty shortcode output",
+        "Previous default reading-time output: Reading time: 4 min read"
       ],
-      "notes": "Not installed in WordPress. Shortcode rendering, reading-time calculation and PHP compatibility remain unverified."
+      "notes": "The earlier runtime smoke test passed for the default shortcode. Custom WPM, label, suffix, lower WPM clamp, and real front-end behavior remain pending in the updated runner."
     },
     {
       "product": "WordPress ZIP downloads",
@@ -135,7 +141,7 @@
   ],
   "notCompleted": [
     "Install and test Tab Tidy in a real Chromium browser with the actual extension package.",
-    "Install each of the four WordPress plugins in a real WordPress test site and run PHP lint/activation/editor/shortcode checks.",
+    "Re-run the changed WordPress plugin ZIPs in Playground; verify actual editor metabox behavior and Reading Time custom attributes/front-end output.",
     "Install the Developer Toolkit into VS Code and test commands in a real editor.",
     "Run QuickPanel export/import round-trip, offline reload, clipboard permission and PWA install checks."
   ]
