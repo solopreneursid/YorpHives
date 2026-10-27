@@ -55,6 +55,7 @@
   `;
   if(!document.getElementById(style.id))document.head.appendChild(style);
   if(!document.querySelector('link[data-yh-site-refresh]')){const refresh=document.createElement('link');refresh.rel='stylesheet';refresh.href='/site-refresh.css?v=1';refresh.dataset.yhSiteRefresh='true';document.head.appendChild(refresh)}
+  if(path==='/'&&!document.querySelector('link[data-yh-home-immersive]')){const immersive=document.createElement('link');immersive.rel='stylesheet';immersive.href='/home-immersive.css?v=1';immersive.dataset.yhHomeImmersive='true';document.head.appendChild(immersive)}
   const nav=document.querySelector('#mainNav');const header=nav?.closest('.site-header')||nav?.parentElement;
   if(nav&&header){
     nav.innerHTML='';
