@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10131b">
+<title>LifeOS by YorpHives — Your day, in focus</title>
+<meta name="description" content="LifeOS by YorpHives is a personal dashboard for tasks, habits, goals, money, study and everyday priorities. Early-access local-first prototype.">\n<meta name="robots" content="index,follow">\n<link rel="canonical" href="https://yorphives.hatchable.site/lifeos/">
+<link rel="stylesheet" href="/lifeos/styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#" aria-label="LifeOS home"><span class="brand-mark">L</span><span>life<span class="brand-light">OS</span><small>YOUR LIFE, IN FOCUS</small></span></a>
+    <div class="workspace-label">WORKSPACE</div>
+    <nav class="side-nav" aria-label="Main navigation">
+      <button class="nav-item active" data-view="today"><span>◷</span> Today <kbd>1</kbd></button>
+      <button class="nav-item" data-view="tasks"><span>☷</span> Tasks <span class="nav-count" id="taskNavCount">0</span></button>
+      <button class="nav-item" data-view="habits"><span>✳</span> Habits</button>
+      <button class="nav-item" data-view="goals"><span>◎</span> Goals</button>
+      <button class="nav-item" data-view="money"><span>↗</span> Money</button>
+    </nav>
+    <div class="workspace-label second-label">YOUR LIFE</div>
+    <nav class="side-nav" aria-label="Life tools">
+      <button class="nav-item" data-view="study"><span>▤</span> Study & career</button>
+      <button class="nav-item" data-view="reminders"><span>◷</span> Reminders</button>
+      <button class="nav-item" data-view="documents"><span>▧</span> Documents</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="privacy-card"><span class="privacy-icon">⌑</span><div><strong>Your space, your rules</strong><p>Your data stays in this browser on this device in this MVP.</p></div></div>
+      <button class="nav-item" data-view="settings"><span>⚙</span> Settings & data</button>
+      <div class="profile-row"><div class="avatar">Y</div><div><strong>Your LifeOS</strong><small>Personal workspace</small></div><span class="profile-dot"></span></div>
+    </div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Toggle navigation">☰</button>
+      <div class="breadcrumbs"><span>Workspace</span><b>/</b><strong id="breadcrumbTitle">Today</strong></div>
+      <div class="top-actions"><a class="text-button" href="/products.html" aria-label="Back to YorpHives products">← YorpHives</a><span class="local-badge"><i></i> Local mode</span><button class="icon-button" id="exportBtn" title="Export your data" aria-label="Export your data">⇧</button><button class="primary-button compact" id="quickAddTop">＋ Quick add</button></div>
+    </header>
+    <section class="page" id="pageContent" aria-live="polite"></section>
+    <footer class="app-footer"><span>LifeOS <b>•</b> Early access MVP</span><span>Small steps. A life that feels like yours.</span></footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="itemDialog" class="modal">
+  <form method="dialog" id="itemForm">
+    <div class="modal-head"><div><span class="eyebrow" id="modalEyebrow">QUICK CAPTURE</span><h2 id="modalTitle">Add a task</h2></div><button class="icon-button" value="cancel" aria-label="Close">×</button></div>
+    <label for="itemTitle">What would you like to capture?</label><input id="itemTitle" name="title" maxlength="120" placeholder="e.g. Finish the first lesson" required>
+    <div class="form-row"><div><label for="itemType">Type</label><select id="itemType"><option value="task">Task</option><option value="goal">Goal</option><option value="habit">Habit</option><option value="reminder">Reminder</option><option value="study">Study / career</option><option value="expense">Expense</option><option value="subscription">Subscription</option><option value="document">Document</option></select></div><div><label for="itemWhen">When / category</label><input id="itemWhen" placeholder="Today, Health, Rent…"></div></div>
+    <div class="form-row" id="amountRow" hidden><div><label for="itemAmount">Amount</label><input id="itemAmount" type="number" min="0" step="0.01" placeholder="0.00"></div><div><label for="itemCurrency">Currency</label><select id="itemCurrency"><option>INR</option><option>USD</option><option>EUR</option><option>GBP</option></select></div></div>
+    <div class="modal-actions"><button class="secondary-button" value="cancel">Cancel</button><button class="primary-button" id="saveItemBtn" value="save">Add to LifeOS <span>↗</span></button></div>
+  </form>
+</dialog>
+<script src="/lifeos/app.js" defer></script>
+</body>
+</html>

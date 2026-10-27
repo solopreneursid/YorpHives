@@ -29,6 +29,25 @@
   ],
   "products": [
     {
+      "id": "lifeos",
+      "featured": true,
+      "name": "LifeOS",
+      "type": "Personal productivity app",
+      "group": "apps",
+      "icon": "◷",
+      "description": "A personal dashboard for tasks, habits, goals, expenses, subscriptions, study and career, reminders, and document references. Early-access prototype; data stays in this browser on this device.",
+      "url": "/lifeos/",
+      "status": "Early access prototype",
+      "access": "Free prototype",
+      "platform": "Modern browsers",
+      "keywords": "lifeos personal dashboard tasks habits goals expenses subscriptions study career reminders documents daily planning personal productivity",
+      "lifecycleStatus": "testing",
+      "compatibilityNotes": "Modern desktop and mobile browsers; local browser storage only",
+      "installation": "Open LifeOS in a modern browser. No installation or account is required for this prototype.",
+      "permissions": "No browser-extension permissions. Current data is stored in this browser's localStorage on this device; there is no account, cloud sync, encrypted LifeOS storage, file upload, or connected AI planner.",
+      "verification": "not-independently-verified"
+    },
+    {
       "id": "quickpanel-web",
       "name": "QuickPanel Web App",
       "type": "App",
