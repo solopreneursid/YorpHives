@@ -54,6 +54,7 @@
     }
   `;
   if(!document.getElementById(style.id))document.head.appendChild(style);
+  if(!document.querySelector('link[data-yh-site-refresh]')){const refresh=document.createElement('link');refresh.rel='stylesheet';refresh.href='/site-refresh.css?v=1';refresh.dataset.yhSiteRefresh='true';document.head.appendChild(refresh)}
   const nav=document.querySelector('#mainNav');const header=nav?.closest('.site-header')||nav?.parentElement;
   if(nav&&header){
     nav.innerHTML='';
