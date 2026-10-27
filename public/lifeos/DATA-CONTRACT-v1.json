@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yorphives.hatchable.site/lifeos/DATA-CONTRACT-v1.json",
+  "title": "LifeOS portable backup envelope",
+  "description": "Versioned interchange contract shared by the LifeOS browser prototype and future native client. Unknown item fields should be preserved where possible.",
+  "type": "object",
+  "required": ["app", "format", "formatVersion", "exportedAt", "workspace"],
+  "properties": {
+    "app": { "const": "LifeOS" },
+    "format": { "const": "yorphives.lifeos.backup" },
+    "formatVersion": { "const": 1 },
+    "exportedAt": { "type": "string", "format": "date-time" },
+    "workspace": {
+      "type": "object",
+      "required": ["version", "items", "settings"],
+      "properties": {
+        "version": { "type": "integer", "minimum": 1 },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "type", "title"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "type": { "type": "string", "minLength": 1 },
+              "title": { "type": "string", "minLength": 1 },
+              "createdAt": { "type": "string" },
+              "updatedAt": { "type": "string" },
+              "deletedAt": { "type": ["string", "null"] }
+            },
+            "additionalProperties": true
+          }
+        },
+        "settings": { "type": "object" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

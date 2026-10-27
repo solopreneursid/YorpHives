@@ -1,0 +1,54 @@
+LifeOS — Data Portability & Migration Contract
+Status: initial implementation contract for the current browser prototype and future native client
+Parent product: YorpHives / LifeOS
+Canonical backup schema: /lifeos/DATA-CONTRACT-v1.json
+
+COST AND MAINTENANCE RULES
+- Keep one canonical portable JSON format across web and native clients.
+- Keep local-first operation; do not introduce a paid hosted database, accounts, analytics, or sync for core workflows.
+- Native storage should use SQLite with typed tables and migrations; JSON is for interchange, not the primary native database.
+- Share domain rules and test cases across clients where practical; keep platform UI separate.
+- Avoid adding dependencies unless they remove meaningful maintenance burden.
+- Do not break existing version-1 prototype exports. Imports must remain backward compatible.
+
+BACKUP ENVELOPE
+- app: "LifeOS"
+- format: "yorphives.lifeos.backup"
+- formatVersion: 1 (the envelope/schema version, independent of app release version)
+- exportedAt: ISO-8601 UTC timestamp
+- workspace: { version, items, settings }
+- Each item has a stable string id, type and non-empty title. Additional item fields are allowed for forward compatibility.
+- Unknown fields must be preserved when possible. Unknown item types should be retained rather than silently discarded.
+- Money in the future native SQLite schema uses integer minor units plus ISO 4217 currency code. The browser prototype currently stores decimal amounts; conversion must be explicit and tested during migration.
+
+IMPORT SAFETY
+1. Parse the complete file before touching current data.
+2. Accept the current legacy envelope { app: "LifeOS", version: 1, exportedAt, workspace } and legacy raw workspace { version, items, settings }.
+3. Validate workspace shape, item objects, IDs, type and title; reject malformed files without changing saved data.
+4. Show the user the item count and that import replaces the current workspace before confirmation.
+5. Never silently merge, replace, delete, or migrate data.
+6. Keep the original backup file unchanged. Recommend exporting current data before replacement.
+7. Save the imported workspace only after validation and explicit confirmation. On storage failure, report failure and avoid claiming success.
+
+NATIVE SQLITE RULES
+- Use a small maintained SQLite abstraction; avoid adding a server database for local-only usage.
+- Use stable IDs, UTC timestamps for instants, and local calendar dates for habit check-ins.
+- Use separate typed tables for tasks, projects, habits, habit_check_ins, goals, expenses, subscriptions, reminders, notes/document references and settings when those modules are implemented.
+- Use database migrations from version 1 onward; migrations must be tested against a copy of the previous schema.
+- Use foreign keys and indexes where they improve integrity/query cost; avoid speculative tables before features need them.
+- Soft deletion/tombstones are only required before sync is implemented. For local-only flows, offer undo/confirmation for destructive actions.
+- Recurrence rules must define time-zone and daylight-saving behavior before recurring notifications ship.
+
+MINIMUM ACCEPTANCE TESTS
+- Export a non-empty and an empty workspace.
+- Import a legacy version-1 export.
+- Import a version-1 canonical envelope.
+- Reject malformed JSON, missing items, invalid item objects and blank titles without changing existing data.
+- Cancel import and verify the current workspace is unchanged.
+- Confirm import and verify item counts, IDs, settings and unknown fields survive.
+- Test duplicate IDs and define deterministic handling before native import ships.
+- Verify export/import after a database migration and after an app upgrade.
+- Verify the app works offline and data persists after force-close/relaunch.
+
+CURRENT LIMITATION
+This contract and the browser prototype do not constitute a Flutter codebase or a native build. Android/desktop/iOS artifacts remain unpublished until a Flutter toolchain, source repository/build workflow, signed package and platform acceptance evidence exist.

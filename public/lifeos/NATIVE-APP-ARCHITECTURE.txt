@@ -49,7 +49,7 @@ Normalize where it improves integrity; do not put all domain records in one unty
 
 7. MIGRATION FROM THE CURRENT PROTOTYPE
 - Keep the existing PWA alive as a reference until native features pass acceptance tests.
-- Maintain an explicit versioned JSON interchange format.
+- Maintain an explicit versioned JSON interchange format. Initial contract: /lifeos/DATA-CONTRACT-v1.json; safety and compatibility rules: /lifeos/DATA-MIGRATION-CONTRACT.txt.
 - Add a validated export from the prototype and a native import preview.
 - Import only after the user reviews counts and chooses merge/replace; keep the original export unchanged.
 - Do not attempt to silently read browser localStorage from the native app or imply automatic migration.

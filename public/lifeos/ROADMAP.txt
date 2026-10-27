@@ -27,6 +27,8 @@ PHASE 0 — PRODUCT AND TECHNICAL FOUNDATION
 - Freeze a canonical feature inventory and domain model: tasks/projects, dated habit check-ins, goals/milestones, expenses/subscriptions, study/career items, reminders, notes/document references and settings.
 - Define shared IDs, timestamps, time-zone rules, recurring schedules, deletion semantics, currency handling, validation, and JSON export/import format.
 - Define quality bars: automated tests, accessibility, database migration tests, restore tests, offline tests, backup compatibility, and release signing.
+- Added the first portable backup contract at /lifeos/DATA-CONTRACT-v1.json and migration/safety rules at /lifeos/DATA-MIGRATION-CONTRACT.txt.
+- The browser prototype now exports a named, versioned backup envelope and validates imported items and duplicate IDs before asking to replace the current workspace; legacy version-1 exports remain accepted.
 - Prototype Flutter toolchain and SQLite package in a development environment before choosing final package versions.
 - Do not mark the product as Available until installable builds pass device testing.
 
