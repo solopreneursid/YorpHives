@@ -6,16 +6,19 @@
     {label:'Portfolio',href:'/portfolio.html',key:'portfolio'},
     {label:'Products',href:'/products.html',key:'products'},
     {label:'Free Tools',href:'/free-tools.html',key:'tools'},
-    {label:'Workbench',href:'/workbench.html',key:'workbench'},
-    {label:'QuickPanel',href:'/quickpanel/',key:'quickpanel'}
+    {label:'Workbench',href:'/workbench.html',key:'workbench'}
   ];
   const more = [
+    {label:'QuickPanel',href:'/quickpanel/',key:'quickpanel'},
     {label:'Extensions',href:'/browser-extension.html',key:'extensions'},
+    {label:'Plugins',href:'/plugins.html',key:'plugins'},
     {label:'PDF & Images',href:'/tools.html',key:'media'},
     {label:'File Conversion Workspace',href:'/file-workspace.html',key:'fileworkspace'},
-    {label:'About',href:'/#about',key:'about'}
+    {label:'About',href:'/#about',key:'about'},
+    {label:'FAQ',href:'/#faq',key:'faq'},
+    {label:'Contact / Enquiries',href:'/#request',key:'contact'}
   ];
-  const active = path==='/'?'home':path==='/services.html'?'services':path==='/portfolio.html'?'portfolio':path==='/products.html'?'products':path==='/free-tools.html'?'tools':path==='/workbench.html'?'workbench':path.startsWith('/quickpanel')?'quickpanel':path==='/browser-extension.html'?'extensions':path==='/tools.html'?'media':path==='/file-workspace.html'?'fileworkspace':'tools';
+  const active = path==='/'?'home':path==='/services.html'?'services':path==='/portfolio.html'?'portfolio':path==='/products.html'?'products':path==='/free-tools.html'?'tools':path==='/workbench.html'?'workbench':path.startsWith('/quickpanel')?'quickpanel':path==='/browser-extension.html'?'extensions':path==='/plugins.html'?'plugins':path==='/tools.html'?'media':path==='/file-workspace.html'?'fileworkspace':'tools';
   if(!document.querySelector('link[href^="/tech-wizard.css"]')){const theme=document.createElement('link');theme.rel='stylesheet';theme.href='/tech-wizard.css?v=1';document.head.appendChild(theme)}
   if(!document.querySelector('link[data-yh-font-preconnect]')){const pre=document.createElement('link');pre.rel='preconnect';pre.href='https://fonts.googleapis.com';pre.dataset.yhFontPreconnect='true';document.head.appendChild(pre);const pre2=document.createElement('link');pre2.rel='preconnect';pre2.href='https://fonts.gstatic.com';pre2.crossOrigin='anonymous';document.head.appendChild(pre2);const fonts=document.createElement('link');fonts.rel='stylesheet';fonts.href='https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;650;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap';fonts.dataset.yhFontPreconnect='true';document.head.appendChild(fonts)}
   if(!document.querySelector('link[data-yh-unified-polish]')){const polish=document.createElement('link');polish.rel='stylesheet';polish.href='/site-wide-polish.css?v=2';polish.dataset.yhUnifiedPolish='true';document.head.appendChild(polish)}
@@ -79,7 +82,7 @@
     document.addEventListener('click',e=>{if(!details.contains(e.target))details.open=false});
     document.addEventListener('keydown',e=>{if(e.key==='Escape'){details.open=false;nav.classList.remove('yh-nav-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation');toggle.textContent='☰';toggle.focus()}});
   }
-  document.querySelectorAll('footer.site-footer').forEach(footer=>{const box=footer.querySelector('.footer-links');if(!box)return;box.innerHTML=[['Home','/'],['Services','/services.html'],['Portfolio','/portfolio.html'],['Products','/products.html'],['Free Tools','/free-tools.html'],['Workbench','/workbench.html'],['QuickPanel','/quickpanel/'],['Extensions','/browser-extension.html'],['PDF & Images','/tools.html'],['About','/#about'],['Start a project','/#request']].map(([label,href])=>'<a href="'+href+'">'+label+'</a>').join('')});
+  document.querySelectorAll('footer.site-footer').forEach(footer=>{const box=footer.querySelector('.footer-links');if(!box)return;box.innerHTML=[['Home','/'],['Services','/services.html'],['Portfolio','/portfolio.html'],['Products','/products.html'],['Free Tools','/free-tools.html'],['Workbench','/workbench.html'],['QuickPanel','/quickpanel/'],['Extensions','/browser-extension.html'],['Plugins','/plugins.html'],['PDF & Images','/tools.html'],['File Conversion','/file-workspace.html'],['About','/#about'],['FAQ','/#faq'],['Start a project','/#request']].map(([label,href])=>'<a href="'+href+'">'+label+'</a>').join('')});
   if(path!=='/'&&!path.startsWith('/quickpanel')){
     const main=document.querySelector('main');const title=document.querySelector('main h1')?.textContent?.replace(/\s+/g,' ').trim()||document.title.split('|')[0].trim();
     if(main&&!document.querySelector('.yh-breadcrumb')){const section=document.createElement('nav');section.className='yh-breadcrumb';section.setAttribute('aria-label','Breadcrumb');const ol=document.createElement('ol');const home=document.createElement('li');home.innerHTML='<a href="/">Home</a>';ol.appendChild(home);const current=document.createElement('li');current.setAttribute('aria-current','page');current.textContent=path==='/services.html'?'Services':path==='/portfolio.html'?'Portfolio':path==='/products.html'?'Products':path==='/free-tools.html'?'Free Tools':path==='/workbench.html'?'Workbench':path==='/tools.html'?'PDF & Images':path==='/browser-extension.html'?'Extensions':title;ol.appendChild(current);section.appendChild(ol);main.before(section)}
