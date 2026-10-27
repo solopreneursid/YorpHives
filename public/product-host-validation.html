@@ -59,7 +59,24 @@ if (isset($wp_filter['add_meta_boxes']->callbacks)) {
     }
   }
 }
-echo json_encode(['active'=>$active,'class_loaded'=>$class,'metabox_hook_registered'=>$hook_registered,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
+$test_post_id = wp_insert_post(['post_title'=>'YorpHives Content Check QA Draft','post_content'=>'Sample test content','post_status'=>'draft','post_type'=>'post']);
+$metabox_rendered = false;
+if ($test_post_id && !is_wp_error($test_post_id)) {
+  $test_post = get_post($test_post_id);
+  do_action('add_meta_boxes', 'post', $test_post);
+  global $wp_meta_boxes;
+  $box = $wp_meta_boxes['post']['side']['high']['yorphives-content-check'] ?? null;
+  if ($box && is_callable($box['callback'])) {
+    ob_start();
+    call_user_func($box['callback'], $test_post);
+    $markup = ob_get_clean();
+    $metabox_rendered = strpos($markup, 'yhcc-run') !== false && strpos($markup, 'Check this draft') !== false && strpos($markup, 'yhcc-results') !== false;
+  }
+  wp_delete_post($test_post_id, true);
+}
+$js_present = file_exists(WP_PLUGIN_DIR . '/yorphives-content-check/content-check.js');
+$css_present = file_exists(WP_PLUGIN_DIR . '/yorphives-content-check/content-check.css');
+echo json_encode(['active'=>$active,'class_loaded'=>$class,'metabox_hook_registered'=>$hook_registered,'metabox_rendered'=>$metabox_rendered,'js_file_present'=>$js_present,'css_file_present'=>$css_present,'php'=>PHP_VERSION,'wordpress'=>get_bloginfo('version')]);`},
  alt:{name:'YorpHives Image Alt Helper',zip:'/plugin-packages/yorphives-image-alt-helper.zip',slug:'yorphives-image-alt-helper',file:'yorphives-image-alt-helper/yorphives-image-alt-helper.php',php:`<?php
 require_once '/wordpress/wp-load.php';
 $active = in_array('yorphives-image-alt-helper/yorphives-image-alt-helper.php', (array) get_option('active_plugins', true), true);
@@ -117,6 +134,9 @@ document.querySelectorAll('[data-run]').forEach(btn=>btn.addEventListener('click
   if(data.active!==true)failed.push('plugin activation');
   if(id==='content'&&data.class_loaded!==true)failed.push('plugin class loading');
   if(id==='content'&&!data.metabox_hook_registered)failed.push('editor metabox hook registration');
+  if(id==='content'&&!data.metabox_rendered)failed.push('actual editor metabox rendering');
+  if(id==='content'&&!data.js_file_present)failed.push('Content Check JavaScript package asset');
+  if(id==='content'&&!data.css_file_present)failed.push('Content Check stylesheet package asset');
   if((id==='alt'||id==='link')&&!data.renderer_function_loaded)failed.push('plugin renderer function loading');
   if(id==='reading'&&data.shortcode_registered!==true)failed.push('shortcode registration');
   if(id==='reading'&&data.output_nonempty!==true)failed.push('shortcode output rendering');
