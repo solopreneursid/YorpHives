@@ -1,38 +1,81 @@
-LifeOS — Implementation Roadmap
-YorpHives product route: /lifeos/
-Status: early-access prototype; this document describes planned work, not active features.
+LifeOS — Product & Engineering Roadmap
+Parent platform: YorpHives
+Product route: /lifeos/
+Architecture decision: the current browser/PWA build is a concept and workflow prototype, NOT the intended final application.
 
-PHASE 1 — CORE MVP QUALITY
-- Verify add, edit, complete/reopen, habit check-in/undo, goal progress, expense/subscription editing, JSON export/import, and reload persistence.
-- Test keyboard focus, modal close/cancel, empty states, mobile layout, and visible error states.
-- Test PWA install, icon appearance, offline launch, and cache refresh on supported real devices.
-- Keep the lifecycle label at Testing until end-to-end checks are recorded.
+PRODUCT VISION
+Build LifeOS as a polished, installable, cross-platform personal productivity application. The user should be able to use the core app without a browser tab, keep core data on-device, and later opt into secure synchronization across their own devices. YorpHives remains the parent platform for discovery, product information, release notes, support, and downloads.
 
-PHASE 2 — ACCOUNT AND SYNC DESIGN (NOT IMPLEMENTED)
-- Use Hatchable's supported end-user authentication. Do not create a custom password system.
-- Require authentication for every personal-data API. Derive the owner from the authenticated server request; never trust a client-supplied user_id or workspace_id alone.
-- Proposed schema:
-  lifeos_workspaces: id, owner_user_id, name, created_at, updated_at.
-  lifeos_items: id, workspace_id, owner_user_id, type, payload JSONB, created_at, updated_at, deleted_at, revision.
-  lifeos_sync_state (optional): user_id, device_id, last_sync_at, schema_version.
-- Add database indexes for owner_user_id, workspace_id, and updated_at. Add uniqueness/foreign-key constraints appropriate to the platform's auth schema.
-- Keep task, habit, goal, reminder, study, expense, subscription, and document-reference records scoped to the authenticated owner. Verify cross-user reads and writes fail.
-- Build explicit authenticated API routes for listing changes, creating/updating items, deleting items, exporting, and deleting an account's LifeOS data. Do not expose a public list endpoint.
-- Use per-item updated_at/revision values and soft-delete tombstones so deletes sync between devices. Detect revision conflicts and avoid silently overwriting newer data. Present a recoverable conflict choice where needed.
-- Preserve offline-first interaction. Queue local changes, retry sync safely, show sync state, and keep export/import available.
-- Before enabling sync, add migration/rollback notes, backup/export, API rate limits, ownership tests, session-expiry handling, and privacy/retention/deletion documentation.
+RECOMMENDED TECHNICAL DIRECTION
+- App client: Flutter/Dart, using a single shared application codebase for Android and iOS first, followed by Windows, macOS and Linux after the core experience is stable.
+- Local database: SQLite through a maintained Flutter database layer (evaluate Drift or an equivalent maintained package before implementation). Local-first CRUD must work without network access.
+- App architecture: feature modules (Today, Tasks, Habits, Goals, Money, Study & Career, Notes/Documents, Calendar/Reminders, Insights, Settings); repository layer between UI and persistence; migrations and schema versioning from the first database version.
+- Platform integrations: native notifications, app lifecycle, secure storage for credentials/tokens, file picking and sharing, app icons, deep links, accessibility and responsive layouts implemented through supported platform plugins.
+- Sync backend: defer until local data model and migration strategy are stable. Use supported authentication and authenticated APIs. Enforce ownership on the server; never trust a client-supplied user ID.
+- Web: keep YorpHives /lifeos/ as a product landing page and optional lightweight companion/prototype. Do not treat PWA installation as the final delivery strategy.
+- Distribution: Android signed APK/AAB for testing and store release; iOS signed builds through Apple's distribution flow; desktop installers/packages for Windows, macOS and Linux. These are build/release deliverables and are NOT currently produced.
 
-PHASE 3 — PRIVATE BETA
-- Start with a small, opt-in beta. Explain what leaves the device and when.
-- Add a sync toggle and a visible last-synced status; never silently upload the existing local workspace on first sign-in.
-- Provide an explicit import/merge choice when connecting a local workspace to an account.
-- Test two-device edits, offline changes, simultaneous edits, logout, account deletion, and recovery from failed sync.
+WHY THIS DIRECTION
+- It makes app installation, native notifications, file access and OS integration first-class capabilities.
+- SQLite provides reliable structured local storage and supports offline-first use.
+- One Flutter codebase limits duplication for a solo founder.
+- Shipping Android first allows validation before maintaining every desktop/mobile platform.
+- The web landing page remains integrated into YorpHives without forcing the actual product to run only in a browser.
 
-PHASE 4 — PUBLIC RELEASE
-- Only after test evidence: update product catalogue verification and lifecycle status; publish genuine screenshots captured from the live app; finalise access terms, support path, privacy notice, and release notes.
-- Keep future AI planning, notifications, bank integrations, native packaging, and paid features clearly marked as unavailable until actually implemented.
+PHASE 0 — PRODUCT AND TECHNICAL FOUNDATION
+- Keep the current PWA as a working prototype/reference; do not discard it until feature parity and data export are verified.
+- Freeze a canonical feature inventory and domain model: tasks/projects, dated habit check-ins, goals/milestones, expenses/subscriptions, study/career items, reminders, notes/document references and settings.
+- Define shared IDs, timestamps, time-zone rules, recurring schedules, deletion semantics, currency handling, validation, and JSON export/import format.
+- Define quality bars: automated tests, accessibility, database migration tests, restore tests, offline tests, backup compatibility, and release signing.
+- Prototype Flutter toolchain and SQLite package in a development environment before choosing final package versions.
+- Do not mark the product as Available until installable builds pass device testing.
 
-CURRENT DATA AND FEATURE LIMITS
-- Current workspace stays in browser localStorage on the current device/profile.
-- No LifeOS accounts, cloud sync, server-side workspace storage, bank connection, file upload vault, connected AI planner, browser notifications, billing, or native APK/app-store package.
-- Do not use this prototype to store passwords, account credentials, medical records, or other highly sensitive information.
+PHASE 1 — NATIVE APP FOUNDATION (ANDROID FIRST)
+- Create the Flutter application source as a native application codebase, kept within the YorpHives product's version-control/release process. Do not create a separate YorpHives product or duplicate catalogue entry.
+- Implement app shell, navigation, design tokens, themes, localization-ready text, accessible components, error/empty/loading states, and first-run onboarding.
+- Add SQLite persistence, versioned migrations, repository interfaces and unit/widget/integration tests.
+- Add export/import with schema versioning and safe validation; never silently overwrite user data.
+- Provide sample data as an optional demo, not mixed into a user's real workspace by default.
+- Build a signed Android test package and test installation, upgrade, restart, offline use, backup and restore on real devices.
+
+PHASE 2 — CORE DAILY WORKFLOWS
+- Today dashboard with priorities, overdue items, upcoming commitments and an end-of-day review.
+- Tasks and projects with priorities, due dates, subtasks, recurrence, filters and reliable completion history.
+- Habits with schedules, dated check-ins, streaks and a history/calendar view.
+- Goals with milestones and progress history.
+- Money with manual expenses, categories, monthly budgets and recurring subscription reminders. No bank connection in this phase.
+- Study/career plans, searchable notes, reminders and document references.
+- Search, quick capture, undo for destructive changes, keyboard navigation on desktop, and helpful empty states.
+- Native local notifications with explicit permissions and per-reminder controls.
+- Track feature-level tests and usability issues before adding new modules.
+
+PHASE 3 — DESKTOP AND SECOND MOBILE PLATFORM
+- Bring the same Flutter codebase to Windows, macOS and Linux, and prepare iOS distribution.
+- Adapt navigation and layouts for phones, tablets and desktop windows rather than merely stretching a phone screen.
+- Add desktop keyboard shortcuts, window-size handling, file import/export and platform-specific packaging.
+- Test each OS separately; do not claim support based on compilation alone.
+
+PHASE 4 — OPTIONAL ACCOUNTS AND SECURE SYNC (NOT IMPLEMENTED)
+- First document data flows, retention, account deletion and recovery.
+- Use supported end-user authentication; do not build a custom password system.
+- Require authentication on every personal-data API and derive owner identity server-side.
+- Proposed entities: workspaces, typed items, per-item revision/version, updated_at, deleted_at tombstones, and per-device sync cursor.
+- Support idempotent retries, conflict detection, safe merges, session expiry, logout and revocation.
+- Never upload local records silently. Ask the user to opt in and choose merge/replace behavior before first sync.
+- Test cross-user isolation, two-device edits, offline queues, conflict recovery, account deletion and backup restore before private beta.
+
+PHASE 5 — PRIVACY, SECURITY AND PUBLIC RELEASE
+- Publish plain-language privacy notice, access terms, support path, release notes and supported-platform matrix.
+- Minimize collected data. Keep personal content out of analytics/logs by default.
+- Use secure OS storage for tokens/secrets; never store secrets in plaintext preferences.
+- Add dependency checks, signed release builds, crash reporting only with suitable privacy controls, migration/rollback guidance and a documented support process.
+- Update the central YorpHives product catalogue only when each supported platform has evidence-backed test results.
+- Future AI planning, cloud sync, bank integrations, billing and third-party integrations remain unavailable until implemented, tested and documented.
+
+CURRENT STATUS — HONEST BASELINE
+- The current /lifeos/ experience is a browser-based JavaScript prototype/PWA using browser localStorage.
+- It is useful for validating interaction patterns and demonstrating the product, but it is not a native app.
+- No Flutter application, Android APK/AAB, iOS build, desktop installer, native notification system, account system or cloud sync has been delivered by this plan.
+- Current prototype features include tasks, habits, goals, manual expenses/subscriptions, study/career items, reminders, document references, JSON backup/import and a PWA shell.
+- PWA installation/offline behavior must not be represented as equivalent to a fully tested native application.
+- Avoid highly sensitive information in the prototype. Preserve a verified backup before any future migration.

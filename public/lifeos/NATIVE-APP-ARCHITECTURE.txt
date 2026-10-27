@@ -1,0 +1,58 @@
+LifeOS — Native App Architecture Decision
+Decision status: proposed technical direction; confirm toolchain/package compatibility in a real development environment before implementation.
+
+1. PRODUCT BOUNDARY
+LifeOS remains a product in YorpHives. YorpHives owns its public product page, catalogue entry, release information, support and downloads. The installed app is a native-capable client and does not depend on keeping a browser tab open.
+
+2. RECOMMENDED STACK
+- Flutter + Dart for one shared Android/iOS/Windows/macOS/Linux application codebase.
+- SQLite for durable on-device structured data. Evaluate Drift or another actively maintained Flutter SQLite layer before locking dependencies.
+- Repository/service boundary separating UI, domain logic and storage.
+- Versioned database migrations; stable IDs; timestamps stored consistently; explicit time-zone handling for dates and reminders.
+- OS secure storage for authentication tokens only when account/sync is introduced.
+- Native local notifications, file picker, share/export, app lifecycle and deep links through maintained plugins.
+- YorpHives-hosted backend only when sync is designed and secured; local-only operation remains the baseline.
+
+3. DELIVERY STRATEGY
+Android first -> core workflow validation -> iOS and desktop adaptation -> optional sync/private beta -> public release.
+Do not promise simultaneous release on all platforms. A solo founder benefits from narrowing the first release and expanding only after real-device testing.
+
+4. DATA MODEL STARTING POINT
+- Task: id, title, details, project_id, status, priority, due_at, recurrence_rule, created_at, updated_at, completed_at, deleted_at.
+- Project: id, title, status, created_at, updated_at.
+- Habit: id, title, schedule, created_at, updated_at.
+- HabitCheckIn: id, habit_id, local_date, status, created_at; unique habit_id + local_date.
+- Goal: id, title, target_value, current_value, unit, next_milestone, created_at, updated_at.
+- Expense: id, amount_minor_units, currency_code, category_id, occurred_at, note, created_at, updated_at.
+- Subscription: id, name, amount_minor_units, currency_code, billing_period, next_due_at, created_at, updated_at.
+- Reminder: id, title, scheduled_at, recurrence_rule, enabled, created_at, updated_at.
+- Note/DocumentReference: id, title, body_or_reference, created_at, updated_at.
+- AppSettings: theme, locale, week_start, currency, backup preferences and notification preferences.
+Normalize where it improves integrity; do not put all domain records in one untyped JSON blob in the native database. Store money as integer minor units plus currency code, not floating-point values.
+
+5. REQUIRED ENGINEERING GUARDRAILS
+- Database migration tests and backup compatibility tests.
+- Repository/domain unit tests, widget tests and integration tests for critical flows.
+- Automated test coverage for create/edit/delete/undo, date boundaries, habit streaks, recurring schedules, currency formatting and import validation.
+- No silent destructive import; preview and confirm replacement/merge.
+- Accessibility semantics, dynamic text sizing, keyboard support on desktop and reduced-motion consideration.
+- Verify app signing, upgrade path, permissions and offline behavior on real devices.
+- Treat backup files as sensitive because they may contain personal content.
+
+6. SYNC SECURITY MODEL — FUTURE ONLY
+- Authentication required for all private API routes.
+- Owner identity derived from the verified session on the server.
+- Every query/write scoped to that owner; test cross-user access explicitly.
+- Revision-aware updates, soft-delete tombstones, idempotent retries and recoverable conflict UI.
+- Explicit opt-in before the first upload; never sync personal data silently.
+- Document retention, account deletion, export, logout and session revocation.
+
+7. MIGRATION FROM THE CURRENT PROTOTYPE
+- Keep the existing PWA alive as a reference until native features pass acceptance tests.
+- Maintain an explicit versioned JSON interchange format.
+- Add a validated export from the prototype and a native import preview.
+- Import only after the user reviews counts and chooses merge/replace; keep the original export unchanged.
+- Do not attempt to silently read browser localStorage from the native app or imply automatic migration.
+
+8. RELEASE ACCEPTANCE GATE
+A platform is not marked Available until its package installs, upgrades, launches offline, preserves data across restart, exports/imports a backup, handles permission denial, passes core workflow tests, and has a tested restore path on the target OS.
