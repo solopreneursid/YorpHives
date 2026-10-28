@@ -23,6 +23,7 @@
       <button class="nav-item" data-view="tasks"><span>☷</span> Tasks <span class="nav-count" id="taskNavCount">0</span></button>
       <button class="nav-item" data-view="habits"><span>✳</span> Habits</button>
       <button class="nav-item" data-view="goals"><span>◎</span> Goals</button>
+      <button class="nav-item" data-view="projects"><span>▦</span> Projects</button>
       <button class="nav-item" data-view="money"><span>↗</span> Money</button>
     </nav>
     <div class="workspace-label second-label">YOUR LIFE</div>
@@ -52,8 +53,9 @@
   <form method="dialog" id="itemForm">
     <div class="modal-head"><div><span class="eyebrow" id="modalEyebrow">QUICK CAPTURE</span><h2 id="modalTitle">Add a task</h2></div><button class="icon-button" value="cancel" aria-label="Close">×</button></div>
     <label for="itemTitle">What would you like to capture?</label><input id="itemTitle" name="title" maxlength="120" placeholder="e.g. Finish the first lesson" required>
-    <div class="form-row"><div><label for="itemType">Type</label><select id="itemType"><option value="task">Task</option><option value="goal">Goal</option><option value="habit">Habit</option><option value="reminder">Reminder</option><option value="study">Study / career</option><option value="expense">Expense</option><option value="subscription">Subscription</option><option value="document">Document</option></select></div><div><label for="itemWhen">Category / context</label><input id="itemWhen" placeholder="Health, Rent, Learning…"></div></div>
+    <div class="form-row"><div><label for="itemType">Type</label><select id="itemType"><option value="task">Task</option><option value="goal">Goal</option><option value="project">Project</option><option value="habit">Habit</option><option value="reminder">Reminder</option><option value="study">Study / career</option><option value="expense">Expense</option><option value="subscription">Subscription</option><option value="document">Document</option></select></div><div><label for="itemWhen">Category / context</label><input id="itemWhen" placeholder="Health, Rent, Learning…"></div></div>
     <div class="form-row" id="planningRow"><div><label for="itemDue">Due date</label><input id="itemDue" type="date"></div><div><label for="itemPriority">Priority</label><select id="itemPriority"><option value="normal">Normal</option><option value="high">High</option><option value="low">Low</option></select></div></div>
+    <div class="form-row" id="linkageRow" hidden><div><label for="itemProject">Project</label><select id="itemProject"><option value="">No project</option></select></div><div><label for="itemGoal">Related goal</label><select id="itemGoal"><option value="">No goal</option></select></div></div>
     <div id="milestoneRow" hidden><label for="itemMilestone">Next milestone (optional)</label><input id="itemMilestone" maxlength="120" placeholder="e.g. Finish the first module"></div>
     <div class="form-row" id="amountRow" hidden><div><label for="itemAmount">Amount</label><input id="itemAmount" type="number" min="0" step="0.01" placeholder="0.00"></div><div><label for="itemCurrency">Currency</label><select id="itemCurrency"><option>INR</option><option>USD</option><option>EUR</option><option>GBP</option></select></div></div>
     <div class="modal-actions"><button class="secondary-button" value="cancel">Cancel</button><button class="primary-button" id="saveItemBtn" value="save">Add to LifeOS <span>↗</span></button></div>
