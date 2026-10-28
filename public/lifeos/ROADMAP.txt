@@ -4,6 +4,17 @@ Product route: /lifeos/
 Architecture decision: the current browser/PWA build is a concept and workflow prototype, NOT the intended final application.
 
 PRODUCT VISION
+LifeOS helps people turn intentions into consistent action: understand what matters today, make progress on meaningful goals, build routines without guilt, and stay in control of their plans and data.
+
+PRODUCT PRINCIPLES
+- Make the Today experience the center of the product: a realistic daily plan, a few clear priorities, and a useful next action.
+- Connect daily tasks to goals and milestones instead of treating every module as a separate silo.
+- Start new workspaces empty. Demo content must be opt-in and clearly marked.
+- Prefer reliable local-first workflows and portable backups before accounts, sync, or AI.
+- Keep secondary areas discoverable but do not let them overwhelm the main navigation.
+- Add features only when they strengthen the core experience or are supported by user demand.
+- Never describe planned, unbuilt, or untested capabilities as available.
+
 Build LifeOS as a polished, installable, cross-platform personal productivity application. The user should be able to use the core app without a browser tab, keep core data on-device, and later opt into secure synchronization across their own devices. YorpHives remains the parent platform for discovery, product information, release notes, support, and downloads.
 
 RECOMMENDED TECHNICAL DIRECTION
