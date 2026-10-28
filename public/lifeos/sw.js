@@ -1,5 +1,5 @@
 'use strict';
-const CACHE='lifeos-shell-v2';
+const CACHE='lifeos-shell-v3';
 const SHELL=['/lifeos/','/lifeos/styles.css','/lifeos/app.js','/lifeos/manifest.json','/lifeos/icon.svg','/lifeos/icon-192.svg','/lifeos/icon-512.svg','/lifeos/about.html','/lifeos/privacy.html'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('lifeos-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
