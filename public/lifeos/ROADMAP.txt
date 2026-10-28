@@ -39,7 +39,8 @@ PHASE 0 — PRODUCT AND TECHNICAL FOUNDATION
 - Define shared IDs, timestamps, time-zone rules, recurring schedules, deletion semantics, currency handling, validation, and JSON export/import format.
 - Define quality bars: automated tests, accessibility, database migration tests, restore tests, offline tests, backup compatibility, and release signing.
 - Added the first portable backup contract at /lifeos/DATA-CONTRACT-v1.json and migration/safety rules at /lifeos/DATA-MIGRATION-CONTRACT.txt.
-- The browser prototype now exports a named, versioned backup envelope and validates imported items and duplicate IDs before asking to replace the current workspace; legacy version-1 exports remain accepted.
+- The browser prototype exports a named, versioned backup envelope; import validates workspace version, item shape, required IDs/types/titles, duplicate IDs and a 10 MB file limit before confirmation. Legacy version-1 exports remain accepted.
+- Destructive item deletion and workspace reset now offer a short-lived Undo action, with save-failure handling. This UI behavior still requires end-to-end browser testing before it is treated as fully verified.
 - Prototype Flutter toolchain and SQLite package in a development environment before choosing final package versions.
 - Do not mark the product as Available until installable builds pass device testing.
 
@@ -90,7 +91,7 @@ PHASE 5 — PRIVACY, SECURITY AND PUBLIC RELEASE
 CURRENT STATUS — HONEST BASELINE
 - The current /lifeos/ experience is a browser-based JavaScript prototype/PWA using browser localStorage.
 - It is useful for validating interaction patterns and demonstrating the product, but it is not a native app.
-- No Flutter application, Android APK/AAB, iOS build, desktop installer, native notification system, account system or cloud sync has been delivered by this plan.
+- A separate Flutter source scaffold is documented in /lifeos/NATIVE-STARTER-STATUS.txt, but it has not been compiled or run in the available environment. No verified Flutter application, Android APK/AAB, iOS build, desktop installer, native notification system, account system or cloud sync has been delivered.
 - Current prototype features include tasks, habits, goals, manual expenses/subscriptions, study/career items, reminders, document references, JSON backup/import and a PWA shell.
 - PWA installation/offline behavior must not be represented as equivalent to a fully tested native application.
 - Avoid highly sensitive information in the prototype. Preserve a verified backup before any future migration.
