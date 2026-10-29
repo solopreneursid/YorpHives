@@ -1,0 +1,5 @@
+# Hatchable project manifest. This file marks the folder as a
+# Hatchable project and declares the services it uses.
+# Reference: https://hatchable.com/docs/developers/config
+name = "YorpHives"
+description = "YorpHives is an independent technology platform building original local-first browser tools, productivity extensions, free utilities, and technology services."
